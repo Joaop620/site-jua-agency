@@ -63,12 +63,8 @@ export function ContactForm() {
 
   if (status === "sent") {
     return (
-      <div className="form form-ok rv in" role="status">
+      <div className="form form-ok" role="status">
         <JuaSymbol size={72} />
-        <div className="ok-log mono" aria-hidden="true">
-          <span>&gt; POST /api/contato</span>
-          <span className="pink">200 OK · mensagem entregue</span>
-        </div>
         <h3>Recebemos!</h3>
         <p className="sub">A gente volta em breve pra marcar a conversa.</p>
       </div>
@@ -77,15 +73,8 @@ export function ContactForm() {
 
   return (
     <form className="form rv" onSubmit={submit} noValidate aria-busy={status === "loading"}>
-      <div className="form-head">
-        <div>
-          <h3>Vamos conversar</h3>
-          <p className="sub">Sem compromisso e sem enrolação.</p>
-        </div>
-        <span className="form-tag mono" aria-hidden="true">
-          FORM_01
-        </span>
-      </div>
+      <h3>Vamos conversar</h3>
+      <p className="sub">Sem compromisso e sem enrolação.</p>
       <div className="f-row">
         <div className="field">
           <label htmlFor="fn">Seu nome</label>
@@ -152,7 +141,7 @@ export function ContactForm() {
           </>
         ) : (
           <>
-            Enviar <span aria-hidden="true">→</span>
+            Enviar <span className="arr" aria-hidden="true">→</span>
           </>
         )}
       </button>

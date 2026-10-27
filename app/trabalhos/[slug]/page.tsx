@@ -36,9 +36,8 @@ export default async function CasePage({ params }: Params) {
         </div>
       </header>
       <main id="conteudo" className="case-page">
-        <div className="grid-bg" aria-hidden="true" />
         <div className="wrap">
-          <div className="kick mono">Case #{String(i + 1).padStart(3, "0")}</div>
+          <div className="kick mono">Case {String(i + 1).padStart(2, "0")}</div>
           <h1 className="h h-l">{p.title}</h1>
           <dl className="case-specs mono">
             <div>
@@ -56,12 +55,12 @@ export default async function CasePage({ params }: Params) {
           </dl>
           {p.summary && <p className="lead">{p.summary}</p>}
           <div className="case-hero">
-            <Media src={p.image} alt={p.title} label="Imagem principal · 16:8" sizes="100vw" priority seed={i} />
+            <Media src={p.image} alt={p.title} label="Imagem principal · 16:8" sizes="100vw" priority />
           </div>
           <div className="case-gallery">
             {gallery.map((g, j) => (
               <div className="case-gi" key={j}>
-                <Media src={g} alt={`${p.title} — imagem ${j + 1}`} label={`Galeria ${j + 1} · 4:5`} sizes="(max-width: 600px) 100vw, 33vw" seed={i + j + 1} />
+                <Media src={g} alt={`${p.title} — imagem ${j + 1}`} label={`Galeria ${j + 1} · 4:5`} sizes="(max-width: 600px) 100vw, 33vw" />
               </div>
             ))}
           </div>

@@ -6,37 +6,26 @@ import { signs } from "@/content/site";
 export function Diagnostic() {
   const [on, setOn] = useState<boolean[]>(() => signs.map(() => false));
   const n = on.filter(Boolean).length;
-  const pct = Math.round((n / signs.length) * 100);
 
   return (
-    <section className="sec diag" id="diagnostico" aria-labelledby="diag-title">
-      <div className="grid-bg" aria-hidden="true" />
+    <section className="sec light" id="diagnostico" aria-labelledby="diag-title">
       <div className="wrap diag-grid">
-        <div>
+        <div className="diag-head">
           <div className="kick mono">Diagnóstico rápido</div>
-          <h2 id="diag-title" className="h h-l">
-            4 sinais de que a sua marca está <i className="pink">afastando</i> clientes.
+          <h2 id="diag-title" className="h h-l rv">
+            4 sinais de que a sua marca está <i className="mag">afastando</i> clientes.
           </h2>
-          <p className="lead" style={{ marginTop: 28 }}>
+          <p className="lead rv" style={{ marginTop: 28 }}>
             Clique nos que você reconhece. Leva 30 segundos.
           </p>
         </div>
-        <div className="console">
-          <div className="console-bar mono" aria-hidden="true">
-            <span className="dots">
-              <i />
-              <i />
-              <i />
-            </span>
-            <span>brand-scan — v1.0</span>
-            <span>{n}/4</span>
-          </div>
+        <div>
           <div className="diag-list">
             {signs.map((s, i) => (
               <button
                 key={s.title}
                 type="button"
-                className="sign"
+                className="sign rv"
                 aria-pressed={on[i]}
                 onClick={() => setOn((o) => o.map((v, j) => (j === i ? !v : v)))}
               >
@@ -48,17 +37,6 @@ export function Diagnostic() {
                 <span className="box" aria-hidden="true" />
               </button>
             ))}
-          </div>
-          <div className="meter" aria-hidden="true">
-            <div className="meter-head mono">
-              <span>Risco de marca</span>
-              <span className="pink">{pct}%</span>
-            </div>
-            <div className="meter-track">
-              {signs.map((_, i) => (
-                <span key={i} data-on={i < n || undefined} />
-              ))}
-            </div>
           </div>
           <div className="diag-result" aria-live="polite">
             <p>
@@ -76,7 +54,7 @@ export function Diagnostic() {
             </p>
             {n >= 2 && (
               <a className="btn btn-p" href="#contato">
-                Vamos conversar <span aria-hidden="true">→</span>
+                Vamos conversar <span className="arr" aria-hidden="true">→</span>
               </a>
             )}
           </div>

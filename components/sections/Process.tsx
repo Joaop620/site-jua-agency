@@ -2,73 +2,75 @@
 
 import { useEffect, useRef, useState } from "react";
 import { phases } from "@/content/site";
-import { MoonPhase } from "../MoonPhase";
+import { Moon, type MoonLayout } from "../Moon";
+import { useScrollProgress } from "../useScrollProgress";
+
+const layout = (w: number, h: number): MoonLayout => ({ cx: w / 2, cy: h / 2, r: Math.min(w, h) * 0.36 });
+const PHASE = [140, 90, 42, 0];
 
 export function Process() {
-  const ref = useRef<HTMLDivElement>(null);
-  const [p, setP] = useState(0);
+  const { el, p } = useScrollProgress<HTMLDivElement>("through");
+  const [active, setActive] = useState(0);
+  const steps = useRef<(HTMLLIElement | null)[]>([]);
 
   useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    let raf = 0;
-    const on = () => {
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => {
-        const r = el.getBoundingClientRect();
-        const v = (innerHeight * 0.75 - r.top) / (r.height + innerHeight * 0.1);
-        setP(Math.max(0, Math.min(1, v)));
-      });
-    };
-    on();
-    addEventListener("scroll", on, { passive: true });
-    addEventListener("resize", on);
-    return () => {
-      removeEventListener("scroll", on);
-      removeEventListener("resize", on);
-      cancelAnimationFrame(raf);
-    };
+    const io = new IntersectionObserver(
+      (entries) =>
+        entries.forEach((e) => {
+          if (e.isIntersecting) setActive(Number((e.target as HTMLElement).dataset.i));
+        }),
+      { rootMargin: "-45% 0px -45% 0px" }
+    );
+    steps.current.forEach((s) => s && io.observe(s));
+    return () => io.disconnect();
   }, []);
 
-  const active = Math.min(4, Math.floor(p * 4.4));
+  // fase contínua: interpola entre as quatro fases conforme a rolagem
+  const getPhase = () => {
+    const x = Math.min(1, p.current * 1.15) * (PHASE.length - 1);
+    const i = Math.min(PHASE.length - 2, Math.floor(x));
+    return PHASE[i] + (PHASE[i + 1] - PHASE[i]) * (x - i);
+  };
 
   return (
     <section className="sec process" id="processo" aria-labelledby="proc-title">
-      <div className="stars" aria-hidden="true" />
       <div className="wrap">
         <div className="sec-head">
           <div>
             <div className="kick mono">Processo</div>
-            <h2 id="proc-title" className="h h-l">
+            <h2 id="proc-title" className="h h-l rv">
               Como uma marca <i className="pink">nasce</i> aqui dentro.
             </h2>
           </div>
-          <p className="lead">Quatro fases, como as da lua. Cada uma prepara a próxima, e nenhuma é pulada.</p>
+          <p className="lead rv">Quatro fases, como as da lua. Cada uma prepara a próxima, e nenhuma é pulada.</p>
         </div>
-        <div className="pipe-meta mono" aria-hidden="true">
-          <span>pipeline.run()</span>
-          <span>
-            <span className="pink">{Math.round(p * 100)}%</span> concluído
-          </span>
-        </div>
-        <div className="phases" ref={ref} style={{ ["--p" as string]: p }}>
-          <div className="pipe" aria-hidden="true">
-            <span />
-          </div>
-          {phases.map((ph, i) => (
-            <div className="phase rv" key={ph.title} data-on={i < active || undefined}>
-              <div className="phase-node">
-                <MoonPhase phase={ph.phase} />
+        <div className="proc" ref={el}>
+          <div className="proc-stage">
+            <div className="proc-sticky">
+              <Moon className="proc-moon" layout={layout} getPhase={getPhase} />
+              <div className="proc-count mono" aria-hidden="true">
+                <span className="pink">0{active + 1}</span> / 04 · {phases[active].title}
               </div>
-              <div className="phase-status mono" aria-hidden="true">
-                {i < active ? "● ok" : "○ aguardando"}
-              </div>
-              <div className="it num">0{i + 1}</div>
-              <h3>{ph.title}</h3>
-              <p className="it sub">{ph.sub}</p>
-              <p>{ph.text}</p>
             </div>
-          ))}
+          </div>
+          <ol className="proc-steps">
+            {phases.map((ph, i) => (
+              <li
+                key={ph.title}
+                className="step"
+                data-i={i}
+                data-on={i === active || undefined}
+                ref={(n) => {
+                  steps.current[i] = n;
+                }}
+              >
+                <div className="it num">0{i + 1}</div>
+                <h3>{ph.title}</h3>
+                <p className="it sub">{ph.sub}</p>
+                <p>{ph.text}</p>
+              </li>
+            ))}
+          </ol>
         </div>
       </div>
     </section>

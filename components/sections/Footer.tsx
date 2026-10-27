@@ -6,7 +6,6 @@ export function Footer() {
   const c = site.contact;
   return (
     <footer className="foot">
-      <div className="grid-bg" aria-hidden="true" />
       <div className="wrap">
         <p className="h foot-big">
           Bonito. Estratégico. <i className="pink">Vende.</i>
@@ -56,9 +55,7 @@ export function Footer() {
         </div>
         <div className="foot-bot mono">
           <span>© 2026 Juá Agency</span>
-          <span className="foot-sys">
-            <span className="pulse" aria-hidden="true" /> Todos os sistemas operando · <Clock />
-          </span>
+          <Clock prefix="São Paulo" />
           <span>jua.agency · est. 2026</span>
         </div>
       </div>

@@ -6,22 +6,21 @@ const fmt = new Intl.DateTimeFormat("pt-BR", {
   timeZone: "America/Sao_Paulo",
   hour: "2-digit",
   minute: "2-digit",
-  second: "2-digit",
   hour12: false,
 });
 
-/** Relógio ao vivo no fuso de São Paulo. */
-export function Clock({ prefix = "SP" }: { prefix?: string }) {
-  const [now, setNow] = useState<string>("--:--:--");
+/** Hora local de São Paulo, atualizada ao vivo. */
+export function Clock({ prefix }: { prefix?: string }) {
+  const [now, setNow] = useState("--:--");
   useEffect(() => {
     const tick = () => setNow(fmt.format(new Date()));
     tick();
-    const id = setInterval(tick, 1000);
+    const id = setInterval(tick, 10000);
     return () => clearInterval(id);
   }, []);
   return (
-    <span className="clock mono" suppressHydrationWarning>
-      {prefix} <time>{now}</time> <span className="dim">BRT</span>
+    <span className="clock" suppressHydrationWarning>
+      {prefix} <time>{now}</time>
     </span>
   );
 }

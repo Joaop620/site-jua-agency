@@ -5,14 +5,13 @@ export function Contact() {
   const c = site.contact;
   return (
     <section className="sec contact" id="contato" aria-labelledby="contact-title">
-      <div className="stars" aria-hidden="true" />
       <div className="rise" aria-hidden="true" />
       <div className="wrap contact-in">
         <div>
           <div className="kick mono">
             {site.agenda.month} · {site.agenda.year}
           </div>
-          <h2 id="contact-title" className="h h-l">
+          <h2 id="contact-title" className="h h-l rv">
             Agenda <i className="pink">aberta</i> pra novos projetos.
           </h2>
           <p className="lead" style={{ marginTop: 28 }}>
@@ -32,12 +31,6 @@ export function Contact() {
               <span className="mono">Instagram</span>
               {c.instagram.label}
             </a>
-          </div>
-          <div className="sla mono" aria-hidden="true">
-            <span>
-              <span className="pulse" /> Tempo médio de resposta
-            </span>
-            <span className="pink">&lt; 24h</span>
           </div>
         </div>
         <ContactForm />
