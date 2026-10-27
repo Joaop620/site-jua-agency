@@ -19,12 +19,14 @@ export function Work() {
           {projects.map((pr) => (
             <Link className={`case rv case-${pr.layout}`} href={`/trabalhos/${pr.slug}`} key={pr.slug}>
               <div className="case-img">
-                <Media
+                <div className="case-par" data-speed="-0.07">
+                  <Media
                   src={pr.image}
                   alt={pr.title}
                   label={pr.layout === "tall" ? "Foto do projeto principal · 4:5" : "Foto do projeto · 16:10"}
                   sizes={pr.layout === "tall" ? "(max-width: 1000px) 100vw, 640px" : "(max-width: 1000px) 100vw, 600px"}
-                />
+                  />
+                </div>
               </div>
               <div className="case-meta">
                 <h3 className="h h-s">

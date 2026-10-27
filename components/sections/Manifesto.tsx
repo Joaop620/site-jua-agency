@@ -1,24 +1,15 @@
-"use client";
-
-import { useScrollProgress } from "../useScrollProgress";
-
-const TEXT =
-  "Clareza vende. Por isso cada projeto começa entendendo o seu negócio, quem compra de você e por que essa pessoa escolheria você. Só depois a gente abre o arquivo.";
+import { ScrollWords } from "../ScrollWords";
 
 export function Manifesto() {
-  const { el } = useScrollProgress<HTMLElement>("through");
-  const words = TEXT.split(" ");
-
   return (
-    <section className="band" ref={el} aria-label="Manifesto">
+    <section className="band" data-progress aria-label="Manifesto">
+      <svg className="band-moon" viewBox="0 0 64 64" aria-hidden="true" data-speed="-0.12">
+        <path d="M38 7 A26 26 0 1 0 57 38 A18.5 18.5 0 0 1 38 7 Z" />
+      </svg>
       <div className="wrap band-in">
         <p className="it band-title rv">Ninguém compra o que não entende.</p>
-        <p className="band-text" aria-label={TEXT}>
-          {words.map((w, i) => (
-            <span key={i} aria-hidden="true" style={{ ["--k" as string]: (i / words.length).toFixed(3) }}>
-              {w}{" "}
-            </span>
-          ))}
+        <p className="band-text">
+          <ScrollWords text="Clareza vende. Por isso cada projeto começa entendendo o seu negócio, quem compra de você e por que essa pessoa escolheria você. Só depois a gente abre o arquivo." />
         </p>
       </div>
     </section>

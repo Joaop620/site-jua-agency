@@ -70,6 +70,9 @@ export function Moon({ getPhase, layout, stars = false, className }: Props) {
     let L: MoonLayout = { cx: 0, cy: 0, r: 0 };
     let P = new Float32Array(0); // x, y, z, relevo
     let S: { x: number; y: number; s: number; ph: number }[] = [];
+    // estrelas cadentes ocasionais (só com `stars`)
+    let meteor: { x: number; y: number; dx: number; dy: number; t0: number } | null = null;
+    let nextMeteor = performance.now() + 3500;
     const buckets: number[][] = Array.from({ length: LEVELS + 1 }, () => []);
 
     let phase = getPhase();
@@ -151,6 +154,41 @@ export function Moon({ getPhase, layout, stars = false, className }: Props) {
       for (const s of S) {
         ctx.fillStyle = `rgba(247,243,238,${(0.25 + 0.25 * Math.sin(now / 1400 + s.ph)).toFixed(3)})`;
         ctx.fillRect(s.x, s.y, s.s, s.s);
+      }
+
+      if (stars && !reduce) {
+        if (!meteor && now > nextMeteor) {
+          const left = L.cx > w / 2;
+          const ang = left ? Math.PI * 0.82 : Math.PI * 0.18;
+          meteor = {
+            x: left ? w * (0.15 + Math.random() * 0.3) : w * (0.55 + Math.random() * 0.3),
+            y: h * (0.05 + Math.random() * 0.25),
+            dx: Math.cos(ang),
+            dy: Math.sin(ang),
+            t0: now,
+          };
+        }
+        if (meteor) {
+          const k = (now - meteor.t0) / 1100;
+          if (k >= 1) {
+            meteor = null;
+            nextMeteor = now + 5000 + Math.random() * 7000;
+          } else {
+            const dist = Math.min(w, h) * 0.45;
+            const hx = meteor.x + meteor.dx * dist * k;
+            const hy = meteor.y + meteor.dy * dist * k;
+            const tail = 140 * Math.sin(Math.PI * k);
+            const g2 = ctx.createLinearGradient(hx - meteor.dx * tail, hy - meteor.dy * tail, hx, hy);
+            g2.addColorStop(0, "rgba(247,243,238,0)");
+            g2.addColorStop(1, `rgba(247,243,238,${(0.8 * Math.sin(Math.PI * k)).toFixed(3)})`);
+            ctx.strokeStyle = g2;
+            ctx.lineWidth = 1.2;
+            ctx.beginPath();
+            ctx.moveTo(hx - meteor.dx * tail, hy - meteor.dy * tail);
+            ctx.lineTo(hx, hy);
+            ctx.stroke();
+          }
+        }
       }
 
       const a = (phase * Math.PI) / 180;

@@ -1,6 +1,7 @@
 import { Effects } from "@/components/Effects";
 import { Nav } from "@/components/sections/Nav";
 import { Hero } from "@/components/sections/Hero";
+import { Marquee } from "@/components/sections/Marquee";
 import { Attributes } from "@/components/sections/Attributes";
 import { Manifesto } from "@/components/sections/Manifesto";
 import { Services } from "@/components/sections/Services";
@@ -19,6 +20,7 @@ export default function Home() {
       <main id="conteudo">
         <span id="topo" />
         <Hero />
+        <Marquee />
         <Attributes />
         <Manifesto />
         <Services />

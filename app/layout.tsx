@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Inter_Tight, Cormorant_Garamond, JetBrains_Mono } from "next/font/google";
 import { site } from "@/content/site";
+import { Intro } from "@/components/Intro";
+import { SmoothScroll } from "@/components/SmoothScroll";
 import "./globals.css";
 
 const sans = Inter_Tight({ subsets: ["latin"], weight: ["400", "500", "600", "700"], variable: "--f-sans", display: "swap" });
@@ -27,8 +29,18 @@ export const viewport: Viewport = { themeColor: "#0A0620", colorScheme: "dark" }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="pt-BR" className={`${sans.variable} ${serif.variable} ${mono.variable}`}>
+    <html lang="pt-BR" className={`${sans.variable} ${serif.variable} ${mono.variable}`} suppressHydrationWarning>
+      <head>
+        <script
+          // abertura só na primeira visita da sessão e sem "reduzir movimento"
+          dangerouslySetInnerHTML={{
+            __html: `try{if(!sessionStorage.getItem("jua-intro")&&!matchMedia("(prefers-reduced-motion: reduce)").matches){document.documentElement.classList.add("intro");sessionStorage.setItem("jua-intro","1")}}catch(e){}`,
+          }}
+        />
+      </head>
       <body>
+        <Intro />
+        <SmoothScroll />
         <a className="skip" href="#conteudo">
           Pular para o conteúdo
         </a>

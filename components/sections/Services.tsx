@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { services } from "@/content/site";
 import { PickLink } from "../PickLink";
+import { Roll } from "../Roll";
 
 export function Services() {
   const [open, setOpen] = useState(0);
@@ -47,7 +48,7 @@ export function Services() {
                       ))}
                     </ul>
                     <PickLink className="btn btn-d" pick={s.pick}>
-                      Quero esse <span className="arr" aria-hidden="true">→</span>
+                      <Roll>Quero esse</Roll> <span className="arr" aria-hidden="true">→</span>
                     </PickLink>
                   </div>
                 </div>
@@ -60,7 +61,7 @@ export function Services() {
             Precisa de <i>tudo junto?</i> A gente monta um projeto só, com um cronograma só.
           </p>
           <PickLink className="btn btn-p" pick="Tudo junto">
-            Montar meu projeto <span className="arr" aria-hidden="true">→</span>
+            <Roll>Montar meu projeto</Roll> <span className="arr" aria-hidden="true">→</span>
           </PickLink>
         </div>
       </div>

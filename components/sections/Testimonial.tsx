@@ -1,14 +1,17 @@
 import Image from "next/image";
 import { testimonial } from "@/content/site";
+import { ScrollWords } from "../ScrollWords";
 
 export function Testimonial() {
   return (
-    <section className="sec testi" aria-label="Depoimento">
+    <section className="sec testi" data-progress aria-label="Depoimento">
       <figure className="wrap testi-in">
         <div className="q rv" aria-hidden="true">
           “
         </div>
-        <blockquote className="rv">{testimonial.quote}</blockquote>
+        <blockquote>
+          <ScrollWords text={testimonial.quote} start={-0.05} span={0.75} />
+        </blockquote>
         <figcaption className="who rv">
           <div className="avatar">
             {testimonial.avatar ? (

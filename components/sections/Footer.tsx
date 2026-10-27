@@ -7,8 +7,8 @@ export function Footer() {
   return (
     <footer className="foot">
       <div className="wrap">
-        <p className="h foot-big">
-          Bonito. Estratégico. <i className="pink">Vende.</i>
+        <p className="h foot-big rv">
+          Bonito é o começo. <i className="pink">Vender</i> é o ponto.
         </p>
         <div className="foot-grid">
           <div>
