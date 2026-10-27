@@ -3,7 +3,6 @@
 import { useEffect, useRef } from "react";
 import { site } from "@/content/site";
 import { Moon, type MoonLayout } from "../Moon";
-import { Roll } from "../Roll";
 import { useScrollProgress } from "../useScrollProgress";
 
 const layout = (w: number, h: number): MoonLayout =>
@@ -11,18 +10,6 @@ const layout = (w: number, h: number): MoonLayout =>
     ? { cx: w * 0.5, cy: h * 0.33, r: Math.min(w * 0.5, h * 0.27) }
     : { cx: w * 0.64, cy: h * 0.46, r: Math.min(h * 0.41, w * 0.31) };
 
-/** Divide uma palavra em letras para a entrada escalonada. */
-function Chars({ text, from }: { text: string; from: number }) {
-  return (
-    <>
-      {[...text].map((c, i) => (
-        <span className="ch" key={i} style={{ ["--i" as string]: from + i }}>
-          {c}
-        </span>
-      ))}
-    </>
-  );
-}
 
 const ease = (t: number) => 1 - Math.pow(1 - Math.min(1, Math.max(0, t)), 3);
 
@@ -47,7 +34,7 @@ export function Hero() {
       <div className="hero-pin">
         <Moon className="hero-moon" layout={layout} getPhase={getPhase} stars />
         <div className="wrap hero-frame">
-          <div className="hero-top mono">
+          <div className="hero-top label">
             <span className="hero-fade">Agência criativa · Branding, design e social</span>
             {site.agenda.open && (
               <span className="hero-fade">
@@ -58,15 +45,15 @@ export function Hero() {
           <div className="hero-bottom">
             <h1 id="hero-title" className="h hero-title" aria-label={site.tagline}>
               <span className="hl hl-1" aria-hidden="true">
-                <Chars text="Bonito." from={0} />
+                <span className="hl-in">Bonito.</span>
               </span>
               <span className="hl hl-2" aria-hidden="true">
-                <Chars text="Estratégico." from={5} />
+                <span className="hl-in">Estratégico.</span>
               </span>
               <span className="hl hl-3" aria-hidden="true">
-                <i className="pink">
-                  <Chars text="Vende." from={14} />
-                </i>
+                <span className="hl-in">
+                  <i className="pink">Vende.</i>
+                </span>
               </span>
             </h1>
             <div className="hero-side hero-fade">
@@ -74,19 +61,15 @@ export function Hero() {
                 A Juá cria marcas, conteúdo e sites com design bonito, estratégia clara e resultado que dá pra medir.
               </p>
               <div className="hero-ctas">
-                <a className="btn btn-p" href="#contato" data-magnetic>
-                  <Roll>Agendar uma conversa</Roll> <span className="arr" aria-hidden="true">→</span>
+                <a className="btn btn-p" href="#contato">
+                  Agendar uma conversa <span className="arr" aria-hidden="true">→</span>
                 </a>
-                <a className="btn btn-g" href="#servicos" data-magnetic>
-                  <Roll>Ver serviços</Roll>
+                <a className="btn btn-g" href="#servicos">
+                  Ver serviços
                 </a>
               </div>
             </div>
           </div>
-        </div>
-        <div className="hero-scroll mono" aria-hidden="true">
-          <span>Role</span>
-          <span className="hero-scroll-bar" />
         </div>
       </div>
     </section>

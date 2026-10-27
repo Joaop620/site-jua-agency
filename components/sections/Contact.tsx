@@ -8,7 +8,7 @@ export function Contact() {
       <div className="rise" aria-hidden="true" />
       <div className="wrap contact-in">
         <div>
-          <div className="kick mono">
+          <div className="kick label">
             {site.agenda.month} · {site.agenda.year}
           </div>
           <h2 id="contact-title" className="h h-l rv">
@@ -20,15 +20,15 @@ export function Contact() {
           </p>
           <div className="contact-info">
             <a href={`mailto:${c.email}`}>
-              <span className="mono">E-mail</span>
+              <span className="label">E-mail</span>
               {c.email}
             </a>
             <a href={c.whatsapp.href} target="_blank" rel="noopener noreferrer">
-              <span className="mono">WhatsApp</span>
+              <span className="label">WhatsApp</span>
               {c.whatsapp.label}
             </a>
             <a href={c.instagram.href} target="_blank" rel="noopener noreferrer">
-              <span className="mono">Instagram</span>
+              <span className="label">Instagram</span>
               {c.instagram.label}
             </a>
           </div>

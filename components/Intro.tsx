@@ -21,7 +21,6 @@ export function Intro() {
           pathLength={1}
         />
       </svg>
-      <span className="intro-word mono">Juá Agency</span>
     </div>
   );
 }

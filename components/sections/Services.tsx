@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { services } from "@/content/site";
 import { PickLink } from "../PickLink";
-import { Roll } from "../Roll";
 
 export function Services() {
   const [open, setOpen] = useState(0);
@@ -13,7 +12,7 @@ export function Services() {
       <div className="wrap">
         <div className="sec-head">
           <div>
-            <div className="kick mono">O que fazemos</div>
+            <div className="kick label">O que fazemos</div>
             <h2 id="svc-title" className="h h-l rv">
               Quatro frentes. <i className="mag">Um só</i> objetivo: vender mais.
             </h2>
@@ -35,7 +34,7 @@ export function Services() {
                   >
                     <span className="svc-n">{s.n}</span>
                     <span className="svc-t">{s.title}</span>
-                    <span className="svc-a mono">{s.area}</span>
+                    <span className="svc-a label">{s.area}</span>
                     <span className="svc-x" aria-hidden="true" />
                   </button>
                 </h3>
@@ -48,7 +47,7 @@ export function Services() {
                       ))}
                     </ul>
                     <PickLink className="btn btn-d" pick={s.pick}>
-                      <Roll>Quero esse</Roll> <span className="arr" aria-hidden="true">→</span>
+                      Quero esse <span className="arr" aria-hidden="true">→</span>
                     </PickLink>
                   </div>
                 </div>
@@ -61,7 +60,7 @@ export function Services() {
             Precisa de <i>tudo junto?</i> A gente monta um projeto só, com um cronograma só.
           </p>
           <PickLink className="btn btn-p" pick="Tudo junto">
-            <Roll>Montar meu projeto</Roll> <span className="arr" aria-hidden="true">→</span>
+            Montar meu projeto <span className="arr" aria-hidden="true">→</span>
           </PickLink>
         </div>
       </div>

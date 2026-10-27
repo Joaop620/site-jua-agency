@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter_Tight, Cormorant_Garamond, JetBrains_Mono } from "next/font/google";
+import { Inter_Tight, Cormorant_Garamond } from "next/font/google";
 import { site } from "@/content/site";
 import { Intro } from "@/components/Intro";
 import { SmoothScroll } from "@/components/SmoothScroll";
@@ -7,7 +7,6 @@ import "./globals.css";
 
 const sans = Inter_Tight({ subsets: ["latin"], weight: ["400", "500", "600", "700"], variable: "--f-sans", display: "swap" });
 const serif = Cormorant_Garamond({ subsets: ["latin"], weight: ["500", "600"], style: ["italic"], variable: "--f-serif", display: "swap" });
-const mono = JetBrains_Mono({ subsets: ["latin"], weight: ["400", "500"], variable: "--f-mono", display: "swap" });
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -29,7 +28,7 @@ export const viewport: Viewport = { themeColor: "#0A0620", colorScheme: "dark" }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="pt-BR" className={`${sans.variable} ${serif.variable} ${mono.variable}`} suppressHydrationWarning>
+    <html lang="pt-BR" className={`${sans.variable} ${serif.variable}`} suppressHydrationWarning>
       <head>
         <script
           // abertura só na primeira visita da sessão e sem "reduzir movimento"

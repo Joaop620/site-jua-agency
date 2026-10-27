@@ -37,7 +37,7 @@ export function Process() {
       <div className="wrap">
         <div className="sec-head">
           <div>
-            <div className="kick mono">Processo</div>
+            <div className="kick label">Processo</div>
             <h2 id="proc-title" className="h h-l rv">
               Como uma marca <i className="pink">nasce</i> aqui dentro.
             </h2>
@@ -48,9 +48,6 @@ export function Process() {
           <div className="proc-stage">
             <div className="proc-sticky">
               <Moon className="proc-moon" layout={layout} getPhase={getPhase} />
-              <div className="proc-count mono" aria-hidden="true">
-                <span className="pink">0{active + 1}</span> / 04 · {phases[active].title}
-              </div>
             </div>
           </div>
           <ol className="proc-steps">

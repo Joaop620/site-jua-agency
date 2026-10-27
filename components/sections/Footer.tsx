@@ -53,7 +53,7 @@ export function Footer() {
             </ul>
           </div>
         </div>
-        <div className="foot-bot mono">
+        <div className="foot-bot label">
           <span>© 2026 Juá Agency</span>
           <Clock prefix="São Paulo" />
           <span>jua.agency · est. 2026</span>

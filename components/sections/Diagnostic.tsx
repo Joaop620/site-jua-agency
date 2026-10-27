@@ -11,7 +11,7 @@ export function Diagnostic() {
     <section className="sec light" id="diagnostico" aria-labelledby="diag-title">
       <div className="wrap diag-grid">
         <div className="diag-head">
-          <div className="kick mono">Diagnóstico rápido</div>
+          <div className="kick label">Diagnóstico rápido</div>
           <h2 id="diag-title" className="h h-l rv">
             4 sinais de que a sua marca está <i className="mag">afastando</i> clientes.
           </h2>

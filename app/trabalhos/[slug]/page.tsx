@@ -37,9 +37,9 @@ export default async function CasePage({ params }: Params) {
       </header>
       <main id="conteudo" className="case-page">
         <div className="wrap">
-          <div className="kick mono">Case {String(i + 1).padStart(2, "0")}</div>
+          <div className="kick label">Case {String(i + 1).padStart(2, "0")}</div>
           <h1 className="h h-l">{p.title}</h1>
-          <dl className="case-specs mono">
+          <dl className="case-specs label">
             <div>
               <dt>Cliente</dt>
               <dd>{p.client}</dd>
@@ -65,7 +65,7 @@ export default async function CasePage({ params }: Params) {
             ))}
           </div>
           <Link className="case-next" href={`/trabalhos/${next.slug}`}>
-            <span className="mono">Próximo case →</span>
+            <span className="label">Próximo case →</span>
             <span className="h h-m">{next.title}</span>
           </Link>
         </div>

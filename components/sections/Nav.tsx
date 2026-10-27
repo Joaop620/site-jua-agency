@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { nav } from "@/content/site";
 import { Logo } from "../Logo";
-import { Roll } from "../Roll";
 
 export function Nav() {
   const [open, setOpen] = useState(false);
@@ -31,16 +30,16 @@ export function Nav() {
           <ul className="nav-links">
             {nav.map((l) => (
               <li key={l.href}>
-                <a href={l.href}>
-                  <Roll>{l.label}</Roll>
+                <a className="ul" href={l.href}>
+                  {l.label}
                 </a>
               </li>
             ))}
           </ul>
         </nav>
         <div className="nav-cta">
-          <a className="btn btn-p btn-sm" href="#contato" data-magnetic>
-            <Roll>Agendar conversa</Roll>
+          <a className="btn btn-p btn-sm" href="#contato">
+            Agendar conversa
           </a>
           <button className="nav-toggle" aria-expanded={open} aria-controls="mnav" onClick={() => setOpen((o) => !o)}>
             <span className="burger" aria-hidden="true" />

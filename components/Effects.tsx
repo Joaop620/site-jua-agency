@@ -7,7 +7,6 @@ import { useEffect } from "react";
  * - `.rv`: revela ao entrar na tela
  * - `[data-progress]`: escreve `--p` (0–1) conforme a seção atravessa a tela
  * - `[data-speed]`: parallax vertical
- * - `[data-magnetic]`: botão acompanha levemente o ponteiro
  */
 export function Effects() {
   useEffect(() => {
@@ -57,29 +56,12 @@ export function Effects() {
     addEventListener("scroll", onScroll, { passive: true });
     addEventListener("resize", onScroll);
 
-    const mags = reduce || !matchMedia("(pointer: fine)").matches ? [] : [...document.querySelectorAll<HTMLElement>("[data-magnetic]")];
-    const offs = mags.map((el) => {
-      const move = (e: PointerEvent) => {
-        const r = el.getBoundingClientRect();
-        const x = (e.clientX - r.left - r.width / 2) * 0.22;
-        const y = (e.clientY - r.top - r.height / 2) * 0.32;
-        el.style.transform = `translate(${x.toFixed(1)}px,${y.toFixed(1)}px)`;
-      };
-      const leave = () => (el.style.transform = "");
-      el.addEventListener("pointermove", move);
-      el.addEventListener("pointerleave", leave);
-      return () => {
-        el.removeEventListener("pointermove", move);
-        el.removeEventListener("pointerleave", leave);
-      };
-    });
 
     return () => {
       io.disconnect();
       cancelAnimationFrame(raf);
       removeEventListener("scroll", onScroll);
       removeEventListener("resize", onScroll);
-      offs.forEach((f) => f());
     };
   }, []);
 

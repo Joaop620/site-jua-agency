@@ -8,7 +8,7 @@ export function Work() {
       <div className="wrap">
         <div className="sec-head">
           <div>
-            <div className="kick mono">Trabalhos recentes</div>
+            <div className="kick label">Trabalhos recentes</div>
             <h2 id="work-title" className="h h-l rv">
               Marcas que <i className="pink">brilham</i> no escuro.
             </h2>
@@ -32,7 +32,7 @@ export function Work() {
                 <h3 className="h h-s">
                   <span className="ul">{pr.title}</span>
                 </h3>
-                <span className="mono">
+                <span className="label">
                   {pr.services.join(" · ")}
                   {pr.services.length < 2 ? ` · ${pr.year}` : ""}
                 </span>
