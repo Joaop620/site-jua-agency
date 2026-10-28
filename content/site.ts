@@ -163,7 +163,7 @@ export const testimonial = {
   avatar: "",
 };
 
-export const formServices = ["Branding", "Identidade visual", "Social media", "Site", "Tudo junto"];
+export const formServices = ["Branding", "Identidade visual", "Social media", "Site", "Tudo junto", "Ainda não sei"];
 
 // ---------- Planos e preços ----------
 // Valores de referência (pesquisa de mercado BR 2026). Ajuste à vontade.
@@ -279,3 +279,23 @@ export const faq = [
     a: "Pode. Muita gente começa pela identidade e depois parte pro conteúdo. A gente ajuda a decidir a ordem que faz mais sentido pro seu momento.",
   },
 ];
+
+// ---------- Estúdio ----------
+export const studio = {
+  paragraphs: [
+    "Somos um estúdio pequeno, e isso é de propósito. Atendemos poucos clientes por vez pra conhecer cada negócio de perto e cuidar dos detalhes que fazem diferença.",
+    "A gente gosta de design bonito, mas só quando ele ajuda a vender. Por isso toda decisão aqui tem um motivo, e a gente sempre conta qual é.",
+    "E sim, muita coisa boa por aqui acontece depois das dez da noite.",
+  ],
+  team: [
+    {
+      name: "Lua",
+      role: "Designer gráfica",
+      links: [
+        { label: "Behance", href: "https://www.behance.net/rlua" },
+        { label: "Instagram", href: "https://www.instagram.com/designerrlua/" },
+        { label: "LinkedIn", href: "https://www.linkedin.com/in/raisalua/" },
+      ],
+    },
+  ],
+};

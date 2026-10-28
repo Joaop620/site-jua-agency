@@ -53,9 +53,14 @@ export function Diagnostic() {
               )}
             </p>
             {n >= 2 && (
-              <a className="btn btn-p" href="#contato">
-                Vamos conversar <span className="arr" aria-hidden="true">→</span>
-              </a>
+              <div className="diag-ctas">
+                <a className="btn btn-p" href="#contato">
+                  Vamos conversar <span className="arr" aria-hidden="true">→</span>
+                </a>
+                <a className="btn btn-g" href="#planos">
+                  Ver planos
+                </a>
+              </div>
             )}
           </div>
         </div>

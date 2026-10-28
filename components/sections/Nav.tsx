@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { nav } from "@/content/site";
+import { nav, site } from "@/content/site";
 import { Logo } from "../Logo";
 
 export function Nav() {
@@ -75,6 +75,15 @@ export function Nav() {
             </li>
           ))}
         </ul>
+        <div className="mnav-foot">
+          <a href={site.contact.whatsapp.href} target="_blank" rel="noopener noreferrer">
+            WhatsApp ↗
+          </a>
+          <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>
+          <a href={site.contact.instagram.href} target="_blank" rel="noopener noreferrer">
+            {site.contact.instagram.label}
+          </a>
+        </div>
       </nav>
     </header>
   );

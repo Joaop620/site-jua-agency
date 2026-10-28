@@ -197,6 +197,7 @@ export function ContactForm() {
           </>
         )}
       </button>
+      <p className="form-privacy">A gente usa seus dados só pra responder esta mensagem.</p>
       {status === "error" && (
         <p className="form-err" role="alert">
           {msg} Tente de novo ou escreva pra ola@jua.agency.

@@ -58,7 +58,10 @@ section{position:relative}
 
 /* nav */
 .nav{position:fixed;top:0;left:0;right:0;z-index:50;border-bottom:1px solid transparent;transition:background .4s,border-color .4s}
-.nav[data-solid]{background:rgba(10,6,32,.94);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-color:var(--line-d)}
+.nav::before{content:"";position:absolute;inset:0;z-index:-1;opacity:0;background:rgba(10,6,32,.94);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);transition:opacity .4s}
+/* o desfoque fica no ::before: no próprio header ele prenderia o menu mobile (position:fixed) dentro da barra */
+.nav[data-solid]{border-color:var(--line-d)}
+.nav[data-solid]::before{opacity:1}
 .nav-bar{display:flex;align-items:center;justify-content:space-between;gap:24px;height:72px}
 .logo{display:flex;align-items:center;gap:10px;color:var(--paper);font-weight:700;font-size:21px;letter-spacing:-.03em}
 .logo i{font-family:var(--serif);font-weight:500;font-size:1.12em;letter-spacing:0}
@@ -289,7 +292,8 @@ html.intro .intro-ov{position:fixed;inset:0;z-index:300;display:flex;flex-direct
 html.intro .hl-1 .hl-in{animation-delay:1.4s}html.intro .hl-2 .hl-in{animation-delay:1.5s}html.intro .hl-3 .hl-in{animation-delay:1.6s}
 .hero-fade{animation:fade 1.2s var(--ease) .5s both}
 html.intro .hero-fade{animation-delay:2.05s}
-html.intro .nav{animation:fade 1s var(--ease) 1.9s both}
+html.intro .nav{animation:navIn 1s var(--ease) 1.9s both}
+@keyframes navIn{from{opacity:0}}
 
 
 
@@ -418,6 +422,23 @@ html.intro .nav{animation:fade 1s var(--ease) 1.9s both}
 .nf .lead{margin:0 auto 12px}
 .nf-code{color:var(--dim-d)}
 
+/* ---------- estúdio ---------- */
+.studio{background:var(--mid)}
+.studio-grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:clamp(40px,7vw,120px);align-items:end}
+.studio-text{display:grid;gap:20px;margin-top:40px;max-width:34em}
+.studio-text p{margin:0;color:var(--dim-d);font-size:18px}
+.studio-text .lead{color:var(--paper)}
+.team{list-style:none;margin:0;padding:0;display:grid;gap:16px}
+.member{display:grid;grid-template-columns:96px minmax(0,1fr);gap:24px;align-items:center;padding:28px;border-radius:24px;border:1px solid var(--line-d);background:linear-gradient(180deg,rgba(247,243,238,.045),rgba(247,243,238,.01))}
+.member-mark svg{width:96px;height:96px;display:block}
+.member h3{margin:0;font-size:28px;letter-spacing:-.03em}
+.member .label{margin:4px 0 14px;color:var(--dim-d)}
+.member-links{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px 18px;font-size:15px}
+.form-privacy{margin:14px 0 0;font-size:13.5px;color:var(--dim-l);text-align:center}
+.diag-ctas{display:flex;flex-wrap:wrap;gap:10px}
+.mnav-foot{display:grid;gap:14px;margin-top:32px}
+.mnav .mnav-foot a{padding:0;border:0;font-size:16px;font-weight:500;letter-spacing:0;line-height:1.4;color:var(--dim-d)}
+
 @media (max-width:1000px){
   .nav-links,.nav-cta .btn{display:none}.nav-toggle{display:grid}
   .hero-moon{transform-origin:50% 38%}
@@ -425,6 +446,7 @@ html.intro .nav{animation:fade 1s var(--ease) 1.9s both}
   .attr:nth-child(3){border-left:0;padding-left:0}.attr:nth-child(n+3){border-top:1px solid var(--line-d)}
   .sec-head,.band-in,.diag-grid,.contact-in{grid-template-columns:1fr}
   .diag-head,.faq-head{position:static}
+  .studio-grid{grid-template-columns:1fr}
   .faq-grid,.pp-head{grid-template-columns:1fr}
   .plans{grid-template-columns:1fr;max-width:560px}
   .pp{grid-template-columns:minmax(0,1fr) auto;row-gap:10px}
