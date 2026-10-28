@@ -6,6 +6,7 @@ const sizes = {
   tall: "(max-width: 1000px) 100vw, 640px",
   wide: "(max-width: 1000px) 100vw, 600px",
   half: "(max-width: 1000px) 100vw, 640px",
+  full: "(max-width: 1320px) 100vw, 1220px",
 };
 
 export function Work() {

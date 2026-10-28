@@ -67,23 +67,38 @@ export default async function CasePage({ params }: Params) {
               </div>
             </dl>
           </div>
-          <div className="case-hero">
-            <Media src={p.image} alt={p.title} label="Imagem principal" sizes="(max-width: 1320px) 100vw, 1220px" priority />
+          <div className="case-hero" data-cover={p.cover ? "" : undefined}>
+            <Media src={p.cover || p.image} alt={p.title} label="Imagem principal" sizes="(max-width: 1320px) 100vw, 1220px" priority />
           </div>
+          {p.details?.length ? (
+            <dl className="case-details">
+              {p.details.map((d) => (
+                <div key={d.label}>
+                  <dt className="label">{d.label}</dt>
+                  <dd>{d.text}</dd>
+                </div>
+              ))}
+            </dl>
+          ) : null}
+          {p.screens?.map((src, j) => (
+            <div className="case-screen" key={src}>
+              <Media src={src} alt={`${p.title}, tela ${j + 2} no computador`} label={`Tela ${j + 2}`} sizes="(max-width: 1320px) 100vw, 1220px" />
+            </div>
+          ))}
           {p.gallery?.length ? (
             <div className="case-gallery">
               {p.gallery.map((g, j) => (
                 <div className="case-gi" key={g}>
-                  <Media src={g} alt={`${p.title}, imagem ${j + 1}`} label={`Imagem ${j + 1}`} sizes="(max-width: 600px) 100vw, 33vw" />
+                  <Media src={g} alt={`${p.title}, imagem ${j + 1}`} label={`Imagem ${j + 1}`} sizes="(max-width: 600px) 50vw, 25vw" />
                 </div>
               ))}
             </div>
           ) : null}
           {p.href && (
             <div className="case-cta">
-              <p>As peças completas deste projeto estão no Behance.</p>
+              <p>{p.hrefText ?? "As peças completas deste projeto estão no Behance."}</p>
               <a className="btn btn-p" href={p.href} target="_blank" rel="noopener noreferrer">
-                Ver projeto completo <span className="arr" aria-hidden="true">↗</span>
+                {p.hrefLabel ?? "Ver projeto completo"} <span className="arr" aria-hidden="true">↗</span>
               </a>
             </div>
           )}

@@ -7,7 +7,7 @@ import { Services } from "@/components/sections/Services";
 import { Process } from "@/components/sections/Process";
 import { Work } from "@/components/sections/Work";
 import { Diagnostic } from "@/components/sections/Diagnostic";
-// import { Testimonial } from "@/components/sections/Testimonial";
+import { Testimonial } from "@/components/sections/Testimonial";
 import { Studio } from "@/components/sections/Studio";
 import { Pricing } from "@/components/sections/Pricing";
 import { Faq } from "@/components/sections/Faq";
@@ -30,8 +30,7 @@ export default function Home() {
         <Process />
         <Work />
         <Diagnostic />
-        {/* depoimento escondido até ter um cliente real: volte a linha abaixo quando tiver */}
-        {/* <Testimonial /> */}
+        <Testimonial />
         <Studio />
         <Pricing />
         <Faq />

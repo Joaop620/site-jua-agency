@@ -10,11 +10,21 @@ export type Project = {
   year: string;
   /** Capa do projeto: caminho em /public/images ou URL do Behance */
   image?: string;
-  /** "tall" ocupa duas linhas (topo em arco), "wide" é 16:10, "half" é 4:3 */
-  layout: "tall" | "wide" | "half";
+  /** "tall" ocupa duas linhas (topo em arco), "wide" é 16:10, "half" é 4:3, "full" ocupa a linha toda */
+  layout: "tall" | "wide" | "half" | "full";
   summary?: string;
-  /** Link do projeto completo (Behance) */
+  /** Link do projeto completo (Behance ou o site no ar) */
   href?: string;
+  /** Texto do botão e da frase do link (padrão: Behance) */
+  hrefLabel?: string;
+  hrefText?: string;
+  /** Desafio, o que foi feito, resultado… */
+  details?: { label: string; text: string }[];
+  /** Imagem grande da página do case (16:9); se vazia, usa `image` */
+  cover?: string;
+  /** Telas largas (16:9) */
+  screens?: string[];
+  /** Galeria (4:5) */
   gallery?: string[];
 };
 
@@ -94,12 +104,48 @@ export const phases = [
 // Projetos do portfólio da Lua (github.com/Joaop620/lua-design-portfolio · behance.net/rlua)
 export const projects: Project[] = [
   {
+    slug: "coletivo-respirartes",
+    title: "Coletivo Respirartes",
+    client: "Coletivo Respirartes · Ponto de Cultura de Ji-Paraná (RO)",
+    services: ["Site", "Design", "Desenvolvimento"],
+    year: "2026",
+    layout: "tall",
+    image: "/images/respirartes/capa-celular.jpg",
+    cover: "/images/respirartes/desktop-hero.jpg",
+    href: "https://respirartes.com",
+    hrefLabel: "Ver o site no ar",
+    hrefText: "O site está no ar em respirartes.com.",
+    summary:
+      "Site oficial do Respirartes, coletivo de doze artistas de Ji-Paraná reconhecido como Ponto de Cultura pela Política Nacional Cultura Viva.",
+    details: [
+      {
+        label: "Desafio",
+        text: "Reunir num lugar só a história do coletivo, os sete filmes, as ações culturais e o certificado de Ponto de Cultura, de um jeito que funcionasse bem no celular, onde o público deles está.",
+      },
+      {
+        label: "O que fizemos",
+        text: "Arquitetura e textos, design com tipografia marcante e as cores das linguagens do coletivo, vídeo de apresentação de 2 minutos, galeria das ações com 21 fotos e o certificado com link de conferência. Feito em HTML, CSS e JavaScript puros, leve e rápido.",
+      },
+      {
+        label: "Resultado",
+        text: "Site no ar com domínio próprio, acessível e pronto pra compartilhar: o coletivo colocou o link na bio do Instagram no mesmo dia da entrega.",
+      },
+    ],
+    screens: ["/images/respirartes/desktop-filmes.jpg", "/images/respirartes/desktop-acoes.jpg"],
+    gallery: [
+      "/images/respirartes/celular-filmes.jpg",
+      "/images/respirartes/celular-sobre.jpg",
+      "/images/respirartes/celular-acoes.jpg",
+      "/images/respirartes/celular-certificado.jpg",
+    ],
+  },
+  {
     slug: "identidade-visual-lua-design",
     title: "Identidade Visual Lua Design",
     client: "Lua Design",
     services: ["Branding", "Logo", "Guidelines"],
     year: "2024",
-    layout: "tall",
+    layout: "wide",
     image: "https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/d5c1d4188786339.65a130c530602.jpg",
     href: "https://www.behance.net/gallery/188786339/Identidade-Visual-Lua-Design",
     summary: "A marca autoral da Lua: alegre, moderna e elegante.",
@@ -121,7 +167,7 @@ export const projects: Project[] = [
     client: "Consultor imobiliário",
     services: ["Social media", "Identidade"],
     year: "2024",
-    layout: "wide",
+    layout: "half",
     image: "https://mir-s3-cdn-cf.behance.net/project_modules/max_632_webp/defb3a198776469.664661fe5be14.png",
     href: "https://www.behance.net/gallery/198776469/Social-Media-Consultor-Imobiliario",
     summary: "Criação de artes e reforço de identidade para performance nas redes.",
@@ -143,7 +189,7 @@ export const projects: Project[] = [
     client: "Programador",
     services: ["Social media", "Tech"],
     year: "2024",
-    layout: "half",
+    layout: "full",
     image: "https://mir-s3-cdn-cf.behance.net/project_modules/fs_webp/bb394f193166227.65e759d04fed9.png",
     href: "https://www.behance.net/gallery/193166227/Social-Media-Programador",
     summary: "Série de peças para presença digital de programador.",
@@ -158,10 +204,13 @@ export const signs = [
 ];
 
 export const testimonial = {
-  quote: "Antes eu tinha vergonha de mandar o link do meu Instagram. Hoje é ele que apresenta a minha empresa.",
-  name: "Nome do cliente",
-  company: "Empresa · Cidade",
-  avatar: "",
+  quote:
+    "Que lindo! Ficou a cara do coletivo, do jeito que a gente sonhava. Já colocamos o link na bio do Instagram e todo mundo que viu amou. Agora a gente tem um lugar pra mostrar nossos filmes e nossas ações com orgulho.",
+  name: "Coletivo Respirartes",
+  company: "Ponto de Cultura · Ji-Paraná, RO",
+  avatar: "/images/respirartes/logo.jpg",
+  /** case do projeto (slug em `projects`) */
+  project: "coletivo-respirartes",
 };
 
 export const formServices = ["Branding", "Identidade visual", "Social media", "Site", "Tudo junto", "Ainda não sei"];

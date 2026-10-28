@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { testimonial } from "@/content/site";
 
 export function Testimonial() {
@@ -21,6 +22,11 @@ export function Testimonial() {
             <strong>{testimonial.name}</strong>
             <span className="label">{testimonial.company}</span>
           </div>
+          {testimonial.project && (
+            <Link className="testi-link ul" href={`/trabalhos/${testimonial.project}`}>
+              Ver o projeto <span aria-hidden="true">→</span>
+            </Link>
+          )}
         </figcaption>
       </figure>
     </section>
