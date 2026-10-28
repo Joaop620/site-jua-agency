@@ -44,16 +44,28 @@ Coloque os arquivos em `public/images/` e aponte o caminho em `content/site.ts`.
 
 A imagem principal da página de case usa 16:8.
 
-## Formulário (Resend)
+## Contato e formulário
 
-1. Crie uma conta no [Resend](https://resend.com), verifique o domínio `jua.agency` e gere uma API key.
-2. Copie `.env.example` para `.env.local` e preencha `RESEND_API_KEY` (e, se quiser, `CONTACT_FROM` / `CONTACT_TO`).
-3. O envio passa por `app/api/contato/route.ts`, com validação no servidor (zod) e campo honeypot anti-spam. Sem a chave, o formulário mostra a mensagem de erro.
+- E-mail: juagency.info@gmail.com · Instagram: @agencyjua · WhatsApp: +55 (69) 99245-9026 (tudo em `content/site.ts`).
+- O formulário abre o WhatsApp da Juá com a mensagem pronta. Funciona sem nenhuma configuração.
+- Cópia por e-mail (opcional): crie uma conta grátis no [Resend](https://resend.com) com o e-mail acima, gere uma API key e adicione `RESEND_API_KEY` nas variáveis de ambiente da Vercel. Sem domínio próprio, o remetente padrão é `onboarding@resend.dev`.
+
+## Segurança
+
+- **Cabeçalhos HTTP** em todas as páginas (`next.config.ts`): Content-Security-Policy, HSTS, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Permissions-Policy e COOP.
+- **Rota do formulário** (`app/api/contato/route.ts`): aceita só POST com JSON, confere a origem, limita o tamanho (16 KB) e o número de envios por IP (5 a cada 10 min), valida tudo no servidor (zod), tem campo-isca anti-robô, escapa o HTML do e-mail e não é indexada.
+- **Dependências** sem vulnerabilidades conhecidas (`npm audit` limpo). Rode `npm audit` de vez em quando e atualize o Next.js quando sair versão de segurança.
+- **Segredos** só em variáveis de ambiente; `.env*` está no `.gitignore`.
+- `/.well-known/security.txt` com o contato pra quem achar alguma falha.
+
+## Privacidade (LGPD)
+
+Página `/privacidade` explica quais dados o site recebe, pra quê, com quem passam e como pedir a exclusão. Ela é linkada no rodapé e no formulário. O site não usa cookies de rastreamento (o Vercel Analytics é anônimo e sem cookies), então não precisa de banner de cookies.
 
 ## Publicar na Vercel
 
-1. Importe este repositório em [vercel.com/new](https://vercel.com/new) (framework detectado: Next.js).
-2. Em *Settings → Environment Variables*, adicione `RESEND_API_KEY` (e as outras do `.env.example`).
-3. Aponte o domínio `jua.agency` em *Settings → Domains*.
+1. O projeto `site-jua-agency` já publica sozinho a cada envio para o GitHub.
+2. Endereço atual: https://site-jua-agency.vercel.app
+3. Domínio próprio: adicione em *Settings → Domains* e defina `NEXT_PUBLIC_SITE_URL` com o novo endereço (usado no sitemap, no Google e no compartilhamento).
 
 SEO e métricas já inclusos: Vercel Analytics (ativa sozinho na Vercel), dados estruturados (serviço, ofertas e FAQ), metadata, Open Graph gerado (`app/opengraph-image.tsx`), favicon a partir do símbolo (`app/icon.svg`), `sitemap.xml` e `robots.txt`. As animações respeitam `prefers-reduced-motion`.

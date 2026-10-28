@@ -29,7 +29,8 @@ export type Project = {
 };
 
 export const site = {
-  url: "https://jua.agency",
+  // endereço público do site; com domínio próprio, defina NEXT_PUBLIC_SITE_URL na Vercel
+  url: (process.env.NEXT_PUBLIC_SITE_URL || "https://site-jua-agency.vercel.app").replace(/\/$/, ""),
   name: "Juá Agency",
   tagline: "Bonito. Estratégico. Vende.",
   description:
@@ -37,9 +38,9 @@ export const site = {
   // o mês e o ano da agenda são calculados na hora (mês atual)
   agenda: { open: true },
   contact: {
-    email: "ola@jua.agency",
+    email: "juagency.info@gmail.com",
     whatsapp: { label: "+55 (69) 99245-9026", href: "https://wa.me/5569992459026", phone: "+5569992459026" },
-    instagram: { label: "@jua.agency", href: "https://instagram.com/jua.agency" },
+    instagram: { label: "@agencyjua", href: "https://www.instagram.com/agencyjua/" },
     behance: { label: "Behance", href: "https://www.behance.net/rlua" },
   },
 };

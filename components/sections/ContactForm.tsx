@@ -208,7 +208,7 @@ export function ContactForm() {
       <button className="btn btn-n" type="submit">
         Enviar pelo WhatsApp
       </button>
-      <p className="form-privacy">Ao enviar, o WhatsApp abre com a sua mensagem pronta. A gente usa seus dados só pra responder.</p>
+      <p className="form-privacy">Ao enviar, o WhatsApp abre com a sua mensagem pronta. A gente usa seus dados só pra responder (<a href="/privacidade">privacidade</a>).</p>
     </form>
   );
 }

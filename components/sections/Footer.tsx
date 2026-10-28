@@ -62,7 +62,9 @@ export function Footer() {
           <span>
             © <Now kind="year" /> Juá Agency
           </span>
-          <span>Bonito. Estratégico. Vende.</span>
+          <a className="ul" href="/privacidade">
+            Política de privacidade
+          </a>
           <a className="ul" href="#conteudo">
             Voltar ao topo ↑
           </a>
