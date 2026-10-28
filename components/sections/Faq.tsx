@@ -10,7 +10,7 @@ export function Faq() {
     <section className="sec light faq" id="duvidas" aria-labelledby="faq-title">
       <div className="wrap faq-grid">
         <div className="faq-head">
-          <div className="kick label">Dúvidas frequentes</div>
+          <div className="kick">Dúvidas frequentes</div>
           <h2 id="faq-title" className="h h-l rv">
             Antes de começar.
           </h2>

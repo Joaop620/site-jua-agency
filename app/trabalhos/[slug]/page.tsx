@@ -33,10 +33,10 @@ export default async function CasePage({ params }: Params) {
 
   return (
     <>
-      <header className="nav">
-        <div className="nav-pill">
+      <header className="nav" data-light>
+        <div className="wrap nav-bar">
           <Link className="nav-logo" href="/" aria-label="Juá Agency, início">
-            <JuaSymbol size={28} />
+            <JuaSymbol size={26} variant="mono" />
             <span>
               Juá <i>Agency</i>
             </span>
@@ -48,7 +48,7 @@ export default async function CasePage({ params }: Params) {
       </header>
       <main id="conteudo" className="case-page">
         <div className="wrap">
-          <div className="kick label">Case {String(i + 1).padStart(2, "0")}</div>
+          <div className="kick">Case {String(i + 1).padStart(2, "0")}</div>
           <h1 className="h h-l">{p.title}</h1>
           <div className="case-intro">
             {p.summary && <p className="lead">{p.summary}</p>}
@@ -104,11 +104,11 @@ export default async function CasePage({ params }: Params) {
           )}
           <div className="case-ask">
             <h2 className="h h-m">
-              Quer algo <i className="pink">assim</i> pra sua marca?
+              Quer algo assim pra sua marca?
             </h2>
             <div className="case-ask-ctas">
               <Link className="btn btn-p" href="/#form">
-                Agendar conversa <span className="arr" aria-hidden="true">→</span>
+                Agendar conversa
               </Link>
               <Link className="btn btn-g" href="/#planos">
                 Ver planos e preços

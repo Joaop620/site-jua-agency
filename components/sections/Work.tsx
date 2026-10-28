@@ -15,9 +15,9 @@ export function Work() {
       <div className="wrap">
         <div className="sec-head">
           <div>
-            <div className="kick label">Trabalhos recentes</div>
+            <div className="kick">Trabalhos recentes</div>
             <h2 id="work-title" className="h h-l rv">
-              Marcas que <i className="pink">brilham</i> no escuro.
+              Marcas que brilham no escuro.
             </h2>
           </div>
           <p className="lead rv">Alguns projetos que saíram daqui. Cada um começou com uma conversa.</p>

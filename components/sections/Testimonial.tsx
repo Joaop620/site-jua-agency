@@ -4,7 +4,7 @@ import { testimonial } from "@/content/site";
 
 export function Testimonial() {
   return (
-    <section className="sec testi" aria-label="Depoimento">
+    <section className="sec testi" data-dark aria-label="Depoimento">
       <figure className="wrap testi-in">
         <div className="q rv" aria-hidden="true">
           “

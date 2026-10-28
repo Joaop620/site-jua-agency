@@ -11,9 +11,9 @@ export function Diagnostic() {
     <section className="sec light" id="diagnostico" aria-labelledby="diag-title">
       <div className="wrap diag-grid">
         <div className="diag-head">
-          <div className="kick label">Diagnóstico rápido</div>
+          <div className="kick">Diagnóstico rápido</div>
           <h2 id="diag-title" className="h h-l rv">
-            4 sinais de que a sua marca está <i className="mag">afastando</i> clientes.
+            4 sinais de que a sua marca está afastando clientes.
           </h2>
           <p className="lead rv" style={{ marginTop: 28 }}>
             Clique nos que você reconhece. Leva 30 segundos.
@@ -55,7 +55,7 @@ export function Diagnostic() {
             {n >= 2 && (
               <div className="diag-ctas">
                 <a className="btn btn-p" href="#contato">
-                  Vamos conversar <span className="arr" aria-hidden="true">→</span>
+                  Vamos conversar
                 </a>
                 <a className="btn btn-g" href="#planos">
                   Ver planos

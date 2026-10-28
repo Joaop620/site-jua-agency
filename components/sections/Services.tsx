@@ -12,9 +12,9 @@ export function Services() {
       <div className="wrap">
         <div className="sec-head">
           <div>
-            <div className="kick label">O que fazemos</div>
+            <div className="kick">O que fazemos</div>
             <h2 id="svc-title" className="h h-l rv">
-              Quatro frentes. <i className="mag">Um só</i> objetivo: vender mais.
+              Quatro frentes. Um só objetivo: vender mais.
             </h2>
           </div>
           <p className="lead rv">Dá pra começar por uma delas ou fazer tudo junto. A gente ajuda você a decidir por onde começar.</p>
@@ -47,7 +47,7 @@ export function Services() {
                       ))}
                     </ul>
                     <PickLink className="btn btn-d" pick={s.pick}>
-                      Quero esse <span className="arr" aria-hidden="true">→</span>
+                      Quero esse
                     </PickLink>
                     <a className="svc-price ul" href="#planos">
                       Ver preços
@@ -60,10 +60,10 @@ export function Services() {
         </div>
         <div className="svc-all rv">
           <p>
-            Precisa de <i>tudo junto?</i> A gente monta um projeto só, com um cronograma só.
+            Precisa de tudo junto? A gente monta um projeto só, com um cronograma só.
           </p>
           <PickLink className="btn btn-p" pick="Tudo junto">
-            Montar meu projeto <span className="arr" aria-hidden="true">→</span>
+            Montar meu projeto
           </PickLink>
         </div>
       </div>

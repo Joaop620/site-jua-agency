@@ -6,7 +6,7 @@ export function Studio() {
     <section className="sec studio" id="estudio" aria-labelledby="studio-title">
       <div className="wrap studio-grid">
         <div>
-          <div className="kick label">O estúdio</div>
+          <div className="kick">O estúdio</div>
           <h2 id="studio-title" className="h h-l rv">
             Pequeno, de propósito.
           </h2>

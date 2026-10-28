@@ -34,13 +34,13 @@ export function Process() {
   };
 
   return (
-    <section className="sec process" id="processo" aria-labelledby="proc-title">
+    <section className="sec process" data-dark id="processo" aria-labelledby="proc-title">
       <div className="wrap">
         <div className="sec-head">
           <div>
-            <div className="kick label">Processo</div>
+            <div className="kick">Processo</div>
             <h2 id="proc-title" className="h h-l rv">
-              Como uma marca <i className="pink">nasce</i> aqui dentro.
+              Como uma marca nasce aqui dentro.
             </h2>
           </div>
           <p className="lead rv">Quatro fases, como as da lua. Cada uma prepara a próxima, e nenhuma é pulada.</p>

@@ -126,7 +126,7 @@ export function ContactForm() {
         <p className="sub">Abrimos o WhatsApp com a sua mensagem pronta. É só tocar em enviar que a gente responde pra marcar a conversa.</p>
         <p className="form-privacy">Prefere e-mail? Escreva pra {site.contact.email}.</p>
         <a className="btn btn-n" href={waUrl} target="_blank" rel="noopener noreferrer">
-          Abrir o WhatsApp de novo <span className="arr" aria-hidden="true">→</span>
+          Abrir o WhatsApp de novo
         </a>
       </div>
     );
@@ -206,7 +206,7 @@ export function ContactForm() {
         <textarea id="fm" name="mensagem" placeholder="O que você vende, pra quem, e o que gostaria de mudar na sua marca." />
       </div>
       <button className="btn btn-n" type="submit">
-        Enviar pelo WhatsApp <span className="arr" aria-hidden="true">→</span>
+        Enviar pelo WhatsApp
       </button>
       <p className="form-privacy">Ao enviar, o WhatsApp abre com a sua mensagem pronta. A gente usa seus dados só pra responder.</p>
     </form>

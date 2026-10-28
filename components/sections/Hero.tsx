@@ -7,8 +7,8 @@ import { useScrollProgress } from "../useScrollProgress";
 
 const layout = (w: number, h: number): MoonLayout =>
   w < 760
-    ? { cx: w * 0.5, cy: h * 0.33, r: Math.min(w * 0.5, h * 0.27) }
-    : { cx: w * 0.64, cy: h * 0.46, r: Math.min(h * 0.41, w * 0.31) };
+    ? { cx: w * 0.68, cy: h * 0.27, r: Math.min(w * 0.42, h * 0.2) }
+    : { cx: w * 0.7, cy: h * 0.48, r: Math.min(h * 0.36, w * 0.25) };
 
 
 const ease = (t: number) => 1 - Math.pow(1 - Math.min(1, Math.max(0, t)), 3);
@@ -21,23 +21,18 @@ export function Hero() {
   // a lua "nasce": vai de nova até crescente na abertura e cresce com a rolagem
   const getPhase = () => {
     if (!start.current) start.current = performance.now();
-    const rise = ease((performance.now() - start.current) / 2400);
+    const rise = ease((performance.now() - start.current) / 1500);
     const base = 112 - p.current * 82;
     return 180 + (base - 180) * rise;
   };
 
   return (
-    <section className="hero" ref={el} aria-labelledby="hero-title">
+    <section className="hero" data-dark ref={el} aria-labelledby="hero-title">
       <div className="hero-pin">
-        <Moon className="hero-moon" layout={layout} getPhase={getPhase} stars />
+        <Moon className="hero-moon" layout={layout} getPhase={getPhase} />
         <div className="wrap hero-frame">
+          <p className="hero-kicker hero-fade">Estúdio de branding, design e social media</p>
           <div className="hero-bottom">
-            {launchPromo.active && (
-              <a className="hero-promo hero-fade" href="#planos">
-                <span className="promo-tag">−{Math.round(launchPromo.discount * 100)}%</span>
-                {launchPromo.label} em todos os planos <span className="arr" aria-hidden="true">→</span>
-              </a>
-            )}
             <h1 id="hero-title" className="h hero-title" aria-label={site.tagline}>
               <span className="hl hl-1" aria-hidden="true">
                 <span className="hl-in">Bonito.</span>
@@ -46,9 +41,7 @@ export function Hero() {
                 <span className="hl-in">Estratégico.</span>
               </span>
               <span className="hl hl-3" aria-hidden="true">
-                <span className="hl-in">
-                  <i className="pink">Vende.</i>
-                </span>
+                <span className="hl-in pink">Vende.</span>
               </span>
             </h1>
             <div className="hero-side hero-fade">
@@ -57,12 +50,17 @@ export function Hero() {
               </p>
               <div className="hero-ctas">
                 <a className="btn btn-p" href="#contato">
-                  Agendar uma conversa <span className="arr" aria-hidden="true">→</span>
+                  Agendar uma conversa
                 </a>
-                <a className="btn btn-g" href="#planos">
+                <a className="link" href="#planos">
                   Ver planos e preços
                 </a>
               </div>
+              {launchPromo.active && (
+                <p className="hero-promo">
+                  {launchPromo.label}: {Math.round(launchPromo.discount * 100)}% de desconto para {launchPromo.until}.
+                </p>
+              )}
             </div>
           </div>
         </div>

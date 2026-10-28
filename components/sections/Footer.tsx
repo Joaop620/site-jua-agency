@@ -5,10 +5,10 @@ import { Now } from "../Now";
 export function Footer() {
   const c = site.contact;
   return (
-    <footer className="foot">
+    <footer className="foot" data-dark>
       <div className="wrap">
         <p className="h foot-big rv">
-          Bonito é o começo. <i className="pink">Vender</i> é o ponto.
+          Bonito é o começo. Vender é o ponto.
         </p>
         <div className="foot-grid">
           <div>
