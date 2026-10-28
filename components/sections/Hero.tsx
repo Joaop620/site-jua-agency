@@ -7,7 +7,7 @@ import { useScrollProgress } from "../useScrollProgress";
 
 const layout = (w: number, h: number): MoonLayout =>
   w < 760
-    ? { cx: w * 0.68, cy: h * 0.27, r: Math.min(w * 0.42, h * 0.2) }
+    ? { cx: w * 0.6, cy: h * 0.28, r: Math.min(w * 0.33, h * 0.18) }
     : { cx: w * 0.7, cy: h * 0.48, r: Math.min(h * 0.36, w * 0.25) };
 
 
