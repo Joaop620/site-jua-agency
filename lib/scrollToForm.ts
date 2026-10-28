@@ -15,5 +15,7 @@ export function scrollToForm(e?: { preventDefault(): void }) {
     if (lenis) lenis.scrollTo(y, { duration: 1.1 });
     else window.scrollTo({ top: y, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
     history.replaceState(null, "", "#form");
+    // depois da rolagem, o cursor já fica no primeiro campo
+    setTimeout(() => document.getElementById("fn")?.focus({ preventScroll: true }), 1150);
   });
 }

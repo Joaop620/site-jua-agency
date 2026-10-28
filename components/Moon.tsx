@@ -92,7 +92,7 @@ export function Moon({ getPhase, layout, stars = false, className }: Props) {
       // pontos quase uniformes (Fibonacci) com um leve deslocamento aleatório,
       // para a superfície não formar padrões regulares
       // menos pontos em telas pequenas: a densidade visual é a mesma e o celular respira
-      const n = Math.round(Math.min(26000, Math.max(1800, L.r * L.r * (w < 760 ? 0.09 : 0.18))));
+      const n = Math.round(Math.min(26000, Math.max(1800, L.r * L.r * (w < 760 ? 0.07 : 0.18))));
       P = new Float32Array(n * 4);
       const ga = Math.PI * (3 - Math.sqrt(5));
       const jit = 1.6 / Math.sqrt(n);
@@ -233,6 +233,15 @@ export function Moon({ getPhase, layout, stars = false, className }: Props) {
     else addEventListener("load", () => idle(begin), { once: true });
     const ro = new ResizeObserver(() => started && build());
     ro.observe(canvas);
+    // aba em segundo plano: para de desenhar
+    const onVis = () => {
+      if (document.hidden) cancelAnimationFrame(raf);
+      else if (visible && started) {
+        last = performance.now();
+        raf = requestAnimationFrame(loop);
+      }
+    };
+    document.addEventListener("visibilitychange", onVis);
     const io = new IntersectionObserver(([e]) => {
       const was = visible;
       visible = e.isIntersecting;
@@ -247,6 +256,7 @@ export function Moon({ getPhase, layout, stars = false, className }: Props) {
       cancelAnimationFrame(raf);
       ro.disconnect();
       io.disconnect();
+      document.removeEventListener("visibilitychange", onVis);
     };
     // getPhase/layout são lidos a cada frame; o efeito roda uma vez
     // eslint-disable-next-line react-hooks/exhaustive-deps

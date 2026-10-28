@@ -33,7 +33,7 @@ export const site = {
   name: "Juá Agency",
   tagline: "Bonito. Estratégico. Vende.",
   description:
-    "Agência criativa de branding, identidade visual, social media e sites. Design bonito, estratégia clara e resultado que dá pra medir.",
+    "Estúdio de branding, identidade visual, social media e sites. Design bonito, estratégia clara e resultado que dá pra medir.",
   // o mês e o ano da agenda são calculados na hora (mês atual)
   agenda: { open: true },
   contact: {
@@ -110,7 +110,7 @@ export const projects: Project[] = [
     services: ["Site", "Design", "Desenvolvimento"],
     year: "2026",
     layout: "tall",
-    image: "/images/respirartes/capa-celular.jpg",
+    image: "/images/respirartes/capa-v2.jpg",
     cover: "/images/respirartes/desktop-hero.jpg",
     href: "https://respirartes.com",
     hrefLabel: "Ver o site no ar",
@@ -124,19 +124,19 @@ export const projects: Project[] = [
       },
       {
         label: "O que fizemos",
-        text: "Arquitetura e textos, design com tipografia marcante e as cores das linguagens do coletivo, vídeo de apresentação de 2 minutos, galeria das ações com 21 fotos e o certificado com link de conferência. Feito em HTML, CSS e JavaScript puros, leve e rápido.",
+        text: "Arquitetura e textos, design com tipografia marcante e as cores das linguagens do coletivo, vídeo de apresentação de 2 minutos, galeria das ações com 21 fotos e o certificado com link de conferência. Leve de propósito: abre rápido até com a internet fraca do interior.",
       },
       {
         label: "Resultado",
         text: "Site no ar com domínio próprio, acessível e pronto pra compartilhar: o coletivo colocou o link na bio do Instagram no mesmo dia da entrega.",
       },
     ],
-    screens: ["/images/respirartes/desktop-filmes.jpg", "/images/respirartes/desktop-acoes.jpg"],
+    screens: ["/images/respirartes/desktop-filmes-v2.jpg", "/images/respirartes/desktop-acoes-v2.jpg"],
     gallery: [
-      "/images/respirartes/celular-filmes.jpg",
-      "/images/respirartes/celular-sobre.jpg",
-      "/images/respirartes/celular-acoes.jpg",
-      "/images/respirartes/celular-certificado.jpg",
+      "/images/respirartes/celular-filmes-v2.jpg",
+      "/images/respirartes/celular-sobre-v2.jpg",
+      "/images/respirartes/celular-acoes-v2.jpg",
+      "/images/respirartes/celular-certificado-v2.jpg",
     ],
   },
   {

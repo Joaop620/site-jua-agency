@@ -60,7 +60,12 @@ export function Nav() {
 
   return (
     <>
-      <header className="nav" data-hidden={(hidden && !open) || undefined} data-open={open || undefined}>
+      <header
+        className="nav"
+        data-hidden={(hidden && !open) || undefined}
+        data-open={open || undefined}
+        onFocusCapture={() => setHidden(false)}
+      >
         <div className="nav-pill">
           <a className="nav-logo" href="#conteudo" aria-label="Juá Agency, início">
             <JuaSymbol size={28} />

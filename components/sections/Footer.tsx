@@ -13,7 +13,7 @@ export function Footer() {
         <div className="foot-grid">
           <div>
             <Logo />
-            <p className="foot-desc">Agência criativa de branding, identidade visual, social media e sites.</p>
+            <p className="foot-desc">Estúdio de branding, identidade visual, social media e sites.</p>
           </div>
           <div>
             <h4>Navegue</h4>

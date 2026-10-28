@@ -19,6 +19,7 @@ type Billing = "mensal" | "semestral";
 
 export function Pricing() {
   const [billing, setBilling] = useState<Billing>("mensal");
+  const [expanded, setExpanded] = useState<Record<string, boolean>>({});
   const off = Math.round(semesterDiscount * 100);
   const promoOff = Math.round(launchPromo.discount * 100);
 
@@ -65,7 +66,7 @@ export function Pricing() {
             const semester = round10(month * (1 - semesterDiscount));
             const shown = billing === "semestral" ? semester : month;
             return (
-              <article className="plan rv" key={p.id} data-featured={p.featured || undefined}>
+              <article className="plan rv" key={p.id} data-featured={p.featured || undefined} data-expanded={expanded[p.id] || undefined}>
                 <div className="plan-name">
                   <h4>
                     {p.name}
@@ -78,6 +79,16 @@ export function Pricing() {
                     <li key={f}>{f}</li>
                   ))}
                 </ul>
+                {p.features.length > 3 && (
+                  <button
+                    type="button"
+                    className="plan-more"
+                    aria-expanded={!!expanded[p.id]}
+                    onClick={() => setExpanded((x) => ({ ...x, [p.id]: !x[p.id] }))}
+                  >
+                    {expanded[p.id] ? "Mostrar menos" : `Ver tudo que inclui (${p.features.length})`}
+                  </button>
+                )}
                 <div className="plan-price">
                   {launchPromo.active && (
                     <s className="plan-was">
@@ -93,7 +104,12 @@ export function Pricing() {
                       ? `R$ ${brl.format(semester * 6)} no semestre`
                       : `ou R$ ${brl.format(semester)}/mês no semestral`}
                   </p>
-                  <a className="btn btn-p btn-sm" href="#form" onClick={(e) => choose(e, `${p.name} (${billing})`, "Social media")}>
+                  <a
+                    className="btn btn-p btn-sm"
+                    href="#form"
+                    aria-label={`Quero o plano ${p.name}`}
+                    onClick={(e) => choose(e, `${p.name} (${billing})`, "Social media")}
+                  >
                     Quero esse plano
                   </a>
                 </div>
@@ -153,7 +169,7 @@ export function Pricing() {
                 )}
                 R$ {brl.format(promoPrice(p.from))}
               </p>
-              <a className="link pp-cta" href="#form" onClick={(e) => choose(e, p.name, p.pick)}>
+              <a className="link pp-cta" href="#form" aria-label={`Pedir proposta de ${p.name}`} onClick={(e) => choose(e, p.name, p.pick)}>
                 Pedir proposta
               </a>
             </li>
