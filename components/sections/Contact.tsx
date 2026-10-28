@@ -5,7 +5,8 @@ import { Now } from "../Now";
 export function Contact() {
   const c = site.contact;
   return (
-    <section className="sec contact" data-dark id="contato" data-progress aria-labelledby="contact-title">
+    <section className="sec contact" id="contato" data-progress aria-labelledby="contact-title">
+      <div className="rise" aria-hidden="true" />
       <div className="wrap contact-in">
         <div>
           <div className="kick">

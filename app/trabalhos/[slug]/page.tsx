@@ -33,10 +33,10 @@ export default async function CasePage({ params }: Params) {
 
   return (
     <>
-      <header className="nav" data-light>
-        <div className="wrap nav-bar">
+      <header className="nav">
+        <div className="nav-pill">
           <Link className="nav-logo" href="/" aria-label="Juá Agency, início">
-            <JuaSymbol size={26} variant="mono" />
+            <JuaSymbol size={28} />
             <span>
               Juá <i>Agency</i>
             </span>

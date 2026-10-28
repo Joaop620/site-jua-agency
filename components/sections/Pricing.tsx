@@ -1,5 +1,7 @@
 "use client";
 
+import { useState } from "react";
+import { AnimatedNumber } from "../AnimatedNumber";
 import { launchPromo, planCompare, plans, projectPrices, promoPrice, semesterDiscount } from "@/content/site";
 import { scrollToForm } from "@/lib/scrollToForm";
 
@@ -13,7 +15,10 @@ function choose(e: React.MouseEvent, plan: string, service: string) {
   scrollToForm(e);
 }
 
+type Billing = "mensal" | "semestral";
+
 export function Pricing() {
+  const [billing, setBilling] = useState<Billing>("mensal");
   const off = Math.round(semesterDiscount * 100);
   const promoOff = Math.round(launchPromo.discount * 100);
 
@@ -40,11 +45,25 @@ export function Pricing() {
           </p>
         )}
 
-        <h3 className="price-sub">Social media, por mês</h3>
+        <div className="price-row">
+          <h3 className="price-sub">Social media, por mês</h3>
+          <div className="bill" role="group" aria-label="Forma de contratação">
+            <div className="bill-switch" data-on={billing}>
+              <span className="bill-pill" aria-hidden="true" />
+              <button type="button" aria-pressed={billing === "mensal"} onClick={() => setBilling("mensal")}>
+                Mensal
+              </button>
+              <button type="button" aria-pressed={billing === "semestral"} onClick={() => setBilling("semestral")}>
+                Semestral <span className="bill-off">−{off}%</span>
+              </button>
+            </div>
+          </div>
+        </div>
         <div className="plans">
           {plans.map((p) => {
             const month = promoPrice(p.price);
             const semester = round10(month * (1 - semesterDiscount));
+            const shown = billing === "semestral" ? semester : month;
             return (
               <article className="plan rv" key={p.id} data-featured={p.featured || undefined}>
                 <div className="plan-name">
@@ -66,13 +85,15 @@ export function Pricing() {
                     </s>
                   )}
                   <p className="plan-now">
-                    R$ {brl.format(month)}
+                    R$ <AnimatedNumber value={shown} />
                     <span>/mês</span>
                   </p>
                   <p className="plan-sem">
-                    R$ {brl.format(semester)}/mês no semestral
+                    {billing === "semestral"
+                      ? `R$ ${brl.format(semester * 6)} no semestre`
+                      : `ou R$ ${brl.format(semester)}/mês no semestral`}
                   </p>
-                  <a className="btn btn-p btn-sm" href="#form" onClick={(e) => choose(e, p.name, "Social media")}>
+                  <a className="btn btn-p btn-sm" href="#form" onClick={(e) => choose(e, `${p.name} (${billing})`, "Social media")}>
                     Quero esse plano
                   </a>
                 </div>
