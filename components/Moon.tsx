@@ -41,6 +41,26 @@ function fbm(x: number, y: number, z: number) {
   return s;
 }
 
+const STOPS: [number, number, number, number][] = [
+  [0, 14, 8, 36],
+  [0.22, 96, 22, 104],
+  [0.42, 206, 58, 128],
+  [0.62, 240, 178, 198],
+  [0.8, 238, 214, 216],
+  [1, 250, 240, 234],
+];
+function ramp(t: number): [number, number, number] {
+  for (let i = 1; i < STOPS.length; i++) {
+    const [p1, r1, g1, b1] = STOPS[i];
+    const [p0, r0, g0, b0] = STOPS[i - 1];
+    if (t <= p1) {
+      const k = (t - p0) / (p1 - p0);
+      return [r0 + (r1 - r0) * k, g0 + (g1 - g0) * k, b0 + (b1 - b0) * k];
+    }
+  }
+  return [252, 238, 232];
+}
+
 const smooth = (a: number, b: number, x: number) => {
   const t = Math.min(1, Math.max(0, (x - a) / (b - a)));
   return t * t * (3 - 2 * t);
@@ -114,7 +134,7 @@ export function Moon({ getPhase, layout, className }: Props) {
           const maria = smooth(0.52, 0.68, fbm(x * 1.6 + 3.1, y * 1.6 + 1.7, z * 1.6));
           const fine = fbm(x * 7 + 11, y * 7 + 5, z * 7);
           const grain = hash(px, py, 7) * 0.06;
-          ALB[i] = 0.82 - maria * 0.32 + (fine - 0.5) * 0.26 + grain;
+          ALB[i] = 0.9 - maria * 0.34 + (fine - 0.5) * 0.4 + grain;
         }
       }
       drawn = -999;
@@ -134,19 +154,31 @@ export function Moon({ getPhase, layout, className }: Props) {
           continue;
         }
         const lam = NX[i] * lx + NZ[i] * lz;
-        // terminador com transição curta, como na lua de verdade
-        const lit = smooth(-0.03, 0.22, lam) * (0.78 + 0.22 * NZ[i]);
-        const v = Math.min(1, Math.max(0, ALB[i])) * lit;
-        // lado claro: papel quente; lado escuro: um tom acima do fundo
-        // sombra puxando pro violeta só no escuro; luz em tom papel, sem lilás
-        const k = v * v * (3 - 2 * v);
-        d[o] = 20 + v * 205 + k * 22;
-        d[o + 1] = 14 + v * 208 + k * 21;
-        d[o + 2] = 40 + v * 176 + k * 22;
+        const alb = Math.min(1, Math.max(0, ALB[i]));
+        // luz: terminador suave + leve escurecimento na borda (limb darkening)
+        const lit = smooth(-0.04, 0.3, lam) * (0.72 + 0.28 * NZ[i]);
+        const v = lit * (0.22 + 0.78 * alb);
+        // rampa da marca: violeta → magenta → rosa → creme
+        const [r, g, b] = ramp(v);
+        // lado escuro: "luz da terra" violeta com o relevo aparecendo de leve
+        const dark = (1 - lit) * (0.4 + 0.6 * alb);
+        // contorno iluminado de leve na borda do lado escuro
+        const rim = (1 - lit) * Math.pow(1 - NZ[i], 6) * 0.35;
+        d[o] = r + dark * 12 + rim * 90;
+        d[o + 1] = g + dark * 6 + rim * 30;
+        d[o + 2] = b + dark * 26 + rim * 140;
         d[o + 3] = IN[i] === 2 ? 150 : 255;
       }
       octx.putImageData(img, 0, 0);
       ctx.clearRect(0, 0, w, h);
+      const lf = 1 - phase / 180;
+      const gx = L.cx + lx * L.r * 0.25;
+      const halo = ctx.createRadialGradient(gx, L.cy, L.r * 0.85, gx, L.cy, L.r * 1.7);
+      halo.addColorStop(0, `rgba(229,25,122,${(0.04 + lf * 0.08).toFixed(3)})`);
+      halo.addColorStop(0.5, `rgba(63,18,120,${(0.04 + lf * 0.05).toFixed(3)})`);
+      halo.addColorStop(1, "rgba(63,18,120,0)");
+      ctx.fillStyle = halo;
+      ctx.fillRect(0, 0, w, h);
       ctx.imageSmoothingQuality = "high";
       ctx.drawImage(off, L.cx - L.r, L.cy - L.r, L.r * 2, L.r * 2);
       drawn = phase;

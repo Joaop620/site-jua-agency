@@ -172,7 +172,7 @@ section{position:relative}
 .case-par{position:absolute;inset:-8% 0;will-change:transform}
 .case-par>*{transition:transform 1.2s var(--ease)}
 .case:hover .case-par>*{transform:scale(1.05)}
-.case-tall{grid-row:span 2}.case-tall .case-img{flex:1;min-height:560px;border-radius:999px 999px 20px 20px}
+.case-tall{grid-row:span 2}.case-tall .case-img{flex:1;min-height:560px}
 .case-wide .case-img{aspect-ratio:16/10}
 .case-full{grid-column:1/-1}.case-full .case-img{aspect-ratio:21/8}
 .testi-link{margin-left:auto;font-size:15px;font-weight:600;color:var(--pink)}
@@ -300,7 +300,7 @@ section{position:relative}
 
 
 /* título do hero: linha por linha; as linhas se afastam com a rolagem */
-.hl{display:block;overflow:hidden;padding:0 .12em .08em 0;margin-bottom:-.08em;will-change:transform}
+.hl{display:block;overflow:hidden;padding:0 .12em .2em 0;margin-bottom:-.2em;will-change:transform}
 .hl-1{transform:translateX(calc(var(--p,0) * -90px))}
 .hl-2{transform:translateX(calc(var(--p,0) * 70px))}
 .hl-3{transform:translateX(calc(var(--p,0) * -40px))}
@@ -327,7 +327,7 @@ section{position:relative}
 .case.rv .case-meta{opacity:0;transform:translateY(16px);transition:opacity 1s var(--ease) .4s,transform 1s var(--ease) .4s}
 .case.rv.in .case-meta{opacity:1;transform:none}
 
-@keyframes lineUp{from{transform:translateY(105%)}}
+@keyframes lineUp{from{transform:translateY(130%)}}
 
 /* ---------- processo: prazos ---------- */
 .step-top{display:flex;align-items:center;gap:16px}
