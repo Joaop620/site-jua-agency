@@ -13,6 +13,7 @@ export function StructuredData() {
       description: site.description,
       slogan: site.tagline,
       areaServed: "BR",
+      address: { "@type": "PostalAddress", addressLocality: "Ji-Paraná", addressRegion: "RO", addressCountry: "BR" },
       sameAs: [site.contact.instagram.href, site.contact.behance.href],
       makesOffer: [
         ...plans.map((p) => ({

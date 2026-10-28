@@ -337,8 +337,8 @@ export const faq = [
     a: "Não. A gestão das campanhas está incluída; a verba é paga direto pra plataforma (Meta ou Google) e você define o valor.",
   },
   {
-    q: "Vocês atendem fora de São Paulo?",
-    a: "Sim. O trabalho é todo remoto, com reuniões por vídeo, então atendemos marcas do Brasil inteiro.",
+    q: "Vocês atendem fora de Rondônia?",
+    a: "Sim. A Juá é de Ji-Paraná (RO), mas o trabalho é todo remoto, com reuniões por vídeo, então atendemos marcas do Brasil inteiro.",
   },
   {
     q: "Posso começar só por um serviço?",

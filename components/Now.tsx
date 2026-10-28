@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-const month = new Intl.DateTimeFormat("pt-BR", { month: "long", timeZone: "America/Sao_Paulo" });
+const month = new Intl.DateTimeFormat("pt-BR", { month: "long", timeZone: "America/Porto_Velho" });
 
 /** Mês ("Novembro · 2026") ou ano atual, calculados no navegador pra nunca ficarem velhos. */
 export function Now({ kind }: { kind: "month" | "year" }) {
