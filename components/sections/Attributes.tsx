@@ -7,7 +7,7 @@ export function Attributes() {
         {attributes.map((a, i) => (
           <div className="attr rv" key={a.title} style={{ ["--d" as string]: i }}>
             <span className="label attr-n">0{i + 1}</span>
-            <h3>{a.title}</h3>
+            <h2>{a.title}</h2>
             <p>{a.text}</p>
           </div>
         ))}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { site } from "@/content/site";
 import { Moon, type MoonLayout } from "../Moon";
 import { useScrollProgress } from "../useScrollProgress";
@@ -17,14 +17,11 @@ export function Hero() {
   const { el, p } = useScrollProgress<HTMLElement>("pin");
   const start = useRef(0);
 
-  useEffect(() => {
-    const intro = document.documentElement.classList.contains("intro");
-    start.current = performance.now() + (intro ? 1300 : 150);
-  }, []);
 
   // a lua "nasce": vai de nova até crescente na abertura e cresce com a rolagem
   const getPhase = () => {
-    const rise = start.current ? ease((performance.now() - start.current) / 2400) : 0;
+    if (!start.current) start.current = performance.now();
+    const rise = ease((performance.now() - start.current) / 2400);
     const base = 112 - p.current * 82;
     return 180 + (base - 180) * rise;
   };

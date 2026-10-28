@@ -2,7 +2,6 @@ import type { Metadata, Viewport } from "next";
 import { Inter_Tight, Cormorant_Garamond } from "next/font/google";
 import { site } from "@/content/site";
 import { Analytics } from "@vercel/analytics/next";
-import { Intro } from "@/components/Intro";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import "./globals.css";
 
@@ -29,17 +28,8 @@ export const viewport: Viewport = { themeColor: "#0A0620", colorScheme: "dark" }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="pt-BR" className={`${sans.variable} ${serif.variable}`} suppressHydrationWarning>
-      <head>
-        <script
-          // abertura só na primeira visita da sessão e sem "reduzir movimento"
-          dangerouslySetInnerHTML={{
-            __html: `try{if(!sessionStorage.getItem("jua-intro")&&!matchMedia("(prefers-reduced-motion: reduce)").matches){document.documentElement.classList.add("intro");sessionStorage.setItem("jua-intro","1")}}catch(e){}`,
-          }}
-        />
-      </head>
+    <html lang="pt-BR" className={`${sans.variable} ${serif.variable}`}>
       <body>
-        <Intro />
         <SmoothScroll />
         <a className="skip" href="#conteudo">
           Pular para o conteúdo

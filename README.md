@@ -16,6 +16,17 @@ npm run build    # build de produção
 
 Tudo que é texto editável (projetos, serviços, processo, sinais do diagnóstico, depoimento, contato e mês da agenda) está em **`content/site.ts`**. O layout fica em `components/sections/*.tsx`.
 
+## Planos, preços e dúvidas
+
+Em `content/site.ts`:
+
+- `plans`: os três planos mensais de social media (nome, frase, preço mensal, itens). O desconto do semestral fica em `semesterDiscount`.
+- `planCompare`: as linhas da tabela "Comparar os planos".
+- `projectPrices`: projetos avulsos com preço "a partir de" e prazo.
+- `faq`: perguntas e respostas da seção Dúvidas (também viram dados estruturados para o Google).
+
+Quando alguém clica em "Quero o ..." ou na seta de um projeto, a escolha aparece no formulário e vai junto no e-mail.
+
 ## Projetos
 
 Os cinco projetos em `content/site.ts` vêm do portfólio da Lua ([GitHub](https://github.com/Joaop620/lua-design-portfolio) · [Behance](https://www.behance.net/rlua)). As capas são carregadas direto do CDN do Behance (liberado em `next.config.ts`) e cada case tem o link para o projeto completo. Para adicionar um projeto, copie um item da lista e troque título, serviços, ano, imagem e `href`.
@@ -45,4 +56,4 @@ A imagem principal da página de case usa 16:8.
 2. Em *Settings → Environment Variables*, adicione `RESEND_API_KEY` (e as outras do `.env.example`).
 3. Aponte o domínio `jua.agency` em *Settings → Domains*.
 
-SEO já incluso: metadata, Open Graph gerado (`app/opengraph-image.tsx`), favicon a partir do símbolo (`app/icon.svg`), `sitemap.xml` e `robots.txt`. As animações respeitam `prefers-reduced-motion`.
+SEO e métricas já inclusos: Vercel Analytics (ativa sozinho na Vercel), dados estruturados (serviço, ofertas e FAQ), metadata, Open Graph gerado (`app/opengraph-image.tsx`), favicon a partir do símbolo (`app/icon.svg`), `sitemap.xml` e `robots.txt`. As animações respeitam `prefers-reduced-motion`.

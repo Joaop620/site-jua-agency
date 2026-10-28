@@ -95,7 +95,8 @@ export function Moon({ getPhase, layout, stars = false, className }: Props) {
 
       // pontos quase uniformes (Fibonacci) com um leve deslocamento aleatório,
       // para a superfície não formar padrões regulares
-      const n = Math.round(Math.min(30000, Math.max(5000, L.r * L.r * 0.2)));
+      // menos pontos em telas pequenas: a densidade visual é a mesma e o celular respira
+      const n = Math.round(Math.min(26000, Math.max(2600, L.r * L.r * (w < 760 ? 0.12 : 0.18))));
       P = new Float32Array(n * 4);
       const ga = Math.PI * (3 - Math.sqrt(5));
       const jit = 1.6 / Math.sqrt(n);
@@ -211,8 +212,14 @@ export function Moon({ getPhase, layout, stars = false, className }: Props) {
       }
     };
 
+    // em telas pequenas desenha a ~30 fps
+    let lastDraw = 0;
     const loop = (now: number) => {
-      draw(now);
+      const minGap = w < 760 ? 30 : 0;
+      if (now - lastDraw >= minGap) {
+        lastDraw = now;
+        draw(now);
+      }
       if (visible) raf = requestAnimationFrame(loop);
     };
 
@@ -222,14 +229,25 @@ export function Moon({ getPhase, layout, stars = false, className }: Props) {
       tPitch = (e.clientY / innerHeight - 0.5) * 0.3;
     };
 
-    build();
-    raf = requestAnimationFrame(loop);
-    const ro = new ResizeObserver(build);
+    // começa depois do carregamento, pra não disputar com o primeiro desenho da página
+    let started = false;
+    const begin = () => {
+      if (started) return;
+      started = true;
+      build();
+      last = performance.now();
+      raf = requestAnimationFrame(loop);
+    };
+    const idle = (cb: () => void) =>
+      typeof requestIdleCallback === "function" ? requestIdleCallback(cb, { timeout: 900 }) : setTimeout(cb, 300);
+    if (document.readyState === "complete") idle(begin);
+    else addEventListener("load", () => idle(begin), { once: true });
+    const ro = new ResizeObserver(() => started && build());
     ro.observe(canvas);
     const io = new IntersectionObserver(([e]) => {
       const was = visible;
       visible = e.isIntersecting;
-      if (visible && !was) {
+      if (visible && !was && started) {
         last = performance.now();
         raf = requestAnimationFrame(loop);
       }

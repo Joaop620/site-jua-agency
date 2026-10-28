@@ -100,7 +100,7 @@ section{position:relative}
 .attr.rv{transition-delay:calc(var(--d)*90ms)}
 .attr:first-child{border-left:0;padding-left:0}
 .attr-n{display:block;color:var(--pink);margin-bottom:24px}
-.attr h3{margin:0 0 10px;font-size:22px;letter-spacing:-.02em}
+.attr h2{margin:0 0 10px;font-size:22px;letter-spacing:-.02em}
 .attr p{margin:0;font-size:16px;color:var(--dim-d)}
 
 /* manifesto: as palavras acendem com a rolagem */
@@ -275,12 +275,6 @@ section{position:relative}
 
 /* ---------- efeitos ---------- */
 
-/* abertura */
-.intro-ov{display:none}
-html.intro .intro-ov{position:fixed;inset:0;z-index:300;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;background:var(--mid);clip-path:inset(0 0 0 0);animation:introOut 1s var(--ease) 1.25s forwards}
-.intro-mark{width:88px;height:88px;overflow:visible}
-.intro-j{stroke-dasharray:1;stroke-dashoffset:1;animation:draw .9s var(--ease) .1s forwards}
-.intro-dot{opacity:0;transform-box:fill-box;transform-origin:center;transform:scale(.2);animation:pop .6s var(--ease) .65s forwards}
 
 /* título do hero: linha por linha; as linhas se afastam com a rolagem */
 .hl{display:block;overflow:hidden;padding:0 .12em .08em 0;margin-bottom:-.08em;will-change:transform}
@@ -289,11 +283,7 @@ html.intro .intro-ov{position:fixed;inset:0;z-index:300;display:flex;flex-direct
 .hl-3{transform:translateX(calc(var(--p,0) * -40px))}
 .hl-in{display:block;animation:lineUp 1.1s var(--ease) both}
 .hl-2 .hl-in{animation-delay:.1s}.hl-3 .hl-in{animation-delay:.2s}
-html.intro .hl-1 .hl-in{animation-delay:1.4s}html.intro .hl-2 .hl-in{animation-delay:1.5s}html.intro .hl-3 .hl-in{animation-delay:1.6s}
 .hero-fade{animation:fade 1.2s var(--ease) .5s both}
-html.intro .hero-fade{animation-delay:2.05s}
-html.intro .nav{animation:navIn 1s var(--ease) 1.9s both}
-@keyframes navIn{from{opacity:0}}
 
 
 
@@ -315,9 +305,6 @@ html.intro .nav{animation:navIn 1s var(--ease) 1.9s both}
 .case.rv.in .case-meta{opacity:1;transform:none}
 
 @keyframes lineUp{from{transform:translateY(105%)}}
-@keyframes draw{to{stroke-dashoffset:0}}
-@keyframes pop{to{opacity:1;transform:none}}
-@keyframes introOut{to{clip-path:inset(0 0 100% 0);visibility:hidden}}
 
 /* ---------- processo: prazos ---------- */
 .step-top{display:flex;align-items:center;gap:16px}
