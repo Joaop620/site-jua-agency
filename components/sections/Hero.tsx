@@ -7,8 +7,8 @@ import { useScrollProgress } from "../useScrollProgress";
 
 const layout = (w: number, h: number): MoonLayout =>
   w < 760
-    ? { cx: w * 0.6, cy: h * 0.28, r: Math.min(w * 0.33, h * 0.18) }
-    : { cx: w * 0.7, cy: h * 0.48, r: Math.min(h * 0.36, w * 0.25) };
+    ? { cx: w * 0.5, cy: h * 0.33, r: Math.min(w * 0.5, h * 0.27) }
+    : { cx: w * 0.64, cy: h * 0.46, r: Math.min(h * 0.41, w * 0.31) };
 
 
 const ease = (t: number) => 1 - Math.pow(1 - Math.min(1, Math.max(0, t)), 3);
@@ -21,7 +21,7 @@ export function Hero() {
   // a lua "nasce": vai de nova até crescente na abertura e cresce com a rolagem
   const getPhase = () => {
     if (!start.current) start.current = performance.now();
-    const rise = ease((performance.now() - start.current) / 1500);
+    const rise = ease((performance.now() - start.current) / 2400);
     const base = 112 - p.current * 82;
     return 180 + (base - 180) * rise;
   };
@@ -29,7 +29,7 @@ export function Hero() {
   return (
     <section className="hero" data-dark ref={el} aria-labelledby="hero-title">
       <div className="hero-pin">
-        <Moon className="hero-moon" layout={layout} getPhase={getPhase} />
+        <Moon className="hero-moon" layout={layout} getPhase={getPhase} stars />
         <div className="wrap hero-frame">
           <p className="hero-kicker hero-fade">Estúdio de branding, design e social media</p>
           <div className="hero-bottom">

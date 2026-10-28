@@ -1,147 +1,256 @@
 "use client";
 
-import { useEffect, useId, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 export type MoonLayout = { cx: number; cy: number; r: number };
 
 type Props = {
   /** Ângulo de fase em graus: 180 = lua nova, 90 = quarto, 0 = cheia. */
   getPhase: () => number;
-  /** Onde desenhar a lua dentro do container. */
+  /** Onde desenhar a esfera dentro do canvas. */
   layout: (w: number, h: number) => MoonLayout;
+  stars?: boolean;
   className?: string;
 };
 
-// crateras em coordenadas relativas ao raio (x, y, raio)
-const CRATERS: [number, number, number][] = [
-  [0.38, -0.42, 0.13],
-  [0.55, 0.12, 0.09],
-  [0.18, 0.46, 0.16],
-  [-0.12, -0.18, 0.1],
-  [0.62, -0.08, 0.05],
-  [-0.4, 0.3, 0.12],
-  [0.05, 0.08, 0.06],
-  [-0.5, -0.45, 0.08],
+const LEVELS = 28;
+// violeta → magenta → pink → quase branco, como a luz batendo na superfície
+const RAMP: [number, number, number, number][] = [
+  [0, 63, 18, 120],
+  [0.45, 229, 25, 122],
+  [0.75, 255, 85, 167],
+  [1, 255, 222, 238],
 ];
 
-/** Caminho da parte iluminada: meio disco do lado da luz + elipse do terminador. */
-function litPath(L: MoonLayout, phase: number) {
-  const { cx, cy, r } = L;
-  const a = (Math.max(0, Math.min(180, phase)) * Math.PI) / 180;
-  const rx = Math.max(0.01, r * Math.abs(Math.cos(a)));
-  const gibbous = phase < 90 ? 1 : 0;
-  return `M${cx} ${cy - r}A${r} ${r} 0 0 1 ${cx} ${cy + r}A${rx} ${r} 0 0 ${gibbous} ${cx} ${cy - r}Z`;
+function ramp(t: number) {
+  for (let i = 1; i < RAMP.length; i++) {
+    const [p1, r1, g1, b1] = RAMP[i];
+    const [p0, r0, g0, b0] = RAMP[i - 1];
+    if (t <= p1) {
+      const k = (t - p0) / (p1 - p0);
+      return [r0 + (r1 - r0) * k, g0 + (g1 - g0) * k, b0 + (b1 - b0) * k].map((v) => v | 0);
+    }
+  }
+  return [255, 222, 238];
+}
+
+const smooth = (a: number, b: number, x: number) => {
+  const t = Math.min(1, Math.max(0, (x - a) / (b - a)));
+  return t * t * (3 - 2 * t);
+};
+
+/** Relevo procedural: crateras e "mares" para a rotação ficar visível. */
+function surface(x: number, y: number, z: number) {
+  const maria = smooth(-0.2, 0.6, Math.sin(x * 2.1 + 0.6) * Math.cos(y * 1.7 - 0.3) + Math.sin(z * 2.6 + 1.2) * 0.6);
+  const fine = 0.5 + 0.5 * Math.sin(x * 11.3 + z * 4.1) * Math.sin(y * 9.7 - x * 3.3) * Math.sin(z * 12.9 + y * 2.2);
+  return (1 - maria * 0.5) * (0.78 + fine * 0.22);
 }
 
 /**
- * Lua vetorial nas cores da marca. Leve: só o caminho da parte iluminada
- * é recalculado, e só enquanto a fase está mudando.
+ * Lua 3D renderizada em canvas: esfera de pontos (distribuição de Fibonacci),
+ * iluminada por uma fonte de luz cuja direção define a fase.
  */
-export function Moon({ getPhase, layout, className }: Props) {
-  const box = useRef<HTMLDivElement>(null);
-  const lit = useRef<SVGPathElement>(null);
-  const [L, setL] = useState<MoonLayout | null>(null);
-  const [size, setSize] = useState({ w: 0, h: 0 });
-  const id = useId().replace(/:/g, "");
+export function Moon({ getPhase, layout, stars = false, className }: Props) {
+  const ref = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    const el = box.current;
-    if (!el) return;
-    const ro = new ResizeObserver(() => {
-      const w = el.clientWidth;
-      const h = el.clientHeight;
-      setSize({ w, h });
-      setL(layout(w, h));
-    });
-    ro.observe(el);
-    return () => ro.disconnect();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    if (!L) return;
+    const canvas = ref.current;
+    const ctx = canvas?.getContext("2d");
+    if (!canvas || !ctx) return;
     const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    const fills = Array.from({ length: LEVELS }, (_, i) => {
+      const t = i / (LEVELS - 1);
+      const [r, g, b] = ramp(t);
+      return `rgba(${r},${g},${b},${(0.22 + 0.78 * t).toFixed(3)})`;
+    });
+
+    let w = 0;
+    let h = 0;
+    let L: MoonLayout = { cx: 0, cy: 0, r: 0 };
+    let P = new Float32Array(0); // x, y, z, relevo
+    let S: { x: number; y: number; s: number; ph: number }[] = [];
+    const buckets: number[][] = Array.from({ length: LEVELS + 1 }, () => []);
+
     let phase = getPhase();
-    let drawn = -1;
+    let yaw = 0.6;
+    const pitch = -0.18;
     let raf = 0;
     let visible = true;
     let last = performance.now();
-    const loop = (now: number) => {
+
+    const build = () => {
+      const rect = canvas.getBoundingClientRect();
+      const dpr = Math.min(devicePixelRatio || 1, rect.width < 760 ? 1.5 : 2);
+      w = rect.width;
+      h = rect.height;
+      canvas.width = Math.round(w * dpr);
+      canvas.height = Math.round(h * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      L = layout(w, h);
+
+      // pontos quase uniformes (Fibonacci) com um leve deslocamento aleatório,
+      // para a superfície não formar padrões regulares
+      // menos pontos em telas pequenas: a densidade visual é a mesma e o celular respira
+      const n = Math.round(Math.min(26000, Math.max(1800, L.r * L.r * (w < 760 ? 0.09 : 0.18))));
+      P = new Float32Array(n * 4);
+      const ga = Math.PI * (3 - Math.sqrt(5));
+      const jit = 1.6 / Math.sqrt(n);
+      let seed = 11;
+      const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647) - 0.5;
+      for (let i = 0; i < n; i++) {
+        const y0 = 1 - ((i + 0.5) / n) * 2;
+        const rad = Math.sqrt(1 - y0 * y0);
+        const th = ga * i;
+        let x = Math.cos(th) * rad + rnd() * jit;
+        let y = y0 + rnd() * jit;
+        let z = Math.sin(th) * rad + rnd() * jit;
+        const len = Math.hypot(x, y, z);
+        x /= len;
+        y /= len;
+        z /= len;
+        P[i * 4] = x;
+        P[i * 4 + 1] = y;
+        P[i * 4 + 2] = z;
+        P[i * 4 + 3] = surface(x, y, z);
+      }
+
+      S = [];
+      if (stars) {
+        seed = 7;
+        const rnd01 = () => rnd() + 0.5;
+        const count = Math.round((w * h) / 9000);
+        for (let i = 0; i < count; i++) {
+          const x = rnd01() * w;
+          const y = rnd01() * h;
+          if (Math.hypot(x - L.cx, y - L.cy) < L.r * 1.08) continue;
+          S.push({ x, y, s: rnd01() < 0.08 ? 1.6 : 1, ph: rnd01() * 6.28 });
+        }
+      }
+    };
+
+    const draw = (now: number) => {
       const dt = Math.min(0.05, (now - last) / 1000);
       last = now;
       const target = getPhase();
-      phase = reduce ? target : phase + (target - phase) * Math.min(1, dt * 7);
-      if (Math.abs(phase - drawn) > 0.05) {
-        lit.current?.setAttribute("d", litPath(L, phase));
-        drawn = phase;
+      phase = reduce ? target : phase + (target - phase) * Math.min(1, dt * 6);
+      if (!reduce) {
+        yaw += dt * 0.07;
+      }
+      const curYaw = yaw;
+      const curPitch = pitch;
+
+      ctx.globalCompositeOperation = "source-over";
+      ctx.clearRect(0, 0, w, h);
+
+      for (const s of S) {
+        ctx.fillStyle = `rgba(247,243,238,${(0.18 + 0.2 * (s.ph / 6.28)).toFixed(3)})`;
+        ctx.fillRect(s.x, s.y, s.s, s.s);
+      }
+
+      const a = (phase * Math.PI) / 180;
+      const lx = Math.sin(a);
+      const lz = Math.cos(a);
+      const lit = 1 - phase / 180;
+
+      // halo atmosférico discreto do lado iluminado
+      const hx = L.cx + lx * L.r * 0.18;
+      const g = ctx.createRadialGradient(hx, L.cy, L.r * 0.92, hx, L.cy, L.r * 1.32);
+      g.addColorStop(0, `rgba(229,25,122,${(0.05 + lit * 0.09).toFixed(3)})`);
+      g.addColorStop(1, "rgba(229,25,122,0)");
+      ctx.fillStyle = g;
+      ctx.fillRect(0, 0, w, h);
+
+      // borda da esfera
+      ctx.strokeStyle = "rgba(247,243,238,.07)";
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.arc(L.cx, L.cy, L.r, 0, Math.PI * 2);
+      ctx.stroke();
+
+      const cyw = Math.cos(curYaw);
+      const syw = Math.sin(curYaw);
+      const cp = Math.cos(curPitch);
+      const sp = Math.sin(curPitch);
+      for (const b of buckets) b.length = 0;
+
+      for (let i = 0; i < P.length; i += 4) {
+        const x = P[i];
+        const y = P[i + 1];
+        const z = P[i + 2];
+        const x1 = x * cyw + z * syw;
+        const z1 = -x * syw + z * cyw;
+        const y2 = y * cp - z1 * sp;
+        const z2 = y * sp + z1 * cp;
+        if (z2 <= 0) continue;
+        const d = x1 * lx + z2 * lz;
+        const v = Math.min(0.999, smooth(-0.1, 0.32, d) * P[i + 3] * (0.8 + 0.2 * z2) * 1.3);
+        const sx = L.cx + x1 * L.r;
+        const sy = L.cy - y2 * L.r;
+        if (v < 0.03) buckets[LEVELS].push(sx, sy);
+        else buckets[Math.min(LEVELS - 1, (v * LEVELS) | 0)].push(sx, sy);
+      }
+
+      const base = Math.max(1.1, L.r / 210);
+      ctx.fillStyle = "rgba(150,110,230,.075)";
+      const dark = buckets[LEVELS];
+      for (let j = 0; j < dark.length; j += 2) ctx.fillRect(dark[j], dark[j + 1], base, base);
+
+      ctx.globalCompositeOperation = "lighter";
+      for (let k = 0; k < LEVELS; k++) {
+        const arr = buckets[k];
+        if (!arr.length) continue;
+        const s = base * (0.8 + (k / LEVELS) * 0.7);
+        ctx.fillStyle = fills[k];
+        for (let j = 0; j < arr.length; j += 2) ctx.fillRect(arr[j], arr[j + 1], s, s);
+      }
+    };
+
+    // em telas pequenas desenha a ~30 fps
+    let lastDraw = 0;
+    const loop = (now: number) => {
+      const minGap = w < 760 ? 30 : 0;
+      if (now - lastDraw >= minGap) {
+        lastDraw = now;
+        draw(now);
       }
       if (visible) raf = requestAnimationFrame(loop);
     };
-    raf = requestAnimationFrame(loop);
+
+
+    // começa depois do carregamento, pra não disputar com o primeiro desenho da página
+    let started = false;
+    const begin = () => {
+      if (started) return;
+      started = true;
+      build();
+      last = performance.now();
+      raf = requestAnimationFrame(loop);
+    };
+    const idle = (cb: () => void) =>
+      typeof requestIdleCallback === "function" ? requestIdleCallback(cb, { timeout: 900 }) : setTimeout(cb, 300);
+    if (document.readyState === "complete") idle(begin);
+    else addEventListener("load", () => idle(begin), { once: true });
+    const ro = new ResizeObserver(() => started && build());
+    ro.observe(canvas);
     const io = new IntersectionObserver(([e]) => {
       const was = visible;
       visible = e.isIntersecting;
-      if (visible && !was) {
+      if (visible && !was && started) {
         last = performance.now();
         raf = requestAnimationFrame(loop);
       }
     });
-    if (box.current) io.observe(box.current);
+    io.observe(canvas);
+
     return () => {
       cancelAnimationFrame(raf);
+      ro.disconnect();
       io.disconnect();
     };
+    // getPhase/layout são lidos a cada frame; o efeito roda uma vez
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [L]);
+  }, []);
 
-  return (
-    <div ref={box} className={className} aria-hidden="true">
-      {L && (
-        <svg width={size.w} height={size.h} viewBox={`0 0 ${size.w} ${size.h}`} style={{ display: "block", overflow: "visible" }}>
-          <defs>
-            <radialGradient id={`glow${id}`} cx={L.cx} cy={L.cy} r={L.r * 1.6} gradientUnits="userSpaceOnUse">
-              <stop offset=".55" stopColor="#E5197A" stopOpacity=".16" />
-              <stop offset="1" stopColor="#3F1278" stopOpacity="0" />
-            </radialGradient>
-            <linearGradient
-              id={`lit${id}`}
-              gradientUnits="userSpaceOnUse"
-              x1={L.cx + L.r * 0.7}
-              y1={L.cy - L.r * 0.9}
-              x2={L.cx - L.r * 0.6}
-              y2={L.cy + L.r * 0.9}
-            >
-              <stop offset="0" stopColor="#FFD9E8" />
-              <stop offset=".35" stopColor="#FF55A7" />
-              <stop offset=".7" stopColor="#E5197A" />
-              <stop offset="1" stopColor="#3F1278" />
-            </linearGradient>
-            <radialGradient id={`dark${id}`} cx={L.cx - L.r * 0.3} cy={L.cy - L.r * 0.3} r={L.r * 1.3} gradientUnits="userSpaceOnUse">
-              <stop offset="0" stopColor="#24104F" />
-              <stop offset="1" stopColor="#120827" />
-            </radialGradient>
-            <clipPath id={`clip${id}`}>
-              <path ref={lit} d={litPath(L, getPhase())} />
-            </clipPath>
-          </defs>
-          <circle cx={L.cx} cy={L.cy} r={L.r * 1.6} fill={`url(#glow${id})`} />
-          <circle cx={L.cx} cy={L.cy} r={L.r} fill={`url(#dark${id})`} stroke="rgba(247,243,238,.1)" strokeWidth="1" />
-          <g clipPath={`url(#clip${id})`}>
-            <rect x={L.cx - L.r} y={L.cy - L.r} width={L.r * 2} height={L.r * 2} fill={`url(#lit${id})`} />
-            {CRATERS.map(([x, y, cr], i) => (
-              <circle
-                key={i}
-                cx={L.cx + x * L.r}
-                cy={L.cy + y * L.r}
-                r={cr * L.r}
-                fill="rgba(63,18,120,.09)"
-                stroke="rgba(255,255,255,.08)"
-                strokeWidth={Math.max(1, L.r * 0.006)}
-              />
-            ))}
-          </g>
-        </svg>
-      )}
-    </div>
-  );
+  return <canvas ref={ref} className={className} aria-hidden="true" />;
 }
