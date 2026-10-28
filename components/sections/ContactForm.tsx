@@ -108,6 +108,11 @@ export function ContactForm() {
 
     setWaUrl(url);
     setStatus("sent");
+    requestAnimationFrame(() => {
+      const ok = document.getElementById("form-ok");
+      ok?.scrollIntoView({ block: "center", behavior: "smooth" });
+      ok?.focus({ preventScroll: true });
+    });
     try {
       localStorage.removeItem(DRAFT);
     } catch {}
@@ -115,10 +120,11 @@ export function ContactForm() {
 
   if (status === "sent") {
     return (
-      <div className="form form-ok" role="status">
+      <div className="form form-ok" id="form-ok" role="status" tabIndex={-1}>
         <JuaSymbol size={72} />
         <h3>Quase lá!</h3>
         <p className="sub">Abrimos o WhatsApp com a sua mensagem pronta. É só tocar em enviar que a gente responde pra marcar a conversa.</p>
+        <p className="form-privacy">Prefere e-mail? Escreva pra {site.contact.email}.</p>
         <a className="btn btn-n" href={waUrl} target="_blank" rel="noopener noreferrer">
           Abrir o WhatsApp de novo <span className="arr" aria-hidden="true">→</span>
         </a>

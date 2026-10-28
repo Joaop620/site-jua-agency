@@ -238,6 +238,9 @@ section{position:relative}
 
 /* rodapé */
 .foot{border-top:1px solid var(--line-d);padding:80px 0 40px;overflow:hidden}
+#form{scroll-margin-top:96px}
+.form-ok:focus{outline:none}
+.case-page{padding-bottom:clamp(40px,5vw,64px)!important}
 .foot-big{font-size:clamp(48px,10vw,168px);margin:0 0 80px}
 .foot-grid{display:grid;grid-template-columns:minmax(0,1.4fr) repeat(3,minmax(0,1fr));gap:32px;padding-bottom:56px;border-bottom:1px solid var(--line-d)}
 .foot-desc{margin:16px 0 0;color:var(--dim-d);font-size:16px;max-width:22em}
@@ -485,9 +488,9 @@ section{position:relative}
   .compare-scroll{max-width:calc(100vw - 2 * var(--pad))}
   .wa span{display:none}
   /* planos viram carrossel de arrastar no celular */
-  .plans{display:grid;grid-auto-flow:column;grid-template-columns:none;grid-auto-columns:86%;gap:12px;max-width:none;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 calc(var(--pad) * -1);padding:4px var(--pad) 16px;scroll-padding:0 var(--pad);scrollbar-width:none}
+  .plans{display:grid;grid-auto-flow:column;grid-template-columns:none;grid-auto-columns:80%;gap:12px;max-width:none;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 calc(var(--pad) * -1);padding:4px var(--pad) 16px;scroll-padding:0 calc(var(--pad) + 8%);scrollbar-width:none}
   .plans::-webkit-scrollbar{display:none}
-  .plan{scroll-snap-align:start}
+  .plan{scroll-snap-align:center}
   .plans-hint{display:block}
   .foot{padding-bottom:96px}
   .promo{align-items:flex-start}

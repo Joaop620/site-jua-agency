@@ -8,7 +8,7 @@ export function WhatsAppButton() {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
-    // some no contato e no rodapé, onde ele cobriria links e o próprio formulário
+    // some nos planos, no contato e no rodapé, onde ele cobriria links e o próprio formulário
     const hidden = new Set<Element>();
     const io = new IntersectionObserver(
       (entries) => {
@@ -17,7 +17,7 @@ export function WhatsAppButton() {
       },
       { threshold: 0.05 }
     );
-    document.querySelectorAll("#contato, footer").forEach((el) => io.observe(el));
+    document.querySelectorAll("#planos, #contato, footer").forEach((el) => io.observe(el));
     function update() {
       setShow(scrollY > innerHeight * 1.2 && hidden.size === 0);
     }

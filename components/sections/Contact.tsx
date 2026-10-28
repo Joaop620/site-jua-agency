@@ -16,8 +16,7 @@ export function Contact() {
             Agenda <i className="pink">aberta</i> pra novos projetos.
           </h2>
           <p className="lead" style={{ marginTop: 28 }}>
-            Trabalhamos com poucos clientes por vez, pra dar atenção de verdade a cada marca. Conta um pouco do seu negócio e a
-            gente volta pra marcar uma conversa.
+            Trabalhamos com poucos clientes por vez, pra dar atenção de verdade a cada marca. Conta um pouco do seu negócio: a mensagem vai pronta pro nosso WhatsApp e a gente marca a conversa por lá.
           </p>
           <div className="contact-info">
             <a href={`mailto:${c.email}`}>

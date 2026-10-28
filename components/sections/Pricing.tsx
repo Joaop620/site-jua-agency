@@ -3,15 +3,17 @@
 import { useEffect, useRef, useState } from "react";
 import { launchPromo, planCompare, plans, projectPrices, promoPrice, semesterDiscount } from "@/content/site";
 import { AnimatedNumber } from "../AnimatedNumber";
+import { scrollToForm } from "@/lib/scrollToForm";
 
 type Billing = "mensal" | "semestral";
 
 const brl = new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 0 });
 
 /** Avisa o formulário qual plano/serviço foi escolhido. */
-function choose(plan: string, service: string) {
+function choose(e: React.MouseEvent, plan: string, service: string) {
   window.dispatchEvent(new CustomEvent("jua:plan", { detail: plan }));
   window.dispatchEvent(new CustomEvent("jua:pick", { detail: service }));
+  scrollToForm(e);
 }
 
 const Check = () => (
@@ -32,7 +34,7 @@ export function Pricing() {
     const el = list.current;
     if (!el || !matchMedia("(max-width: 640px)").matches) return;
     const featured = el.querySelector<HTMLElement>("[data-featured]");
-    if (featured) el.scrollLeft = featured.offsetLeft - el.offsetLeft - parseFloat(getComputedStyle(el).paddingLeft);
+    if (featured) el.scrollLeft = featured.offsetLeft - el.offsetLeft - (el.clientWidth - featured.offsetWidth) / 2;
   }, []);
 
   return (
@@ -113,7 +115,7 @@ export function Pricing() {
                     launchPromo.active ? `${launchPromo.label}, cobrado todo mês` : "Cobrado todo mês"
                   )}
                 </p>
-                <a className={`btn ${p.featured ? "btn-d" : "btn-g"}`} href="#form" onClick={() => choose(label, "Social media")}>
+                <a className={`btn ${p.featured ? "btn-d" : "btn-g"}`} href="#form" onClick={(e) => choose(e, label, "Social media")}>
                   Quero o {p.name} <span className="arr" aria-hidden="true">→</span>
                 </a>
                 <ul className="plan-list">
@@ -130,7 +132,7 @@ export function Pricing() {
         </div>
 
         <p className="plans-hint" aria-hidden="true">
-          Arraste pro lado pra ver os outros planos →
+          ← Arraste pros lados: são 3 planos →
         </p>
 
         <details className="compare rv">
@@ -206,7 +208,7 @@ export function Pricing() {
                   )}
                   R$ {brl.format(promoPrice(p.from))}
                 </p>
-                <a className="pp-cta" href="#form" onClick={() => choose(p.name, p.pick)} aria-label={`Pedir proposta de ${p.name}`}>
+                <a className="pp-cta" href="#form" onClick={(e) => choose(e, p.name, p.pick)} aria-label={`Pedir proposta de ${p.name}`}>
                   <span aria-hidden="true">→</span>
                 </a>
               </li>
