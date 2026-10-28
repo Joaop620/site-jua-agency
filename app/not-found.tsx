@@ -1,5 +1,8 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { JuaSymbol } from "@/components/JuaSymbol";
+
+export const metadata: Metadata = { title: "Página não encontrada" };
 
 export default function NotFound() {
   return (

@@ -8,22 +8,23 @@ export function WhatsAppButton() {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
-    const contact = document.getElementById("contato");
-    let inContact = false;
-    const io = contact
-      ? new IntersectionObserver(([e]) => {
-          inContact = e.isIntersecting;
-          update();
-        }, { threshold: 0.2 })
-      : null;
-    if (contact && io) io.observe(contact);
+    // some no contato e no rodapé, onde ele cobriria links e o próprio formulário
+    const hidden = new Set<Element>();
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => (e.isIntersecting ? hidden.add(e.target) : hidden.delete(e.target)));
+        update();
+      },
+      { threshold: 0.05 }
+    );
+    document.querySelectorAll("#contato, footer").forEach((el) => io.observe(el));
     function update() {
-      setShow(scrollY > innerHeight * 1.2 && !inContact);
+      setShow(scrollY > innerHeight * 1.2 && hidden.size === 0);
     }
     update();
     addEventListener("scroll", update, { passive: true });
     return () => {
-      io?.disconnect();
+      io.disconnect();
       removeEventListener("scroll", update);
     };
   }, []);

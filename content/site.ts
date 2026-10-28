@@ -24,10 +24,11 @@ export const site = {
   tagline: "Bonito. Estratégico. Vende.",
   description:
     "Agência criativa de branding, identidade visual, social media e sites. Design bonito, estratégia clara e resultado que dá pra medir.",
-  agenda: { open: true, month: "Novembro", year: "2026" },
+  // o mês e o ano da agenda são calculados na hora (mês atual)
+  agenda: { open: true },
   contact: {
     email: "ola@jua.agency",
-    whatsapp: { label: "+55 11 9 8765-4321", href: "https://wa.me/5511987654321" },
+    whatsapp: { label: "+55 (69) 99245-9026", href: "https://wa.me/5569992459026", phone: "+5569992459026" },
     instagram: { label: "@jua.agency", href: "https://instagram.com/jua.agency" },
     behance: { label: "Behance", href: "https://www.behance.net/rlua" },
   },

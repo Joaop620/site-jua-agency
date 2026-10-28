@@ -1,5 +1,6 @@
 import { site } from "@/content/site";
 import { ContactForm } from "./ContactForm";
+import { Now } from "../Now";
 
 export function Contact() {
   const c = site.contact;
@@ -9,7 +10,7 @@ export function Contact() {
       <div className="wrap contact-in">
         <div>
           <div className="kick label">
-            {site.agenda.month} · {site.agenda.year}
+            <Now kind="month" />
           </div>
           <h2 id="contact-title" className="h h-l rv">
             Agenda <i className="pink">aberta</i> pra novos projetos.

@@ -1,6 +1,6 @@
 import { nav, site } from "@/content/site";
 import { Logo } from "../Logo";
-import { Clock } from "../Clock";
+import { Now } from "../Now";
 
 export function Footer() {
   const c = site.contact;
@@ -59,9 +59,11 @@ export function Footer() {
           </div>
         </div>
         <div className="foot-bot label">
-          <span>© 2026 Juá Agency</span>
-          <Clock prefix="São Paulo" />
-          <a className="ul" href="#topo">
+          <span>
+            © <Now kind="year" /> Juá Agency
+          </span>
+          <span>Bonito. Estratégico. Vende.</span>
+          <a className="ul" href="#conteudo">
             Voltar ao topo ↑
           </a>
         </div>

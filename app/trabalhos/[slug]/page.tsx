@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { projects } from "@/content/site";
 import { Logo } from "@/components/Logo";
 import { Media } from "@/components/Placeholder";
+import { Footer } from "@/components/sections/Footer";
 
 type Params = { params: Promise<{ slug: string }> };
 
@@ -81,6 +82,19 @@ export default async function CasePage({ params }: Params) {
               </a>
             </div>
           )}
+          <div className="case-ask">
+            <h2 className="h h-m">
+              Quer algo <i className="pink">assim</i> pra sua marca?
+            </h2>
+            <div className="case-ask-ctas">
+              <Link className="btn btn-p" href="/#form">
+                Agendar conversa <span className="arr" aria-hidden="true">→</span>
+              </Link>
+              <Link className="btn btn-g" href="/#planos">
+                Ver planos e preços
+              </Link>
+            </div>
+          </div>
           <Link className="case-next" href={`/trabalhos/${next.slug}`}>
             <span className="label">Próximo case</span>
             <span className="h h-m">
@@ -89,6 +103,7 @@ export default async function CasePage({ params }: Params) {
           </Link>
         </div>
       </main>
+      <Footer />
     </>
   );
 }

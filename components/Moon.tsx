@@ -74,18 +74,14 @@ export function Moon({ getPhase, layout, stars = false, className }: Props) {
 
     let phase = getPhase();
     let yaw = 0.6;
-    let pitch = -0.18;
-    let tYaw = 0;
-    let tPitch = 0;
-    let mYaw = 0;
-    let mPitch = 0;
+    const pitch = -0.18;
     let raf = 0;
     let visible = true;
     let last = performance.now();
 
     const build = () => {
       const rect = canvas.getBoundingClientRect();
-      const dpr = Math.min(devicePixelRatio || 1, 2);
+      const dpr = Math.min(devicePixelRatio || 1, rect.width < 760 ? 1.5 : 2);
       w = rect.width;
       h = rect.height;
       canvas.width = Math.round(w * dpr);
@@ -96,7 +92,7 @@ export function Moon({ getPhase, layout, stars = false, className }: Props) {
       // pontos quase uniformes (Fibonacci) com um leve deslocamento aleatório,
       // para a superfície não formar padrões regulares
       // menos pontos em telas pequenas: a densidade visual é a mesma e o celular respira
-      const n = Math.round(Math.min(26000, Math.max(2600, L.r * L.r * (w < 760 ? 0.12 : 0.18))));
+      const n = Math.round(Math.min(26000, Math.max(1800, L.r * L.r * (w < 760 ? 0.09 : 0.18))));
       P = new Float32Array(n * 4);
       const ga = Math.PI * (3 - Math.sqrt(5));
       const jit = 1.6 / Math.sqrt(n);
@@ -141,16 +137,14 @@ export function Moon({ getPhase, layout, stars = false, className }: Props) {
       if (!reduce) {
         yaw += dt * 0.07;
       }
-      mYaw += (tYaw - mYaw) * Math.min(1, dt * 3);
-      mPitch += (tPitch - mPitch) * Math.min(1, dt * 3);
-      const curYaw = yaw + mYaw;
-      const curPitch = pitch + mPitch;
+      const curYaw = yaw;
+      const curPitch = pitch;
 
       ctx.globalCompositeOperation = "source-over";
       ctx.clearRect(0, 0, w, h);
 
       for (const s of S) {
-        ctx.fillStyle = `rgba(247,243,238,${(0.25 + 0.25 * Math.sin(now / 1400 + s.ph)).toFixed(3)})`;
+        ctx.fillStyle = `rgba(247,243,238,${(0.18 + 0.2 * (s.ph / 6.28)).toFixed(3)})`;
         ctx.fillRect(s.x, s.y, s.s, s.s);
       }
 
@@ -223,11 +217,6 @@ export function Moon({ getPhase, layout, stars = false, className }: Props) {
       if (visible) raf = requestAnimationFrame(loop);
     };
 
-    const onMove = (e: PointerEvent) => {
-      if (reduce || e.pointerType !== "mouse") return;
-      tYaw = (e.clientX / innerWidth - 0.5) * 0.5;
-      tPitch = (e.clientY / innerHeight - 0.5) * 0.3;
-    };
 
     // começa depois do carregamento, pra não disputar com o primeiro desenho da página
     let started = false;
@@ -253,13 +242,11 @@ export function Moon({ getPhase, layout, stars = false, className }: Props) {
       }
     });
     io.observe(canvas);
-    addEventListener("pointermove", onMove, { passive: true });
 
     return () => {
       cancelAnimationFrame(raf);
       ro.disconnect();
       io.disconnect();
-      removeEventListener("pointermove", onMove);
     };
     // getPhase/layout são lidos a cada frame; o efeito roda uma vez
     // eslint-disable-next-line react-hooks/exhaustive-deps

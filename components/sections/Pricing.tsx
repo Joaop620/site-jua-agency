@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { launchPromo, planCompare, plans, projectPrices, promoPrice, semesterDiscount } from "@/content/site";
 import { AnimatedNumber } from "../AnimatedNumber";
 
@@ -25,6 +25,15 @@ export function Pricing() {
   const factor = billing === "semestral" ? 1 - semesterDiscount : 1;
   const off = Math.round(semesterDiscount * 100);
   const promoOff = Math.round(launchPromo.discount * 100);
+  const list = useRef<HTMLDivElement>(null);
+
+  // no carrossel do celular, começa mostrando o plano recomendado
+  useEffect(() => {
+    const el = list.current;
+    if (!el || !matchMedia("(max-width: 640px)").matches) return;
+    const featured = el.querySelector<HTMLElement>("[data-featured]");
+    if (featured) el.scrollLeft = featured.offsetLeft - el.offsetLeft - parseFloat(getComputedStyle(el).paddingLeft);
+  }, []);
 
   return (
     <section className="sec pricing" id="planos" aria-labelledby="price-title">
@@ -69,10 +78,10 @@ export function Pricing() {
           </p>
         </div>
 
-        <div className="plans">
+        <div className="plans" ref={list}>
           {plans.map((p, i) => {
             const base = promoPrice(p.price);
-            const month = Math.round(base * factor);
+            const month = Math.round((base * factor) / 10) * 10;
             const label = `${p.name} (${billing})`;
             return (
               <article className="plan rv" key={p.id} data-featured={p.featured || undefined} style={{ ["--d" as string]: i }}>
@@ -98,12 +107,13 @@ export function Pricing() {
                   {billing === "semestral" ? (
                     <>
                       R$ {brl.format(month * 6)} no semestre
+                      {launchPromo.active ? ` · inauguração −${promoOff}% + semestral −${off}%` : ` · semestral −${off}%`}
                     </>
                   ) : (
                     launchPromo.active ? `${launchPromo.label}, cobrado todo mês` : "Cobrado todo mês"
                   )}
                 </p>
-                <a className={`btn ${p.featured ? "btn-d" : "btn-g"}`} href="#contato" onClick={() => choose(label, "Social media")}>
+                <a className={`btn ${p.featured ? "btn-d" : "btn-g"}`} href="#form" onClick={() => choose(label, "Social media")}>
                   Quero o {p.name} <span className="arr" aria-hidden="true">→</span>
                 </a>
                 <ul className="plan-list">
@@ -118,6 +128,10 @@ export function Pricing() {
             );
           })}
         </div>
+
+        <p className="plans-hint" aria-hidden="true">
+          Arraste pro lado pra ver os outros planos →
+        </p>
 
         <details className="compare rv">
           <summary>
@@ -192,7 +206,7 @@ export function Pricing() {
                   )}
                   R$ {brl.format(promoPrice(p.from))}
                 </p>
-                <a className="pp-cta" href="#contato" onClick={() => choose(p.name, p.pick)} aria-label={`Pedir proposta de ${p.name}`}>
+                <a className="pp-cta" href="#form" onClick={() => choose(p.name, p.pick)} aria-label={`Pedir proposta de ${p.name}`}>
                   <span aria-hidden="true">→</span>
                 </a>
               </li>

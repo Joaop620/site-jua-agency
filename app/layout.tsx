@@ -31,6 +31,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="pt-BR" className={`${sans.variable} ${serif.variable}`}>
       <body>
         <SmoothScroll />
+        <noscript>
+          <style>{`.rv,.hl-in,.hero-fade{opacity:1!important;transform:none!important;clip-path:none!important;animation:none!important}`}</style>
+        </noscript>
         <a className="skip" href="#conteudo">
           Pular para o conteúdo
         </a>

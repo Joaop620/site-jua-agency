@@ -5,7 +5,7 @@ export function PickLink({ pick, className, children }: { pick: string; classNam
   return (
     <a
       className={className}
-      href="#contato"
+      href="#form"
       onClick={() => window.dispatchEvent(new CustomEvent("jua:pick", { detail: pick }))}
     >
       {children}

@@ -8,7 +8,7 @@ export function Studio() {
         <div>
           <div className="kick label">O estúdio</div>
           <h2 id="studio-title" className="h h-l rv">
-            Pequeno, <i className="pink">de propósito</i>.
+            Pequeno, de propósito.
           </h2>
           <div className="studio-text">
             {studio.paragraphs.map((t, i) => (

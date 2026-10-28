@@ -9,7 +9,7 @@ export function StructuredData() {
       name: site.name,
       url: site.url,
       email: site.contact.email,
-      telephone: site.contact.whatsapp.label.replace(/\s/g, ""),
+      telephone: site.contact.whatsapp.phone,
       description: site.description,
       slogan: site.tagline,
       areaServed: "BR",

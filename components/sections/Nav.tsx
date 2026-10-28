@@ -11,19 +11,20 @@ export function Nav() {
 
   // marca no menu a seção que está na tela
   useEffect(() => {
-    const ids = nav.map((l) => l.href.slice(1));
+    // seções que "limpam" o menu também são observadas (ex.: estúdio, contato)
+    const ids = [...nav.map((l) => l.href.slice(1)), "diagnostico", "estudio", "contato"];
     const els = ids.map((id) => document.getElementById(id)).filter(Boolean) as HTMLElement[];
     const io = new IntersectionObserver(
       (entries) =>
         entries.forEach((e) => {
-          if (e.isIntersecting) setActive(e.target.id);
-          else if (e.target.id === active) setActive("");
+          const id = e.target.id;
+          if (e.isIntersecting) setActive(id);
+          else setActive((a) => (a === id ? "" : a));
         }),
       { rootMargin: "-45% 0px -50% 0px" }
     );
     els.forEach((el) => io.observe(el));
     return () => io.disconnect();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

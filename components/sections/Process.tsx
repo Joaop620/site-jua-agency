@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { phases } from "@/content/site";
 import { Moon, type MoonLayout } from "../Moon";
+import { MoonPhase } from "../MoonPhase";
 import { useScrollProgress } from "../useScrollProgress";
 
 const layout = (w: number, h: number): MoonLayout => ({ cx: w / 2, cy: h / 2, r: Math.min(w, h) * 0.36 });
@@ -62,6 +63,7 @@ export function Process() {
                 }}
               >
                 <div className="step-top">
+                  <MoonPhase phase={ph.phase} className="step-moon" />
                   <span className="it num">0{i + 1}</span>
                   <span className="step-time label">{ph.time}</span>
                 </div>

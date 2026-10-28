@@ -12,7 +12,7 @@ export function Faq() {
         <div className="faq-head">
           <div className="kick label">Dúvidas frequentes</div>
           <h2 id="faq-title" className="h h-l rv">
-            Antes de <i className="mag">começar</i>.
+            Antes de começar.
           </h2>
           <p className="lead rv">
             Não achou o que procurava? Manda no{" "}

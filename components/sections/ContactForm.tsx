@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { formServices } from "@/content/site";
+import { formServices, site } from "@/content/site";
 import { JuaSymbol } from "../JuaSymbol";
 
-type Status = "idle" | "loading" | "sent" | "error";
+type Status = "idle" | "sent";
 type Errors = Partial<Record<"nome" | "email", string>>;
 
 const DRAFT = "jua-contato";
@@ -14,8 +14,8 @@ export function ContactForm() {
   const [status, setStatus] = useState<Status>("idle");
   const [picked, setPicked] = useState<string[]>([]);
   const [errors, setErrors] = useState<Errors>({});
-  const [msg, setMsg] = useState("");
   const [plano, setPlano] = useState("");
+  const [waUrl, setWaUrl] = useState("");
   const form = useRef<HTMLFormElement>(null);
 
   // plano escolhido na seção de preços
@@ -29,7 +29,7 @@ export function ContactForm() {
   useEffect(() => {
     try {
       const d = JSON.parse(localStorage.getItem(DRAFT) || "null");
-      if (!d || !form.current) return;
+      if (!d || !form.current || Date.now() - (d.ts ?? 0) > 7 * 864e5) return;
       for (const f of FIELDS) {
         const el = form.current.elements.namedItem(f) as HTMLInputElement | null;
         if (el && d[f] && !el.value) el.value = d[f];
@@ -42,7 +42,7 @@ export function ContactForm() {
   const saveDraft = () => {
     if (!form.current) return;
     const fd = new FormData(form.current);
-    const d: Record<string, unknown> = { servicos: picked, plano };
+    const d: Record<string, unknown> = { servicos: picked, plano, ts: Date.now() };
     for (const f of FIELDS) d[f] = String(fd.get(f) ?? "");
     try {
       localStorage.setItem(DRAFT, JSON.stringify(d));
@@ -62,7 +62,7 @@ export function ContactForm() {
 
   const toggle = (s: string) => setPicked((p) => (p.includes(s) ? p.filter((x) => x !== s) : [...p, s]));
 
-  async function submit(e: React.FormEvent<HTMLFormElement>) {
+  function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const fd = new FormData(e.currentTarget);
     const data = {
@@ -82,39 +82,52 @@ export function ContactForm() {
       document.getElementById(errs.nome ? "fn" : "fe")?.focus();
       return;
     }
-    setStatus("loading");
+    // monta a mensagem e abre o WhatsApp da Juá já com tudo preenchido
+    const lines = [
+      "Olá! Vim pelo site da Juá e quero agendar uma conversa.",
+      "",
+      `*Nome:* ${data.nome.trim()}`,
+      `*E-mail:* ${data.email.trim()}`,
+      data.empresa.trim() ? `*Empresa/Instagram:* ${data.empresa.trim()}` : null,
+      picked.length ? `*Interesse:* ${picked.join(", ")}` : null,
+      plano ? `*Plano/projeto:* ${plano}` : null,
+      data.mensagem.trim() ? `\n*Sobre o negócio:* ${data.mensagem.trim()}` : null,
+    ].filter((l) => l !== null);
+    const url = `${site.contact.whatsapp.href}?text=${encodeURIComponent(lines.join("\n"))}`;
+    // abre no mesmo clique (sem await antes) pra não ser bloqueado como pop-up
+    const win = window.open(url, "_blank");
+    if (!win) window.location.href = url;
+
+    // cópia por e-mail, se o Resend estiver configurado (falha em silêncio)
+    fetch("/api/contato", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+      keepalive: true,
+    }).catch(() => {});
+
+    setWaUrl(url);
+    setStatus("sent");
     try {
-      const res = await fetch("/api/contato", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-      if (!res.ok) {
-        const body = await res.json().catch(() => ({}));
-        throw new Error(body.error || "Não foi possível enviar.");
-      }
-      setStatus("sent");
-      try {
-        localStorage.removeItem(DRAFT);
-      } catch {}
-    } catch (err) {
-      setMsg(err instanceof Error ? err.message : "Não foi possível enviar.");
-      setStatus("error");
-    }
+      localStorage.removeItem(DRAFT);
+    } catch {}
   }
 
   if (status === "sent") {
     return (
       <div className="form form-ok" role="status">
         <JuaSymbol size={72} />
-        <h3>Recebemos!</h3>
-        <p className="sub">A gente volta em breve pra marcar a conversa.</p>
+        <h3>Quase lá!</h3>
+        <p className="sub">Abrimos o WhatsApp com a sua mensagem pronta. É só tocar em enviar que a gente responde pra marcar a conversa.</p>
+        <a className="btn btn-n" href={waUrl} target="_blank" rel="noopener noreferrer">
+          Abrir o WhatsApp de novo <span className="arr" aria-hidden="true">→</span>
+        </a>
       </div>
     );
   }
 
   return (
-    <form className="form rv" ref={form} onSubmit={submit} onInput={saveDraft} noValidate aria-busy={status === "loading"}>
+    <form className="form rv" id="form" ref={form} onSubmit={submit} onInput={saveDraft} noValidate>
       <h3>Vamos conversar</h3>
       <p className="sub">Sem compromisso e sem enrolação.</p>
       <div className="f-row">
@@ -186,23 +199,10 @@ export function ContactForm() {
         <label htmlFor="fm">Conta um pouco do seu negócio</label>
         <textarea id="fm" name="mensagem" placeholder="O que você vende, pra quem, e o que gostaria de mudar na sua marca." />
       </div>
-      <button className="btn btn-n" type="submit" disabled={status === "loading"}>
-        {status === "loading" ? (
-          <>
-            <span className="spin" aria-hidden="true" /> Enviando…
-          </>
-        ) : (
-          <>
-            Enviar <span className="arr" aria-hidden="true">→</span>
-          </>
-        )}
+      <button className="btn btn-n" type="submit">
+        Enviar pelo WhatsApp <span className="arr" aria-hidden="true">→</span>
       </button>
-      <p className="form-privacy">A gente usa seus dados só pra responder esta mensagem.</p>
-      {status === "error" && (
-        <p className="form-err" role="alert">
-          {msg} Tente de novo ou escreva pra ola@jua.agency.
-        </p>
-      )}
+      <p className="form-privacy">Ao enviar, o WhatsApp abre com a sua mensagem pronta. A gente usa seus dados só pra responder.</p>
     </form>
   );
 }
