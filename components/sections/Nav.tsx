@@ -15,7 +15,7 @@ export function Nav() {
   // marca no menu a seção que está na tela
   useEffect(() => {
     // seções que "limpam" o menu também são observadas (ex.: estúdio, contato)
-    const ids = [...nav.map((l) => l.href.slice(1)), "diagnostico", "estudio", "contato"];
+    const ids = [...nav.map((l) => l.href.slice(1)), "diagnostico", "contato"];
     const els = ids.map((id) => document.getElementById(id)).filter(Boolean) as HTMLElement[];
     const io = new IntersectionObserver(
       (entries) =>

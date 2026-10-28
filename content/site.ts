@@ -245,6 +245,8 @@ export type Plan = {
   price: number;
   featured?: boolean;
   features: string[];
+  /** Entregas por mês; no semestral o site mostra o total de 6 meses */
+  monthly: { n: number; label: string }[];
 };
 
 export const plans: Plan[] = [
@@ -253,6 +255,12 @@ export const plans: Plan[] = [
     name: "Essencial",
     tagline: "Pra marca aparecer com constância e cara de profissional.",
     price: 1490,
+    monthly: [
+      { n: 12, label: "posts" },
+      { n: 1, label: "calendários editoriais" },
+      { n: 1, label: "reuniões de pauta" },
+      { n: 1, label: "relatórios" },
+    ],
     features: [
       "12 posts por mês (feed e carrossel)",
       "Calendário editorial mensal",
@@ -267,6 +275,12 @@ export const plans: Plan[] = [
     tagline: "Pra quem quer transformar seguidor em cliente.",
     price: 2690,
     featured: true,
+    monthly: [
+      { n: 16, label: "posts" },
+      { n: 12, label: "stories" },
+      { n: 4, label: "roteiros de reels" },
+      { n: 2, label: "reuniões" },
+    ],
     features: [
       "16 posts por mês (feed e carrossel)",
       "12 stories por mês",
@@ -281,6 +295,12 @@ export const plans: Plan[] = [
     name: "Completo",
     tagline: "Conteúdo, comunidade e anúncios num lugar só.",
     price: 4290,
+    monthly: [
+      { n: 20, label: "posts" },
+      { n: 20, label: "stories" },
+      { n: 8, label: "roteiros de reels" },
+      { n: 4, label: "reuniões" },
+    ],
     features: [
       "20 posts por mês (feed e carrossel)",
       "20 stories por mês",

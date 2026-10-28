@@ -360,6 +360,12 @@ section{position:relative}
 .plan-list{list-style:none;margin:0;padding:0;font-size:15.5px}
 .plan-list li{position:relative;padding:5px 0 5px 20px}
 .plan-list li::before{content:"";position:absolute;left:0;top:15px;width:9px;height:2px;background:var(--pink)}
+.plan-six{grid-column:1/-1;margin:0;padding:18px 20px;border-radius:14px;background:linear-gradient(120deg,rgba(229,25,122,.16),rgba(63,18,120,.28));border:1px solid rgba(255,85,167,.28);animation:fade .6s var(--ease) both}
+.plan-six-h{margin:0 0 10px;font-size:14px;font-weight:600;color:var(--pink)}
+.plan-six ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.plan-six li{display:grid;gap:2px}
+.plan-six strong{font-size:clamp(32px,3vw,46px);font-weight:700;letter-spacing:-.04em;line-height:1;font-variant-numeric:tabular-nums}
+.plan-six span{font-size:14px;color:var(--dim-d)}
 .plan-more{display:none;justify-self:start;padding:0;border:0;background:none;color:var(--pink);font-weight:600;font-size:15px;text-decoration:underline;text-underline-offset:5px;cursor:pointer}
 .plan-price{display:flex;flex-direction:column;align-items:flex-end;text-align:right}
 .plan-was{color:var(--dim-d);font-size:15px}
@@ -475,6 +481,7 @@ section{position:relative}
   .pp-price{grid-column:1}
   .pp-cta{grid-column:2;grid-row:2/4;align-self:center}
   .plan{grid-template-columns:1fr;gap:12px;padding:26px 0}
+  .plan-six ul{grid-template-columns:repeat(2,minmax(0,1fr))}
   .plan-list li:nth-child(n+4){display:none}
   .plan[data-expanded] .plan-list li{display:block}
   .plan-more{display:inline-block}

@@ -113,6 +113,21 @@ export function Pricing() {
                     Quero esse plano
                   </a>
                 </div>
+                {billing === "semestral" && (
+                  <div className="plan-six" aria-label={`Em 6 meses: ${p.monthly.map((m) => `${m.n * 6} ${m.label}`).join(", ")}`}>
+                    <p className="plan-six-h">Em 6 meses você recebe</p>
+                    <ul aria-hidden="true">
+                      {p.monthly.map((m) => (
+                        <li key={m.label}>
+                          <strong>
+                            <AnimatedNumber value={m.n * 6} />
+                          </strong>
+                          <span>{m.label}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
               </article>
             );
           })}
