@@ -34,14 +34,6 @@ export function Hero() {
       <div className="hero-pin">
         <Moon className="hero-moon" layout={layout} getPhase={getPhase} stars />
         <div className="wrap hero-frame">
-          <div className="hero-top label">
-            <span className="hero-fade">Agência criativa · Branding, design e social</span>
-            {site.agenda.open && (
-              <span className="hero-fade">
-                Agenda aberta · {site.agenda.month} {site.agenda.year}
-              </span>
-            )}
-          </div>
           <div className="hero-bottom">
             <h1 id="hero-title" className="h hero-title" aria-label={site.tagline}>
               <span className="hl hl-1" aria-hidden="true">

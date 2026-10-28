@@ -50,6 +50,11 @@ export function Footer() {
                   Instagram
                 </a>
               </li>
+              <li>
+                <a className="ul" href={c.behance.href} target="_blank" rel="noopener noreferrer">
+                  Behance
+                </a>
+              </li>
             </ul>
           </div>
         </div>

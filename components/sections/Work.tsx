@@ -1,6 +1,12 @@
 import Link from "next/link";
-import { projects } from "@/content/site";
+import { projects, site } from "@/content/site";
 import { Media } from "../Placeholder";
+
+const sizes = {
+  tall: "(max-width: 1000px) 100vw, 640px",
+  wide: "(max-width: 1000px) 100vw, 600px",
+  half: "(max-width: 1000px) 100vw, 640px",
+};
 
 export function Work() {
   return (
@@ -16,16 +22,11 @@ export function Work() {
           <p className="lead rv">Alguns projetos que saíram daqui. Cada um começou com uma conversa.</p>
         </div>
         <div className="cases-grid">
-          {projects.map((pr) => (
+          {projects.map((pr, i) => (
             <Link className={`case rv case-${pr.layout}`} href={`/trabalhos/${pr.slug}`} key={pr.slug}>
               <div className="case-img">
-                <div className="case-par" data-speed="-0.07">
-                  <Media
-                  src={pr.image}
-                  alt={pr.title}
-                  label={pr.layout === "tall" ? "Foto do projeto principal · 4:5" : "Foto do projeto · 16:10"}
-                  sizes={pr.layout === "tall" ? "(max-width: 1000px) 100vw, 640px" : "(max-width: 1000px) 100vw, 600px"}
-                  />
+                <div className="case-par" data-speed="-0.06">
+                  <Media src={pr.image} alt={pr.title} label="Capa do projeto" sizes={sizes[pr.layout]} priority={i === 0} />
                 </div>
               </div>
               <div className="case-meta">
@@ -33,12 +34,17 @@ export function Work() {
                   <span className="ul">{pr.title}</span>
                 </h3>
                 <span className="label">
-                  {pr.services.join(" · ")}
-                  {pr.services.length < 2 ? ` · ${pr.year}` : ""}
+                  {pr.services.slice(0, 2).join(" · ")} · {pr.year}
                 </span>
               </div>
             </Link>
           ))}
+        </div>
+        <div className="work-more rv">
+          <p>Tem mais trabalho no nosso Behance.</p>
+          <a className="btn btn-g" href={site.contact.behance.href} target="_blank" rel="noopener noreferrer">
+            Ver no Behance <span className="arr" aria-hidden="true">↗</span>
+          </a>
         </div>
       </div>
     </section>

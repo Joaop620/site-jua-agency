@@ -16,6 +16,10 @@ npm run build    # build de produção
 
 Tudo que é texto editável (projetos, serviços, processo, sinais do diagnóstico, depoimento, contato e mês da agenda) está em **`content/site.ts`**. O layout fica em `components/sections/*.tsx`.
 
+## Projetos
+
+Os cinco projetos em `content/site.ts` vêm do portfólio da Lua ([GitHub](https://github.com/Joaop620/lua-design-portfolio) · [Behance](https://www.behance.net/rlua)). As capas são carregadas direto do CDN do Behance (liberado em `next.config.ts`) e cada case tem o link para o projeto completo. Para adicionar um projeto, copie um item da lista e troque título, serviços, ano, imagem e `href`.
+
 ## Imagens
 
 Coloque os arquivos em `public/images/` e aponte o caminho em `content/site.ts`. Enquanto o campo `image` estiver vazio, o site mostra um placeholder no tamanho certo.
