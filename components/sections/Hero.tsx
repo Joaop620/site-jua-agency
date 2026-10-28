@@ -56,8 +56,8 @@ export function Hero() {
                 <a className="btn btn-p" href="#contato">
                   Agendar uma conversa <span className="arr" aria-hidden="true">→</span>
                 </a>
-                <a className="btn btn-g" href="#servicos">
-                  Ver serviços
+                <a className="btn btn-g" href="#planos">
+                  Ver planos e preços
                 </a>
               </div>
             </div>

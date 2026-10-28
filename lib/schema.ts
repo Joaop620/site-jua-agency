@@ -7,6 +7,7 @@ export const contactSchema = z.object({
   empresa: z.string().trim().max(200).optional().default(""),
   servicos: z.array(z.enum(formServices as [string, ...string[]])).max(formServices.length).default([]),
   mensagem: z.string().trim().max(4000).optional().default(""),
+  plano: z.string().trim().max(80).optional().default(""),
   // honeypot: precisa chegar vazio
   site: z.string().max(500).optional().default(""),
 });

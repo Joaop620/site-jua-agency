@@ -1,17 +1,55 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { formServices } from "@/content/site";
 import { JuaSymbol } from "../JuaSymbol";
 
 type Status = "idle" | "loading" | "sent" | "error";
 type Errors = Partial<Record<"nome" | "email", string>>;
 
+const DRAFT = "jua-contato";
+const FIELDS = ["nome", "email", "empresa", "mensagem"] as const;
+
 export function ContactForm() {
   const [status, setStatus] = useState<Status>("idle");
   const [picked, setPicked] = useState<string[]>([]);
   const [errors, setErrors] = useState<Errors>({});
   const [msg, setMsg] = useState("");
+  const [plano, setPlano] = useState("");
+  const form = useRef<HTMLFormElement>(null);
+
+  // plano escolhido na seção de preços
+  useEffect(() => {
+    const on = (e: Event) => setPlano((e as CustomEvent<string>).detail);
+    addEventListener("jua:plan", on);
+    return () => removeEventListener("jua:plan", on);
+  }, []);
+
+  // rascunho: se a pessoa sair e voltar, o que ela digitou continua lá
+  useEffect(() => {
+    try {
+      const d = JSON.parse(localStorage.getItem(DRAFT) || "null");
+      if (!d || !form.current) return;
+      for (const f of FIELDS) {
+        const el = form.current.elements.namedItem(f) as HTMLInputElement | null;
+        if (el && d[f] && !el.value) el.value = d[f];
+      }
+      if (Array.isArray(d.servicos)) setPicked((p) => (p.length ? p : d.servicos));
+      if (d.plano) setPlano((p) => p || d.plano);
+    } catch {}
+  }, []);
+
+  const saveDraft = () => {
+    if (!form.current) return;
+    const fd = new FormData(form.current);
+    const d: Record<string, unknown> = { servicos: picked, plano };
+    for (const f of FIELDS) d[f] = String(fd.get(f) ?? "");
+    try {
+      localStorage.setItem(DRAFT, JSON.stringify(d));
+    } catch {}
+  };
+
+  useEffect(saveDraft, [picked, plano]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     const on = (e: Event) => {
@@ -34,6 +72,7 @@ export function ContactForm() {
       mensagem: String(fd.get("mensagem") ?? ""),
       site: String(fd.get("site") ?? ""),
       servicos: picked,
+      plano,
     };
     const errs: Errors = {};
     if (!data.nome.trim()) errs.nome = "Conta pra gente como te chamar.";
@@ -55,6 +94,9 @@ export function ContactForm() {
         throw new Error(body.error || "Não foi possível enviar.");
       }
       setStatus("sent");
+      try {
+        localStorage.removeItem(DRAFT);
+      } catch {}
     } catch (err) {
       setMsg(err instanceof Error ? err.message : "Não foi possível enviar.");
       setStatus("error");
@@ -72,7 +114,7 @@ export function ContactForm() {
   }
 
   return (
-    <form className="form rv" onSubmit={submit} noValidate aria-busy={status === "loading"}>
+    <form className="form rv" ref={form} onSubmit={submit} onInput={saveDraft} noValidate aria-busy={status === "loading"}>
       <h3>Vamos conversar</h3>
       <p className="sub">Sem compromisso e sem enrolação.</p>
       <div className="f-row">
@@ -120,6 +162,16 @@ export function ContactForm() {
         <label htmlFor="fs">Deixe em branco</label>
         <input id="fs" name="site" tabIndex={-1} autoComplete="off" />
       </div>
+      {plano && (
+        <div className="plan-pick" role="status">
+          <span>
+            <span className="label">Escolha</span> {plano}
+          </span>
+          <button type="button" onClick={() => setPlano("")} aria-label="Remover escolha">
+            ×
+          </button>
+        </div>
+      )}
       <fieldset className="field">
         <legend className="lab">O que você precisa?</legend>
         <div className="chips">

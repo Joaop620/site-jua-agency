@@ -8,6 +8,10 @@ import { Process } from "@/components/sections/Process";
 import { Work } from "@/components/sections/Work";
 import { Diagnostic } from "@/components/sections/Diagnostic";
 import { Testimonial } from "@/components/sections/Testimonial";
+import { Pricing } from "@/components/sections/Pricing";
+import { Faq } from "@/components/sections/Faq";
+import { WhatsAppButton } from "@/components/WhatsAppButton";
+import { StructuredData } from "@/components/StructuredData";
 import { Contact } from "@/components/sections/Contact";
 import { Footer } from "@/components/sections/Footer";
 
@@ -26,9 +30,13 @@ export default function Home() {
         <Work />
         <Diagnostic />
         <Testimonial />
+        <Pricing />
+        <Faq />
         <Contact />
       </main>
       <Footer />
+      <WhatsAppButton />
+      <StructuredData />
     </>
   );
 }

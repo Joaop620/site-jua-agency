@@ -7,6 +7,24 @@ import { Logo } from "../Logo";
 export function Nav() {
   const [open, setOpen] = useState(false);
   const [solid, setSolid] = useState(false);
+  const [active, setActive] = useState("");
+
+  // marca no menu a seção que está na tela
+  useEffect(() => {
+    const ids = nav.map((l) => l.href.slice(1));
+    const els = ids.map((id) => document.getElementById(id)).filter(Boolean) as HTMLElement[];
+    const io = new IntersectionObserver(
+      (entries) =>
+        entries.forEach((e) => {
+          if (e.isIntersecting) setActive(e.target.id);
+          else if (e.target.id === active) setActive("");
+        }),
+      { rootMargin: "-45% 0px -50% 0px" }
+    );
+    els.forEach((el) => io.observe(el));
+    return () => io.disconnect();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     const on = () => setSolid(scrollY > 24);
@@ -30,7 +48,7 @@ export function Nav() {
           <ul className="nav-links">
             {nav.map((l) => (
               <li key={l.href}>
-                <a className="ul" href={l.href}>
+                <a className="ul" href={l.href} aria-current={active === l.href.slice(1) ? "location" : undefined}>
                   {l.label}
                 </a>
               </li>

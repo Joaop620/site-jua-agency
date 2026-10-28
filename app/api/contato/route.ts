@@ -31,6 +31,7 @@ export async function POST(req: Request) {
     ["E-mail", d.email],
     ["Empresa / Instagram", d.empresa || "—"],
     ["Serviços", d.servicos.join(", ") || "—"],
+    ["Plano / projeto", d.plano || "—"],
     ["Mensagem", d.mensagem || "—"],
   ];
   // API REST do Resend (https://resend.com/docs/api-reference/emails/send-email)

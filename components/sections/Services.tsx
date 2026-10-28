@@ -49,6 +49,9 @@ export function Services() {
                     <PickLink className="btn btn-d" pick={s.pick}>
                       Quero esse <span className="arr" aria-hidden="true">→</span>
                     </PickLink>
+                    <a className="svc-price ul" href="#planos">
+                      Ver preços
+                    </a>
                   </div>
                 </div>
               </article>

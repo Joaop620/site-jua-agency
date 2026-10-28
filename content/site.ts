@@ -37,7 +37,8 @@ export const nav = [
   { href: "#servicos", label: "Serviços" },
   { href: "#processo", label: "Processo" },
   { href: "#trabalhos", label: "Trabalhos" },
-  { href: "#diagnostico", label: "Diagnóstico" },
+  { href: "#planos", label: "Planos" },
+  { href: "#duvidas", label: "Dúvidas" },
 ];
 
 export const attributes = [
@@ -83,10 +84,10 @@ export const services = [
 ];
 
 export const phases = [
-  { phase: 1 as const, title: "Imersão", sub: "a gente escuta antes de desenhar.", text: "Conversamos com você, olhamos seus números, seus clientes e seus concorrentes." },
-  { phase: 2 as const, title: "Estratégia", sub: "o mapa antes da viagem.", text: "Posicionamento, público, tom de voz e mensagem principal, tudo documentado." },
-  { phase: 3 as const, title: "Design", sub: "a parte que todo mundo vê.", text: "Logo, paleta, tipografia, aplicações e manual. Bonito e construído sobre a estratégia." },
-  { phase: 4 as const, title: "Lançamento", sub: "e a gente mede o que importa.", text: "Marca na rua com conteúdo e site, acompanhando resultados e ajustando o que for preciso." },
+  { phase: 1 as const, title: "Imersão", sub: "a gente escuta antes de desenhar.", text: "Conversamos com você, olhamos seus números, seus clientes e seus concorrentes.", time: "Semana 1" },
+  { phase: 2 as const, title: "Estratégia", sub: "o mapa antes da viagem.", text: "Posicionamento, público, tom de voz e mensagem principal, tudo documentado.", time: "Semanas 2 e 3" },
+  { phase: 3 as const, title: "Design", sub: "a parte que todo mundo vê.", text: "Logo, paleta, tipografia, aplicações e manual. Bonito e construído sobre a estratégia.", time: "Semanas 3 a 6" },
+  { phase: 4 as const, title: "Lançamento", sub: "e a gente mede o que importa.", text: "Marca na rua com conteúdo e site, acompanhando resultados e ajustando o que for preciso.", time: "Contínuo" },
 ];
 
 // Projetos do portfólio da Lua (github.com/Joaop620/lua-design-portfolio · behance.net/rlua)
@@ -163,3 +164,118 @@ export const testimonial = {
 };
 
 export const formServices = ["Branding", "Identidade visual", "Social media", "Site", "Tudo junto"];
+
+// ---------- Planos e preços ----------
+// Valores de referência (pesquisa de mercado BR 2026). Ajuste à vontade.
+
+/** Desconto aplicado na contratação semestral dos planos mensais */
+export const semesterDiscount = 0.1;
+
+export type Plan = {
+  id: string;
+  name: string;
+  tagline: string;
+  /** preço mensal em reais, no plano mensal */
+  price: number;
+  featured?: boolean;
+  features: string[];
+};
+
+export const plans: Plan[] = [
+  {
+    id: "essencial",
+    name: "Essencial",
+    tagline: "Pra marca aparecer com constância e cara de profissional.",
+    price: 1490,
+    features: [
+      "12 posts por mês (feed e carrossel)",
+      "Calendário editorial mensal",
+      "Legendas e hashtags",
+      "1 reunião de pauta por mês",
+      "Relatório mensal simples",
+    ],
+  },
+  {
+    id: "crescimento",
+    name: "Crescimento",
+    tagline: "Pra quem quer transformar seguidor em cliente.",
+    price: 2690,
+    featured: true,
+    features: [
+      "16 posts por mês (feed e carrossel)",
+      "12 stories por mês",
+      "4 roteiros de reels",
+      "Estratégia de conteúdo trimestral",
+      "Relatório com métricas e próximos passos",
+      "Reunião quinzenal",
+    ],
+  },
+  {
+    id: "completo",
+    name: "Completo",
+    tagline: "Conteúdo, comunidade e anúncios num lugar só.",
+    price: 4290,
+    features: [
+      "20 posts por mês (feed e carrossel)",
+      "20 stories por mês",
+      "8 roteiros de reels",
+      "Resposta a comentários e directs (dias úteis)",
+      "Gestão de anúncios (verba à parte)",
+      "Relatório completo e reunião semanal",
+    ],
+  },
+];
+
+/** Linhas da tabela de comparação: [item, essencial, crescimento, completo] */
+export const planCompare: [string, string, string, string][] = [
+  ["Posts no feed", "12", "16", "20"],
+  ["Stories", "—", "12", "20"],
+  ["Roteiros de reels", "—", "4", "8"],
+  ["Calendário editorial", "✓", "✓", "✓"],
+  ["Estratégia de conteúdo", "Mensal", "Trimestral", "Trimestral"],
+  ["Gestão de comunidade", "—", "—", "✓"],
+  ["Gestão de anúncios", "—", "—", "✓"],
+  ["Reuniões", "Mensal", "Quinzenal", "Semanal"],
+  ["Relatório", "Simples", "Com métricas", "Completo"],
+];
+
+export type ProjectPrice = { name: string; text: string; from: number; time: string; pick: string };
+
+export const projectPrices: ProjectPrice[] = [
+  { name: "Identidade visual", text: "Logo, variações, paleta, tipografia, aplicações e manual de marca.", from: 3900, time: "4 a 6 semanas", pick: "Identidade visual" },
+  { name: "Branding completo", text: "Imersão, posicionamento, tom de voz e identidade visual completa.", from: 6900, time: "6 a 8 semanas", pick: "Branding" },
+  { name: "Landing page", text: "Uma página de venda com textos, design responsivo e publicação.", from: 2900, time: "2 a 3 semanas", pick: "Site" },
+  { name: "Site institucional", text: "Até 6 páginas, textos, design, desenvolvimento e métricas.", from: 5900, time: "4 a 6 semanas", pick: "Site" },
+];
+
+// ---------- Dúvidas frequentes ----------
+export const faq = [
+  {
+    q: "Quanto tempo leva um projeto de identidade visual?",
+    a: "Entre 4 e 6 semanas, contando imersão, estratégia, design e manual. O prazo exato entra na proposta, e a gente cumpre.",
+  },
+  {
+    q: "Como funciona o pagamento?",
+    a: "Projetos são divididos em até 3 parcelas: entrada, entrega da proposta visual e entrega final. Planos mensais são cobrados todo mês, e o semestral sai 10% mais barato.",
+  },
+  {
+    q: "Tem fidelidade nos planos mensais?",
+    a: "O plano mensal pode ser cancelado com 30 dias de aviso. O semestral tem o desconto justamente pelo compromisso de 6 meses.",
+  },
+  {
+    q: "Quantas rodadas de ajuste estão incluídas?",
+    a: "Duas rodadas em cada etapa do projeto. Nos planos mensais, cada peça pode ser ajustada antes de ir pro ar.",
+  },
+  {
+    q: "A verba de anúncios está incluída no plano Completo?",
+    a: "Não. A gestão das campanhas está incluída; a verba é paga direto pra plataforma (Meta ou Google) e você define o valor.",
+  },
+  {
+    q: "Vocês atendem fora de São Paulo?",
+    a: "Sim. O trabalho é todo remoto, com reuniões por vídeo, então atendemos marcas do Brasil inteiro.",
+  },
+  {
+    q: "Posso começar só por um serviço?",
+    a: "Pode. Muita gente começa pela identidade e depois parte pro conteúdo. A gente ajuda a decidir a ordem que faz mais sentido pro seu momento.",
+  },
+];

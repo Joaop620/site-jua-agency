@@ -61,7 +61,10 @@ export function Process() {
                   steps.current[i] = n;
                 }}
               >
-                <div className="it num">0{i + 1}</div>
+                <div className="step-top">
+                  <span className="it num">0{i + 1}</span>
+                  <span className="step-time label">{ph.time}</span>
+                </div>
                 <h3>{ph.title}</h3>
                 <p className="it sub">{ph.sub}</p>
                 <p>{ph.text}</p>
