@@ -426,6 +426,20 @@ section{position:relative}
 .mnav-foot{display:grid;gap:14px;margin-top:32px}
 .mnav .mnav-foot a{padding:0;border:0;font-size:16px;font-weight:500;letter-spacing:0;line-height:1.4;color:var(--dim-d)}
 
+/* ---------- promoção de inauguração ---------- */
+.promo-tag{display:inline-grid;place-items:center;padding:3px 9px;border-radius:999px;background:var(--mag);color:var(--paper);font-size:13px;font-weight:700;letter-spacing:-.01em;white-space:nowrap}
+.promo{display:flex;align-items:center;gap:16px;margin:-24px 0 28px;padding:16px 20px;border-radius:16px;border:1px solid rgba(255,85,167,.3);background:rgba(229,25,122,.09)}
+.promo p{margin:0;font-size:16px;color:var(--dim-d)}
+.promo strong{color:var(--paper)}
+.promo + .bill{margin-top:0}
+.plan-was{margin:0 0 2px;color:var(--dim-d);font-size:15px;font-variant-numeric:tabular-nums}
+.plan[data-featured] .plan-was{color:var(--dim-l)}
+.pp-was{font-size:14px;font-weight:500;letter-spacing:0;color:var(--dim-d)}
+.hero-promo{display:inline-flex;align-items:center;gap:10px;margin-bottom:28px;padding:6px 16px 6px 6px;border-radius:999px;border:1px solid var(--line-d);background:rgba(10,6,32,.5);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);font-size:14.5px;font-weight:500;color:var(--paper);transition:border-color .25s}
+.hero-promo:hover{border-color:rgba(255,85,167,.6)}
+.hero-promo .arr{transition:transform .35s var(--ease)}
+.hero-promo:hover .arr{transform:translateX(3px)}
+
 @media (max-width:1000px){
   .nav-links,.nav-cta .btn{display:none}.nav-toggle{display:grid}
   .hero-moon{transform-origin:50% 38%}
@@ -462,6 +476,8 @@ section{position:relative}
   .compare{max-width:100%}
   .compare-scroll{max-width:calc(100vw - 2 * var(--pad))}
   .wa span{display:none}
+  .promo{align-items:flex-start}
+  .hero-promo{font-size:13.5px}
   .wa{padding:14px}
   .bill{margin-top:-8px}
   .attrs-in{grid-template-columns:1fr}.attr{border-left:0!important;padding:32px 0 36px!important;border-top:1px solid var(--line-d)}.attr:first-child{border-top:0}

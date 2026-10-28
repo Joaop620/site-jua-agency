@@ -171,6 +171,21 @@ export const formServices = ["Branding", "Identidade visual", "Social media", "S
 /** Desconto aplicado na contratação semestral dos planos mensais */
 export const semesterDiscount = 0.1;
 
+/**
+ * Promoção de inauguração: desconto sobre todos os preços (planos e projetos).
+ * Para encerrar, troque `active` para false e os preços cheios voltam sozinhos.
+ */
+export const launchPromo = {
+  active: true,
+  discount: 0.2,
+  label: "Preço de inauguração",
+  until: "contratos fechados até 31 de dezembro",
+};
+
+/** Preço com a promoção aplicada, arredondado para a dezena. */
+export const promoPrice = (price: number) =>
+  launchPromo.active ? Math.round((price * (1 - launchPromo.discount)) / 10) * 10 : price;
+
 export type Plan = {
   id: string;
   name: string;

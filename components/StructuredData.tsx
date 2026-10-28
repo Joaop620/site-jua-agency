@@ -1,4 +1,4 @@
-import { faq, plans, projectPrices, site } from "@/content/site";
+import { faq, plans, projectPrices, promoPrice, site } from "@/content/site";
 
 /** Dados estruturados (schema.org) para o Google entender a agência, os preços e as dúvidas. */
 export function StructuredData() {
@@ -18,14 +18,14 @@ export function StructuredData() {
         ...plans.map((p) => ({
           "@type": "Offer",
           name: `Social media · ${p.name}`,
-          price: p.price,
+          price: promoPrice(p.price),
           priceCurrency: "BRL",
-          priceSpecification: { "@type": "UnitPriceSpecification", price: p.price, priceCurrency: "BRL", unitText: "MONTH" },
+          priceSpecification: { "@type": "UnitPriceSpecification", price: promoPrice(p.price), priceCurrency: "BRL", unitText: "MONTH" },
         })),
         ...projectPrices.map((p) => ({
           "@type": "Offer",
           name: p.name,
-          priceSpecification: { "@type": "PriceSpecification", minPrice: p.from, priceCurrency: "BRL" },
+          priceSpecification: { "@type": "PriceSpecification", minPrice: promoPrice(p.from), priceCurrency: "BRL" },
         })),
       ],
     },

@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { site } from "@/content/site";
+import { launchPromo, site } from "@/content/site";
 import { Moon, type MoonLayout } from "../Moon";
 import { useScrollProgress } from "../useScrollProgress";
 
@@ -32,6 +32,12 @@ export function Hero() {
         <Moon className="hero-moon" layout={layout} getPhase={getPhase} stars />
         <div className="wrap hero-frame">
           <div className="hero-bottom">
+            {launchPromo.active && (
+              <a className="hero-promo hero-fade" href="#planos">
+                <span className="promo-tag">−{Math.round(launchPromo.discount * 100)}%</span>
+                {launchPromo.label} em todos os planos <span className="arr" aria-hidden="true">→</span>
+              </a>
+            )}
             <h1 id="hero-title" className="h hero-title" aria-label={site.tagline}>
               <span className="hl hl-1" aria-hidden="true">
                 <span className="hl-in">Bonito.</span>

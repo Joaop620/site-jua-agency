@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { planCompare, plans, projectPrices, semesterDiscount } from "@/content/site";
+import { launchPromo, planCompare, plans, projectPrices, promoPrice, semesterDiscount } from "@/content/site";
 import { AnimatedNumber } from "../AnimatedNumber";
 
 type Billing = "mensal" | "semestral";
@@ -24,6 +24,7 @@ export function Pricing() {
   const [billing, setBilling] = useState<Billing>("mensal");
   const factor = billing === "semestral" ? 1 - semesterDiscount : 1;
   const off = Math.round(semesterDiscount * 100);
+  const promoOff = Math.round(launchPromo.discount * 100);
 
   return (
     <section className="sec pricing" id="planos" aria-labelledby="price-title">
@@ -40,6 +41,16 @@ export function Pricing() {
             com uma conversa.
           </p>
         </div>
+
+        {launchPromo.active && (
+          <div className="promo rv">
+            <span className="promo-tag">−{promoOff}%</span>
+            <p>
+              <strong>{launchPromo.label}.</strong> {promoOff}% de desconto em todos os planos e projetos, para{" "}
+              {launchPromo.until}.
+            </p>
+          </div>
+        )}
 
         <div className="bill rv" role="group" aria-label="Forma de contratação">
           <div className="bill-switch" data-on={billing}>
@@ -60,7 +71,8 @@ export function Pricing() {
 
         <div className="plans">
           {plans.map((p, i) => {
-            const month = Math.round(p.price * factor);
+            const base = promoPrice(p.price);
+            const month = Math.round(base * factor);
             const label = `${p.name} (${billing})`;
             return (
               <article className="plan rv" key={p.id} data-featured={p.featured || undefined} style={{ ["--d" as string]: i }}>
@@ -69,6 +81,12 @@ export function Pricing() {
                   {p.featured && <span className="plan-tag label">Recomendado</span>}
                 </div>
                 <p className="plan-line">{p.tagline}</p>
+                {(launchPromo.active || billing === "semestral") && (
+                  <p className="plan-was">
+                    <span className="sr">Antes:</span>
+                    <s>R$ {brl.format(p.price)}</s>
+                  </p>
+                )}
                 <p className="plan-price">
                   <span className="cur">R$</span>
                   <span className="num">
@@ -79,10 +97,10 @@ export function Pricing() {
                 <p className="plan-sub label">
                   {billing === "semestral" ? (
                     <>
-                      <s>R$ {brl.format(p.price)}</s> · R$ {brl.format(month * 6)} no semestre
+                      R$ {brl.format(month * 6)} no semestre
                     </>
                   ) : (
-                    "Cobrado todo mês"
+                    launchPromo.active ? `${launchPromo.label}, cobrado todo mês` : "Cobrado todo mês"
                   )}
                 </p>
                 <a className={`btn ${p.featured ? "btn-d" : "btn-g"}`} href="#contato" onClick={() => choose(label, "Social media")}>
@@ -167,7 +185,12 @@ export function Pricing() {
                 <span className="pp-time label">{p.time}</span>
                 <p className="pp-price">
                   <span className="label">a partir de</span>
-                  R$ {brl.format(p.from)}
+                  {launchPromo.active && (
+                    <s className="pp-was">
+                      <span className="sr">Antes:</span> R$ {brl.format(p.from)}
+                    </s>
+                  )}
+                  R$ {brl.format(promoPrice(p.from))}
                 </p>
                 <a className="pp-cta" href="#contato" onClick={() => choose(p.name, p.pick)} aria-label={`Pedir proposta de ${p.name}`}>
                   <span aria-hidden="true">→</span>
