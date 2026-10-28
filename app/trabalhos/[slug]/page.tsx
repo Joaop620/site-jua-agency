@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { projects } from "@/content/site";
-import { Logo } from "@/components/Logo";
+import { JuaSymbol } from "@/components/JuaSymbol";
 import { Media } from "@/components/Placeholder";
 import { Footer } from "@/components/sections/Footer";
 
@@ -33,10 +33,15 @@ export default async function CasePage({ params }: Params) {
 
   return (
     <>
-      <header className="nav" data-solid>
-        <div className="wrap nav-bar">
-          <Logo />
-          <Link className="btn btn-g btn-sm" href="/#trabalhos">
+      <header className="nav">
+        <div className="nav-pill">
+          <Link className="nav-logo" href="/" aria-label="Juá Agency, início">
+            <JuaSymbol size={28} />
+            <span>
+              Juá <i>Agency</i>
+            </span>
+          </Link>
+          <Link className="nav-cta nav-back" href="/#trabalhos">
             ← Todos os trabalhos
           </Link>
         </div>
