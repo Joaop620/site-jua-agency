@@ -34,7 +34,7 @@ export const site = {
   name: "Juá Agency",
   tagline: "Bonito. Estratégico. Vende.",
   description:
-    "Estúdio de branding, identidade visual, social media e sites. Design bonito, estratégia clara e resultado que dá pra medir.",
+    "Estúdio de branding, identidade visual, social media e sites em Ji-Paraná (RO). Design com estratégia e resultados mensuráveis.",
   // o mês e o ano da agenda são calculados na hora (mês atual)
   agenda: { open: true },
   contact: {
@@ -54,10 +54,10 @@ export const nav = [
 ];
 
 export const attributes = [
-  { title: "Confiável", text: "Cada decisão tem um porquê, e a gente explica qual é." },
-  { title: "Premium", text: "Tipografia, cor e acabamento escolhidos com cuidado editorial." },
-  { title: "Direta", text: "Sem rodeio. A gente promete o que dá pra cumprir, e cumpre." },
-  { title: "Noturna", text: "Trabalhamos enquanto outras agências dormem." },
+  { title: "Confiável", text: "Toda decisão tem um motivo, e você sabe qual é." },
+  { title: "Premium", text: "Tipografia, cor e acabamento tratados com cuidado editorial." },
+  { title: "Direta", text: "Prometemos apenas o que podemos cumprir. E cumprimos." },
+  { title: "Dedicada", text: "Poucos clientes por vez, com atenção real a cada marca." },
 ];
 
 export const services = [
@@ -65,7 +65,7 @@ export const services = [
     n: "i.",
     area: "Estratégia",
     title: "Branding & posicionamento",
-    text: "Quem você é, pra quem fala e por que alguém deveria escolher você.",
+    text: "Quem é a sua marca, com quem ela fala e por que deve ser a escolhida.",
     items: ["Imersão no negócio", "Pesquisa de público e concorrência", "Posicionamento e proposta de valor", "Tom de voz e mensagens-chave"],
     pick: "Branding",
   },
@@ -73,7 +73,7 @@ export const services = [
     n: "ii.",
     area: "Design",
     title: "Identidade visual",
-    text: "Logo, cores, tipografia e um manual pra marca ficar igual em qualquer lugar.",
+    text: "Logo, cores, tipografia e um manual que mantém a marca consistente em qualquer aplicação.",
     items: ["Logotipo e variações", "Paleta e tipografia", "Aplicações: papelaria, redes, embalagem", "Manual de marca"],
     pick: "Identidade visual",
   },
@@ -81,7 +81,7 @@ export const services = [
     n: "iii.",
     area: "Conteúdo",
     title: "Social media",
-    text: "Conteúdo planejado pra atrair as pessoas certas e transformar seguidor em cliente.",
+    text: "Conteúdo planejado para atrair o público certo e transformar seguidores em clientes.",
     items: ["Estratégia e calendário editorial", "Posts, carrosséis e stories", "Roteiros de reels", "Relatório mensal de resultados"],
     pick: "Social media",
   },
@@ -89,17 +89,17 @@ export const services = [
     n: "iv.",
     area: "Digital",
     title: "Sites & landing pages",
-    text: "Páginas bonitas que guiam o visitante até o pedido de orçamento.",
+    text: "Páginas que conduzem o visitante, com clareza, até o pedido de orçamento.",
     items: ["Arquitetura e textos", "Design responsivo", "Desenvolvimento e publicação", "Métricas e ajustes"],
     pick: "Site",
   },
 ];
 
 export const phases = [
-  { phase: 1 as const, title: "Imersão", sub: "a gente escuta antes de desenhar.", text: "Conversamos com você, olhamos seus números, seus clientes e seus concorrentes.", time: "Semana 1" },
+  { phase: 1 as const, title: "Imersão", sub: "ouvir antes de desenhar.", text: "Entrevistas, análise de números, clientes e concorrentes.", time: "Semana 1" },
   { phase: 2 as const, title: "Estratégia", sub: "o mapa antes da viagem.", text: "Posicionamento, público, tom de voz e mensagem principal, tudo documentado.", time: "Semanas 2 e 3" },
-  { phase: 3 as const, title: "Design", sub: "a parte que todo mundo vê.", text: "Logo, paleta, tipografia, aplicações e manual. Bonito e construído sobre a estratégia.", time: "Semanas 3 a 6" },
-  { phase: 4 as const, title: "Lançamento", sub: "e a gente mede o que importa.", text: "Marca na rua com conteúdo e site, acompanhando resultados e ajustando o que for preciso.", time: "Contínuo" },
+  { phase: 3 as const, title: "Design", sub: "a parte que todos veem.", text: "Logo, paleta, tipografia, aplicações e manual, construídos sobre a estratégia.", time: "Semanas 3 a 6" },
+  { phase: 4 as const, title: "Lançamento", sub: "e a medição do que importa.", text: "Marca no ar com conteúdo e site, acompanhamento de resultados e ajustes contínuos.", time: "Contínuo" },
 ];
 
 // Projetos do portfólio da Lua (github.com/Joaop620/lua-design-portfolio · behance.net/rlua)
@@ -121,15 +121,15 @@ export const projects: Project[] = [
     details: [
       {
         label: "Desafio",
-        text: "Reunir num lugar só a história do coletivo, os sete filmes, as ações culturais e o certificado de Ponto de Cultura, de um jeito que funcionasse bem no celular, onde o público deles está.",
+        text: "Reunir em um só lugar a história do coletivo, os sete filmes, as ações culturais e o certificado de Ponto de Cultura, com ótima experiência no celular, onde está o público deles.",
       },
       {
         label: "O que fizemos",
-        text: "Arquitetura e textos, design com tipografia marcante e as cores das linguagens do coletivo, vídeo de apresentação de 2 minutos, galeria das ações com 21 fotos e o certificado com link de conferência. Leve de propósito: abre rápido até com a internet fraca do interior.",
+        text: "Arquitetura e textos, design com tipografia marcante e as cores das linguagens do coletivo, vídeo de apresentação de 2 minutos, galeria com 21 fotos das ações e certificado com link de verificação. Site leve, que abre rápido mesmo com conexão fraca.",
       },
       {
         label: "Resultado",
-        text: "Site no ar com domínio próprio, acessível e pronto pra compartilhar: o coletivo colocou o link na bio do Instagram no mesmo dia da entrega.",
+        text: "Site publicado com domínio próprio, acessível e pronto para compartilhar. O coletivo incluiu o link na bio do Instagram no mesmo dia da entrega.",
       },
     ],
     screens: ["/images/respirartes/desktop-filmes-v2.jpg", "/images/respirartes/desktop-acoes-v2.jpg"],
@@ -198,7 +198,7 @@ export const projects: Project[] = [
 ];
 
 export const signs = [
-  { title: "Você precisa explicar demais o que faz.", text: "Todo cliente novo pede uma reunião só pra entender o seu serviço." },
+  { title: "Você precisa explicar demais o que faz.", text: "Todo cliente novo precisa de uma reunião só para entender o seu serviço." },
   { title: "Cada post parece de uma empresa diferente.", text: "Muda a cor, a fonte e o tom. Quem vê não cria memória." },
   { title: "Você só consegue competir no preço.", text: "Quando a percepção de valor é baixa, desconto vira o único argumento." },
   { title: "Dá receio de mandar o link do seu Instagram.", text: "No fundo você sabe que o seu negócio é melhor do que parece." },
@@ -253,7 +253,7 @@ export const plans: Plan[] = [
   {
     id: "essencial",
     name: "Essencial",
-    tagline: "Pra marca aparecer com constância e cara de profissional.",
+    tagline: "Presença constante e profissional nas redes.",
     price: 1490,
     monthly: [
       { n: 12, label: "posts" },
@@ -272,7 +272,7 @@ export const plans: Plan[] = [
   {
     id: "crescimento",
     name: "Crescimento",
-    tagline: "Pra quem quer transformar seguidor em cliente.",
+    tagline: "Para transformar seguidores em clientes.",
     price: 2690,
     featured: true,
     monthly: [
@@ -293,7 +293,7 @@ export const plans: Plan[] = [
   {
     id: "completo",
     name: "Completo",
-    tagline: "Conteúdo, comunidade e anúncios num lugar só.",
+    tagline: "Conteúdo, comunidade e anúncios em um só lugar.",
     price: 4290,
     monthly: [
       { n: 20, label: "posts" },
@@ -338,31 +338,31 @@ export const projectPrices: ProjectPrice[] = [
 export const faq = [
   {
     q: "Quanto tempo leva um projeto de identidade visual?",
-    a: "Entre 4 e 6 semanas, contando imersão, estratégia, design e manual. O prazo exato entra na proposta, e a gente cumpre.",
+    a: "Entre 4 e 6 semanas, incluindo imersão, estratégia, design e manual. O prazo exato consta na proposta.",
   },
   {
     q: "Como funciona o pagamento?",
-    a: "Projetos são divididos em até 3 parcelas: entrada, entrega da proposta visual e entrega final. Planos mensais são cobrados todo mês, e o semestral sai 10% mais barato.",
+    a: "Projetos podem ser parcelados em até 3 vezes: entrada, aprovação da proposta visual e entrega final. Planos são cobrados mensalmente; no semestral, cada mensalidade sai 10% mais barata.",
   },
   {
     q: "Tem fidelidade nos planos mensais?",
-    a: "O plano mensal pode ser cancelado com 30 dias de aviso. O semestral tem o desconto justamente pelo compromisso de 6 meses.",
+    a: "O plano mensal pode ser cancelado com 30 dias de aviso. O semestral oferece desconto em troca do compromisso de 6 meses.",
   },
   {
     q: "Quantas rodadas de ajuste estão incluídas?",
-    a: "Duas rodadas em cada etapa do projeto. Nos planos mensais, cada peça pode ser ajustada antes de ir pro ar.",
+    a: "Duas rodadas por etapa do projeto. Nos planos mensais, cada peça pode ser ajustada antes da publicação.",
   },
   {
     q: "A verba de anúncios está incluída no plano Completo?",
-    a: "Não. A gestão das campanhas está incluída; a verba é paga direto pra plataforma (Meta ou Google) e você define o valor.",
+    a: "Não. A gestão das campanhas está incluída; a verba é paga diretamente à plataforma (Meta ou Google), no valor que você definir.",
   },
   {
     q: "Vocês atendem fora de Rondônia?",
-    a: "Sim. A Juá é de Ji-Paraná (RO), mas o trabalho é todo remoto, com reuniões por vídeo, então atendemos marcas do Brasil inteiro.",
+    a: "Sim. A Juá fica em Ji-Paraná (RO), mas trabalha de forma remota, com reuniões por vídeo, e atende marcas de todo o Brasil.",
   },
   {
-    q: "Posso começar só por um serviço?",
-    a: "Pode. Muita gente começa pela identidade e depois parte pro conteúdo. A gente ajuda a decidir a ordem que faz mais sentido pro seu momento.",
+    q: "Posso começar por apenas um serviço?",
+    a: "Sim. Muitos clientes começam pela identidade e depois seguem para o conteúdo. Ajudamos a definir a ordem ideal para o seu momento.",
   },
 ];
 

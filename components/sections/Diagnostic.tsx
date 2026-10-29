@@ -16,7 +16,7 @@ export function Diagnostic() {
             4 sinais de que a sua marca está afastando clientes.
           </h2>
           <p className="lead rv" style={{ marginTop: 28 }}>
-            Clique nos que você reconhece. Leva 30 segundos.
+            Marque os que você reconhece. Leva 30 segundos.
           </p>
         </div>
         <div>
@@ -44,18 +44,18 @@ export function Diagnostic() {
                 "Marque os sinais que você reconhece."
               ) : n === 1 ? (
                 <>
-                  <span className="count">1</span> sinal. Vale ficar de olho.
+                  <span className="count">1</span> sinal. Vale atenção.
                 </>
               ) : (
                 <>
-                  <span className="count">{n}</span> sinais. Então vale a gente conversar.
+                  <span className="count">{n}</span> sinais. É hora de rever a sua marca.
                 </>
               )}
             </p>
             {n >= 2 && (
               <div className="diag-ctas">
                 <a className="btn btn-p" href="#contato">
-                  Vamos conversar
+                  Solicitar orçamento
                 </a>
                 <a className="btn btn-g" href="#planos">
                   Ver planos

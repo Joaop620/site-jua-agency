@@ -34,8 +34,7 @@ export function Pricing() {
             </h2>
           </div>
           <p className="lead rv">
-            Planos mensais pra quem quer constância nas redes, e projetos com preço de partida pra marca e site. Tudo começa
-            com uma conversa.
+            Planos mensais para manter a constância nas redes e projetos com valor de partida para marca e site.
           </p>
         </div>
 
@@ -107,10 +106,10 @@ export function Pricing() {
                   <a
                     className="btn btn-p btn-sm"
                     href="#form"
-                    aria-label={`Quero o plano ${p.name}`}
+                    aria-label={`Escolher o plano ${p.name}`}
                     onClick={(e) => choose(e, `${p.name} (${billing})`, "Social media")}
                   >
-                    Quero esse plano
+                    Escolher plano
                   </a>
                 </div>
                 {billing === "semestral" && (
@@ -184,13 +183,23 @@ export function Pricing() {
                 )}
                 R$ {brl.format(promoPrice(p.from))}
               </p>
-              <a className="link pp-cta" href="#form" aria-label={`Pedir proposta de ${p.name}`} onClick={(e) => choose(e, p.name, p.pick)}>
-                Pedir proposta
+              <a className="link pp-cta" href="#form" aria-label={`Solicitar proposta de ${p.name}`} onClick={(e) => choose(e, p.name, p.pick)}>
+                Solicitar proposta
               </a>
             </li>
           ))}
         </ul>
-        <p className="price-note">Projetos parcelados em até 3x. O valor final sai na proposta, depois da primeira conversa.</p>
+        <p className="price-note">Projetos parcelados em até 3x. O valor final é definido na proposta.</p>
+
+        <div className="quote-cta rv">
+          <div>
+            <h3>Faça seu orçamento</h3>
+            <p>Não encontrou o formato ideal? Montamos uma proposta sob medida para o seu negócio, sem custo e sem compromisso.</p>
+          </div>
+          <a className="btn btn-n" href="#form" onClick={(e) => choose(e, "Orçamento personalizado", "Ainda não sei")}>
+            Solicitar orçamento
+          </a>
+        </div>
       </div>
     </section>
   );

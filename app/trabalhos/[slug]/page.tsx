@@ -104,7 +104,7 @@ export default async function CasePage({ params }: Params) {
           )}
           <div className="case-ask">
             <h2 className="h h-m">
-              Quer algo assim pra sua marca?
+              Quer um projeto assim para a sua marca?
             </h2>
             <div className="case-ask-ctas">
               <Link className="btn btn-p" href="/#form">

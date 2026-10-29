@@ -14,10 +14,10 @@ export function Services() {
           <div>
             <div className="kick">O que fazemos</div>
             <h2 id="svc-title" className="h h-l rv">
-              Quatro frentes. Um só objetivo: vender mais.
+              Quatro frentes. Um objetivo: vender mais.
             </h2>
           </div>
-          <p className="lead rv">Dá pra começar por uma delas ou fazer tudo junto. A gente ajuda você a decidir por onde começar.</p>
+          <p className="lead rv">Comece por uma frente ou combine todas. Ajudamos a definir a melhor ordem para o seu momento.</p>
         </div>
         <div className="svc-list">
           {services.map((s, i) => {
@@ -47,7 +47,7 @@ export function Services() {
                       ))}
                     </ul>
                     <PickLink className="btn btn-d" pick={s.pick}>
-                      Quero esse
+                      Solicitar orçamento
                     </PickLink>
                     <a className="svc-price ul" href="#planos">
                       Ver preços
@@ -60,7 +60,7 @@ export function Services() {
         </div>
         <div className="svc-all rv">
           <p>
-            Precisa de tudo junto? A gente monta um projeto só, com um cronograma só.
+            Precisa de tudo? Montamos um projeto único, com um só cronograma.
           </p>
           <PickLink className="btn btn-p" pick="Tudo junto">
             Montar meu projeto

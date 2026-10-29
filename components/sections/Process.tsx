@@ -43,7 +43,7 @@ export function Process() {
               Como uma marca nasce aqui dentro.
             </h2>
           </div>
-          <p className="lead rv">Quatro fases, como as da lua. Cada uma prepara a próxima, e nenhuma é pulada.</p>
+          <p className="lead rv">Quatro fases, como as da lua. Cada uma prepara a seguinte, e nenhuma é pulada.</p>
         </div>
         <div className="proc" ref={el}>
           <div className="proc-stage">

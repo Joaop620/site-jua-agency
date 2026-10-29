@@ -366,6 +366,9 @@ section{position:relative}
 .plan-six li{display:grid;gap:2px}
 .plan-six strong{font-size:clamp(32px,3vw,46px);font-weight:700;letter-spacing:-.04em;line-height:1;font-variant-numeric:tabular-nums}
 .plan-six span{font-size:14px;color:var(--dim-d)}
+.quote-cta{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:24px;margin-top:clamp(48px,6vw,80px);padding:clamp(28px,4vw,44px);border-radius:20px;background:linear-gradient(120deg,rgba(229,25,122,.22),rgba(63,18,120,.38));border:1px solid rgba(255,85,167,.3)}
+.quote-cta h3{margin:0 0 8px;font-size:clamp(28px,3vw,42px);letter-spacing:-.035em;line-height:1}
+.quote-cta p{margin:0;max-width:34em;color:var(--dim-d);font-size:17px}
 .plan-more{display:none;justify-self:start;padding:0;border:0;background:none;color:var(--pink);font-weight:600;font-size:15px;text-decoration:underline;text-underline-offset:5px;cursor:pointer}
 .plan-price{display:flex;flex-direction:column;align-items:flex-end;text-align:right}
 .plan-was{color:var(--dim-d);font-size:15px}

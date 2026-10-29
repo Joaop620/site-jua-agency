@@ -75,8 +75,8 @@ export function ContactForm() {
       plano,
     };
     const errs: Errors = {};
-    if (!data.nome.trim()) errs.nome = "Conta pra gente como te chamar.";
-    if (!/^\S+@\S+\.\S+$/.test(data.email.trim())) errs.email = "Esse e-mail não parece válido.";
+    if (!data.nome.trim()) errs.nome = "Informe seu nome.";
+    if (!/^\S+@\S+\.\S+$/.test(data.email.trim())) errs.email = "Informe um e-mail válido.";
     setErrors(errs);
     if (Object.keys(errs).length) {
       document.getElementById(errs.nome ? "fn" : "fe")?.focus();
@@ -84,7 +84,7 @@ export function ContactForm() {
     }
     // monta a mensagem e abre o WhatsApp da Juá já com tudo preenchido
     const lines = [
-      "Olá! Vim pelo site da Juá e quero agendar uma conversa.",
+      "Olá! Vim pelo site da Juá e gostaria de solicitar um orçamento.",
       "",
       `*Nome:* ${data.nome.trim()}`,
       `*E-mail:* ${data.email.trim()}`,
@@ -123,8 +123,8 @@ export function ContactForm() {
       <div className="form form-ok" id="form-ok" role="status" tabIndex={-1}>
         <JuaSymbol size={72} />
         <h3>Quase lá!</h3>
-        <p className="sub">Abrimos o WhatsApp com a sua mensagem pronta. É só tocar em enviar que a gente responde pra marcar a conversa.</p>
-        <p className="form-privacy">Prefere e-mail? Escreva pra {site.contact.email}.</p>
+        <p className="sub">O WhatsApp foi aberto com a sua mensagem pronta. Basta tocar em enviar para combinarmos a primeira reunião.</p>
+        <p className="form-privacy">Prefere e-mail? Escreva para {site.contact.email}.</p>
         <a className="btn btn-n" href={waUrl} target="_blank" rel="noopener noreferrer">
           Abrir o WhatsApp de novo
         </a>
@@ -134,15 +134,15 @@ export function ContactForm() {
 
   return (
     <form className="form rv" id="form" ref={form} onSubmit={submit} onInput={saveDraft} noValidate>
-      <h3>Vamos conversar</h3>
-      <p className="sub">Sem compromisso e sem enrolação.</p>
+      <h3>Solicite seu orçamento</h3>
+      <p className="sub">Sem compromisso e sem custo.</p>
       <div className="f-row">
         <div className="field">
           <label htmlFor="fn">Seu nome</label>
           <input
             id="fn"
             name="nome"
-            placeholder="Como podemos te chamar?"
+            placeholder="Como prefere ser chamado(a)?"
             required
             autoComplete="name"
             aria-invalid={!!errors.nome}
@@ -202,13 +202,13 @@ export function ContactForm() {
         </div>
       </fieldset>
       <div className="field">
-        <label htmlFor="fm">Conta um pouco do seu negócio</label>
-        <textarea id="fm" name="mensagem" placeholder="O que você vende, pra quem, e o que gostaria de mudar na sua marca." />
+        <label htmlFor="fm">Fale sobre o seu negócio</label>
+        <textarea id="fm" name="mensagem" placeholder="O que você vende, para quem e o que gostaria de mudar na sua marca." />
       </div>
       <button className="btn btn-n" type="submit">
         Enviar pelo WhatsApp
       </button>
-      <p className="form-privacy">Ao enviar, o WhatsApp abre com a sua mensagem pronta. A gente usa seus dados só pra responder (<a href="/privacidade">privacidade</a>).</p>
+      <p className="form-privacy">Ao enviar, o WhatsApp abre com a sua mensagem pronta. Seus dados são usados apenas para responder ao contato (<a href="/privacidade">privacidade</a>).</p>
     </form>
   );
 }

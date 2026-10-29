@@ -20,7 +20,7 @@ export function Work() {
               Marcas que brilham no escuro.
             </h2>
           </div>
-          <p className="lead rv">Alguns projetos que saíram daqui. Cada um começou com uma conversa.</p>
+          <p className="lead rv">Uma seleção de projetos recentes, do posicionamento à entrega.</p>
         </div>
         <div className="cases-grid">
           {projects.map((pr, i) => (
@@ -42,7 +42,7 @@ export function Work() {
           ))}
         </div>
         <div className="work-more rv">
-          <p>Tem mais trabalho no nosso Behance.</p>
+          <p>Mais projetos no Behance.</p>
           <a className="btn btn-g" href={site.contact.behance.href} target="_blank" rel="noopener noreferrer">
             Ver no Behance <span className="arr" aria-hidden="true">↗</span>
           </a>

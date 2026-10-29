@@ -46,7 +46,7 @@ export function Hero() {
             </h1>
             <div className="hero-side hero-fade">
               <p className="lead hero-lead">
-                A Juá cria marcas, conteúdo e sites com design bonito, estratégia clara e resultado que dá pra medir.
+                Criamos marcas, conteúdo e sites que unem estética, estratégia e resultados mensuráveis.
               </p>
               <div className="hero-ctas">
                 <a className="btn btn-p" href="#contato">

@@ -13,10 +13,10 @@ export function Contact() {
             <Now kind="month" />
           </div>
           <h2 id="contact-title" className="h h-l rv">
-            Agenda aberta pra novos projetos.
+            Agenda aberta para novos projetos.
           </h2>
           <p className="lead" style={{ marginTop: 28 }}>
-            Trabalhamos com poucos clientes por vez, pra dar atenção de verdade a cada marca. Conta um pouco do seu negócio: a mensagem vai pronta pro nosso WhatsApp e a gente marca a conversa por lá.
+            Atendemos poucos clientes por vez para dedicar atenção real a cada marca. Conte um pouco sobre o seu negócio: a mensagem segue pronta para o nosso WhatsApp, onde combinamos a primeira reunião.
           </p>
           <div className="contact-info">
             <a href={`mailto:${c.email}`}>

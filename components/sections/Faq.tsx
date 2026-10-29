@@ -15,11 +15,11 @@ export function Faq() {
             Antes de começar.
           </h2>
           <p className="lead rv">
-            Não achou o que procurava? Manda no{" "}
+            Não encontrou sua dúvida? Fale conosco pelo{" "}
             <a className="ul" href={site.contact.whatsapp.href} target="_blank" rel="noopener noreferrer">
               WhatsApp
-            </a>{" "}
-            que a gente responde.
+            </a>
+            .
           </p>
         </div>
         <div className="faq-list">

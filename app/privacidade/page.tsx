@@ -33,7 +33,7 @@ export default function Privacidade() {
           <h1 className="h h-l">Política de privacidade</h1>
           <div className="legal-body">
             <p className="lead">
-              A Juá Agency respeita a sua privacidade. Este texto explica, de forma direta, quais dados o site recebe, pra que
+              A Juá Agency respeita a sua privacidade. Este texto explica, de forma direta, quais dados o site recebe, para que
               servem e como você pode pedir que sejam apagados, conforme a Lei Geral de Proteção de Dados (Lei nº 13.709/2018).
             </p>
 
@@ -51,8 +51,8 @@ export default function Privacidade() {
                 ativado, também chegam por e-mail.
               </li>
               <li>
-                <strong>Rascunho do formulário:</strong> o que você digita fica guardado só no seu navegador por até 7 dias, pra
-                não se perder se você sair da página. Nada disso vai pra gente antes de você enviar.
+                <strong>Rascunho do formulário:</strong> o que você digita fica guardado só no seu navegador por até 7 dias, para
+                não se perder se você sair da página. Nada disso chega até nós antes do envio.
               </li>
               <li>
                 <strong>Estatísticas de visita:</strong> usamos o Vercel Analytics, que conta visitas de forma anônima, sem
@@ -62,8 +62,8 @@ export default function Privacidade() {
 
             <h2>Pra que usamos</h2>
             <p>
-              Só pra responder o seu contato e preparar uma proposta. Não vendemos, não alugamos e não compartilhamos seus dados
-              com ninguém pra fins de publicidade.
+              Apenas para responder ao seu contato e preparar uma proposta. Não vendemos, não alugamos e não compartilhamos seus dados
+              com terceiros para fins de publicidade.
             </p>
 
             <h2>Com quem os dados passam</h2>
@@ -82,7 +82,7 @@ export default function Privacidade() {
             <h2>Seus direitos</h2>
             <p>
               Você pode pedir a qualquer momento acesso, correção ou exclusão dos seus dados, ou saber com quem eles foram
-              compartilhados. É só escrever pra <a href={`mailto:${email}`}>{email}</a> que a gente responde em até 15 dias.
+              compartilhados. Basta escrever para <a href={`mailto:${email}`}>{email}</a> e responderemos em até 15 dias.
             </p>
 
             <h2>Cookies</h2>
