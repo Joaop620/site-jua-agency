@@ -10,6 +10,14 @@ type Errors = Partial<Record<"nome" | "email", string>>;
 const DRAFT = "jua-contato";
 const FIELDS = ["nome", "email", "empresa", "mensagem"] as const;
 
+// "Ainda não sei" não convive com serviços escolhidos
+const UNSURE = "Ainda não sei";
+function add(p: string[], s: string) {
+  if (p.includes(s)) return p;
+  if (s === UNSURE) return p.length ? p : [s];
+  return [...p.filter((x) => x !== UNSURE), s];
+}
+
 export function ContactForm() {
   const [status, setStatus] = useState<Status>("idle");
   const [picked, setPicked] = useState<string[]>([]);
@@ -54,13 +62,14 @@ export function ContactForm() {
   useEffect(() => {
     const on = (e: Event) => {
       const v = (e as CustomEvent<string>).detail;
-      setPicked((p) => (p.includes(v) ? p : [...p, v]));
+      setPicked((p) => add(p, v));
     };
     addEventListener("jua:pick", on);
     return () => removeEventListener("jua:pick", on);
   }, []);
 
-  const toggle = (s: string) => setPicked((p) => (p.includes(s) ? p.filter((x) => x !== s) : [...p, s]));
+  const toggle = (s: string) =>
+    setPicked((p) => (p.includes(s) ? p.filter((x) => x !== s) : s === UNSURE ? [s] : add(p, s)));
 
   function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -147,6 +156,7 @@ export function ContactForm() {
             autoComplete="name"
             aria-invalid={!!errors.nome}
             aria-describedby={errors.nome ? "fn-err" : undefined}
+            onChange={() => errors.nome && setErrors((e) => ({ ...e, nome: undefined }))}
           />
           {errors.nome && (
             <span id="fn-err" className="err">
@@ -165,6 +175,7 @@ export function ContactForm() {
             autoComplete="email"
             aria-invalid={!!errors.email}
             aria-describedby={errors.email ? "fe-err" : undefined}
+            onChange={() => errors.email && setErrors((e) => ({ ...e, email: undefined }))}
           />
           {errors.email && (
             <span id="fe-err" className="err">
